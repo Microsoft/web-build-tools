@@ -1,0 +1,10 @@
+{
+  "name": "a",
+  "version": "1.0.0",
+  "description": "Test package a",
+  "scripts": {
+    "prebuild": "fake_prebuild_task_but_works_with_mock_a",
+    "build": "fake_build_task_but_works_with_mock_a",
+    "rebuild": "fake_REbuild_task_but_works_with_mock_a"
+  }
+}

@@ -65,11 +65,15 @@ export class ProjectTask implements ITaskDefinition {
   public execute(writer: ITaskWriter): Promise<TaskStatus> {
     try {
       const taskCommand: string = this._getScriptToRun();
+      const preCommand: string = this._getPreScriptToRun();
+      const postCommand: string = this._getPostScriptToRun();
       if (!taskCommand) {
         this.hadEmptyScript = true;
       }
       const deps: IPackageDependencies | undefined = this._getPackageDependencies(taskCommand, writer);
-      return this._executeTask(taskCommand, writer, deps);
+      return this._executeTask(preCommand, writer, deps)
+        .then(() => this._executeTask(taskCommand, writer, deps))
+        .then(() => this._executeTask(postCommand, writer, deps));
     } catch (error) {
       return Promise.reject(new TaskError('executing', error.message));
     }
@@ -96,6 +100,9 @@ export class ProjectTask implements ITaskDefinition {
     writer: ITaskWriter,
     currentPackageDeps: IPackageDependencies | undefined
   ): Promise<TaskStatus> {
+    if (taskCommand === '') {
+      return Promise.resolve(TaskStatus.Skipped);
+    }
     try {
       this._hasWarningOrError = false;
       const projectFolder: string = this._rushProject.projectFolder;
@@ -200,6 +207,28 @@ export class ProjectTask implements ITaskDefinition {
       this._writeLogsToDisk(writer);
       return Promise.reject(new TaskError('error', error.toString()));
     }
+  }
+
+  private _getPreScriptToRun(): string {
+    if (this._commandToRun.match(/^(pre|post).*/)) {
+      return '';
+    }
+    const preCommandScript: string | undefined = this._getScriptCommand(
+      `pre${this._commandToRun}`
+    );
+    return preCommandScript === undefined ? '' :
+      `${preCommandScript} ${this._customParameterValues.join(' ')}`;
+  }
+
+  private _getPostScriptToRun(): string {
+    if (this._commandToRun.match(/^(pre|post).*/)) {
+      return '';
+    }
+    const postCommandScript: string | undefined = this._getScriptCommand(
+      `post${this._commandToRun}`
+    );
+    return postCommandScript === undefined ? '' :
+      `${postCommandScript} ${this._customParameterValues.join(' ')}`;
   }
 
   private _getScriptToRun(): string {

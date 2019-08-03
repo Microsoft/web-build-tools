@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Support pre and post script commands.",
+      "packageName": "@microsoft/rush",
+      "type": "none"
+    }
+  ],
+  "packageName": "@microsoft/rush",
+  "email": "halfnibble@users.noreply.github.com"
+}
