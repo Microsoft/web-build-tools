@@ -16,6 +16,11 @@
       "pattern": "^[0-9]+\\.[0-9]+\\.[0-9a-zA-Z.+\\-]+$"
     },
 
+    "commonFolder": {
+      "description": "If Specified, the folder name ('common') where Rush's common data will be stored.  Example: \"common\"",
+      "type": "string"
+    },
+
     "pnpmVersion": {
       "description": "If specified, selects PNPM as the package manager and specifies the deterministic version to be installed by Rush.",
       "type": "string",

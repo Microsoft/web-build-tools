@@ -112,6 +112,7 @@ export interface IRushVariantOptionsJson {
  */
 export interface IRushConfigurationJson {
   $schema: string;
+  commonFolder?: string;
   npmVersion?: string;
   pnpmVersion?: string;
   yarnVersion?: string;
@@ -1042,7 +1043,8 @@ export class RushConfiguration {
     this._rushJsonFile = rushJsonFilename;
     this._rushJsonFolder = path.dirname(rushJsonFilename);
 
-    this._commonFolder = path.resolve(path.join(this._rushJsonFolder, RushConstants.commonFolderName));
+    this._commonFolder = path.resolve(path.join(this._rushJsonFolder, rushConfigurationJson.commonFolder ||
+      RushConstants.commonFolderName));
 
     this._commonRushConfigFolder = path.join(this._commonFolder, 'config', 'rush');
 

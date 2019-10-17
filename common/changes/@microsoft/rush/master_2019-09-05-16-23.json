@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "add optional 'commonFolder' configuration setting to control the common folder location",
+      "packageName": "@microsoft/rush",
+      "type": "none"
+    }
+  ],
+  "packageName": "@microsoft/rush",
+  "email": "fearthecowboy@users.noreply.github.com"
+}

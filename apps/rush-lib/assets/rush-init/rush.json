@@ -19,6 +19,12 @@
   "rushVersion": "[%RUSH_VERSION%]",
 
   /**
+   * The folder name where Rush's common data will be stored.
+   * assumes 'common' if not specified.
+   */
+  /*[LINE "HYPOTHETICAL"]*/ "commonFolder": "common",
+
+  /**
    * The next field selects which package manager should be installed and determines its version.
    * Rush installs its own local copy of the package manager to ensure that your build process
    * is fully isolated from whatever tools are present in the local environment.
