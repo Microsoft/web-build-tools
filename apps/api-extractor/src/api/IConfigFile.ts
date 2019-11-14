@@ -209,6 +209,53 @@ export interface IConfigTsdocMetadata {
 }
 
 /**
+ * Additional tags to support when parsing documentation comments with TSDoc.
+ *
+ * @remarks
+ * This is part of the {@link IConfigFile} structure.
+
+ * @public
+ */
+export interface IConfigTsdocTagDefinition {
+  /**
+   * Name of the custom tag. TSDoc tag names start with an at-sign (`@`) followed
+   * by ASCII letters using "camelCase" capitalization.
+   */
+  tagName: string;
+
+  /**
+   * Syntax kind of the custom tag.
+   *
+   * @remarks
+   * `"inline"` means that this tag can appear inside other documentation sections (example: `{@link}`).
+   * `"block"` means that this tag starts a new documentation section (example: `@remarks`).
+   * `"modifier"` means that this tag's presence indicates an aspect of the associated API item (example: `@internal`).
+   */
+  syntaxKind: 'inline' | 'block' | 'modifier';
+
+  /**
+   * If true, then this tag may appear multiple times in a doc comment.
+   * By default, a tag may only appear once.
+   */
+  allowMultiple?: boolean;
+}
+
+/**
+ * Custom configuration for TSDoc, including custom supported tags.
+ *
+ * @remarks
+ * This is part of the {@link IConfigFile} structure.
+
+ * @public
+ */
+export interface IConfigTsdoc {
+  /**
+   * {@inheritDoc IConfigTsdocTagDefinition}
+   */
+  tagDefinitions?: ReadonlyArray<IConfigTsdocTagDefinition>;
+}
+
+/**
  * Configures reporting for a given message identifier.
  *
  * @remarks
@@ -366,6 +413,11 @@ export interface IConfigFile {
    * @beta
    */
   tsdocMetadata?: IConfigTsdocMetadata;
+
+  /**
+   * {@inheritDoc IConfigTsdoc}
+   */
+  tsdoc?: IConfigTsdoc;
 
   /**
    * {@inheritDoc IExtractorMessagesConfig}

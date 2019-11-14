@@ -264,6 +264,40 @@
   },
 
   /**
+   * Custom configuration for TSDoc, including custom supported tags.
+   */
+  "tsdoc": {
+    /**
+     * Additional tags to support when parsing documentation comments with TSDoc.
+     */
+    "tagDefinitions": [
+      // {
+        /**
+         * Name of the custom tag (required). TSDoc tag names start with an at-sign (`@`) followed
+         * by ASCII letters using "camelCase" capitalization.
+         */
+        // "tagName": "@default",
+
+        /**
+         * Syntax kind of the custom tag (required).
+         *
+         * Possible values:
+         * - "inline" means that this tag can appear inside other documentation sections (example: `{@link}`).
+         * - "block" means that this tag starts a new documentation section (example: `@remarks`).
+         * - "modifier" means that this tag's presence indicates an aspect of the associated API item (example: `@internal`).
+         */
+        // "syntaxKind": "block",
+
+        /**
+         * If true, then this tag may appear multiple times in a doc comment.
+         * By default, a tag may only appear once.
+         */
+        // "allowMultiple": false
+      // }
+    ]
+  },
+
+  /**
    * Configures how API Extractor reports error and warning messages produced during analysis.
    *
    * There are three sources of messages:  compiler messages, API Extractor messages, and TSDoc messages.

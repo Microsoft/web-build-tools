@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
+import * as tsdoc from '@microsoft/tsdoc';
+
 export enum ApiJsonSchemaVersion {
   /**
    * The initial release.
@@ -72,10 +74,16 @@ export class DeserializerContext {
    */
   public readonly versionToDeserialize: ApiJsonSchemaVersion;
 
+  /**
+   * TSDoc configuration to use when deserializing documentation comments.
+   */
+  public readonly tsdocConfig?: tsdoc.TSDocConfiguration;
+
   public constructor(options: DeserializerContext) {
     this.apiJsonFilename = options.apiJsonFilename;
     this.toolPackage = options.toolPackage;
     this.toolVersion = options.toolVersion;
     this.versionToDeserialize = options.versionToDeserialize;
+    this.tsdocConfig = options.tsdocConfig;
   }
 }

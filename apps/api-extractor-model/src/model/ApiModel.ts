@@ -2,12 +2,24 @@
 // See LICENSE in the project root for license information.
 
 import { DeclarationReference } from '@microsoft/tsdoc/lib/beta/DeclarationReference';
+import * as tsdoc from '@microsoft/tsdoc';
 import { ApiItem, ApiItemKind } from '../items/ApiItem';
 import { ApiItemContainerMixin } from '../mixins/ApiItemContainerMixin';
 import { ApiPackage } from './ApiPackage';
 import { PackageName } from '@microsoft/node-core-library';
 import { ModelReferenceResolver, IResolveDeclarationReferenceResult } from './ModelReferenceResolver';
-import { DocDeclarationReference } from '@microsoft/tsdoc';
+import { AedocDefinitions } from '../aedoc/AedocDefinitions';
+
+/**
+ * Constructor options for {@link ApiModel}.
+ * @public
+ */
+export interface IApiModelOptions {
+  /**
+   * Custom TSDoc tags to support when parsing documentation comments.
+   */
+  tsdocTags?: ReadonlyArray<tsdoc.TSDocTagDefinition>;
+}
 
 /**
  * A serializable representation of a collection of API declarations.
@@ -51,17 +63,19 @@ import { DocDeclarationReference } from '@microsoft/tsdoc';
  */
 export class ApiModel extends ApiItemContainerMixin(ApiItem) {
   private readonly _resolver: ModelReferenceResolver;
+  private readonly _tsdocConfig: tsdoc.TSDocConfiguration;
 
   private _packagesByName: Map<string, ApiPackage> | undefined = undefined;
 
-  public constructor() {
+  public constructor(options: IApiModelOptions = {}) {
     super({ });
 
     this._resolver = new ModelReferenceResolver(this);
+    this._tsdocConfig = AedocDefinitions.getTsdocConfiguration(options.tsdocTags || []);
   }
 
   public loadPackage(apiJsonFilename: string): ApiPackage {
-    const apiPackage: ApiPackage = ApiPackage.loadFromJsonFile(apiJsonFilename);
+    const apiPackage: ApiPackage = ApiPackage.loadFromJsonFile(apiJsonFilename, this._tsdocConfig);
     this.addMember(apiPackage);
     return apiPackage;
   }
@@ -137,8 +151,9 @@ export class ApiModel extends ApiItemContainerMixin(ApiItem) {
     return this._packagesByName.get(packageName);
   }
 
-  public resolveDeclarationReference(declarationReference: DocDeclarationReference,
+  public resolveDeclarationReference(declarationReference: tsdoc.DocDeclarationReference,
     contextApiItem: ApiItem | undefined): IResolveDeclarationReferenceResult {
+
     return this._resolver.resolve(declarationReference, contextApiItem);
   }
 

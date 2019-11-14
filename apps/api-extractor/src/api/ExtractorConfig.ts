@@ -4,6 +4,7 @@
 import * as path from 'path';
 import * as resolve from 'resolve';
 import lodash = require('lodash');
+import * as tsdoc from '@microsoft/tsdoc';
 
 import {
   JsonFile,
@@ -18,10 +19,12 @@ import {
 } from '@microsoft/node-core-library';
 import {
   IConfigFile,
-  IExtractorMessagesConfig
+  IExtractorMessagesConfig,
+  IConfigTsdocTagDefinition
 } from './IConfigFile';
 import { PackageMetadataManager } from '../analyzer/PackageMetadataManager';
 import { MessageRouter } from '../collector/MessageRouter';
+import { AedocDefinitions } from '@microsoft/api-extractor-model';
 
 /**
  * Tokens used during variable expansion of path fields from api-extractor.json.
@@ -111,6 +114,7 @@ interface IExtractorConfigParameters {
   omitTrimmingComments: boolean;
   tsdocMetadataEnabled: boolean;
   tsdocMetadataFilePath: string;
+  tsdocConfig: tsdoc.TSDocConfiguration;
   messages: IExtractorMessagesConfig;
   testMode: boolean;
 }
@@ -195,6 +199,11 @@ export class ExtractorConfig {
   /** {@inheritDoc IConfigTsdocMetadata.tsdocMetadataFilePath} */
   public readonly tsdocMetadataFilePath: string;
 
+  /**
+   * Configuration to use when parsing TSDoc comments.
+   */
+  public readonly tsdocConfig: tsdoc.TSDocConfiguration;
+
   /** {@inheritDoc IConfigFile.messages} */
   public readonly messages: IExtractorMessagesConfig;
 
@@ -222,6 +231,7 @@ export class ExtractorConfig {
     this.omitTrimmingComments = parameters.omitTrimmingComments;
     this.tsdocMetadataEnabled = parameters.tsdocMetadataEnabled;
     this.tsdocMetadataFilePath = parameters.tsdocMetadataFilePath;
+    this.tsdocConfig = parameters.tsdocConfig;
     this.messages = parameters.messages;
     this.testMode = parameters.testMode;
   }
@@ -654,6 +664,25 @@ export class ExtractorConfig {
         omitTrimmingComments = !!configObject.dtsRollup.omitTrimmingComments;
       }
 
+      let tsdocConfig: tsdoc.TSDocConfiguration = AedocDefinitions.tsdocConfiguration;
+      if (configObject.tsdoc && configObject.tsdoc.tagDefinitions) {
+        const customTags: tsdoc.TSDocTagDefinition[] = configObject.tsdoc.tagDefinitions.map(
+          (tag: IConfigTsdocTagDefinition): tsdoc.TSDocTagDefinition => {
+            const tagParams: tsdoc.ITSDocTagDefinitionParameters = {
+              tagName: tag.tagName,
+              syntaxKind: tsdoc.TSDocTagSyntaxKind.BlockTag,
+              allowMultiple: tag.allowMultiple
+            };
+            if (tag.syntaxKind === 'inline') {
+              tagParams.syntaxKind = tsdoc.TSDocTagSyntaxKind.InlineTag;
+            } else if (tag.syntaxKind === 'modifier') {
+              tagParams.syntaxKind = tsdoc.TSDocTagSyntaxKind.ModifierTag;
+            }
+            return new tsdoc.TSDocTagDefinition(tagParams);
+          });
+        tsdocConfig = AedocDefinitions.getTsdocConfiguration(customTags);
+      }
+
       return new ExtractorConfig({
         projectFolder: projectFolder,
         packageJson,
@@ -675,6 +704,7 @@ export class ExtractorConfig {
         omitTrimmingComments,
         tsdocMetadataEnabled,
         tsdocMetadataFilePath,
+        tsdocConfig,
         messages: configObject.messages || { },
         testMode: !!configObject.testMode
       });

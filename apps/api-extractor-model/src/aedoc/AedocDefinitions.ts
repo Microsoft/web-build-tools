@@ -27,44 +27,56 @@ export class AedocDefinitions {
     syntaxKind: TSDocTagSyntaxKind.ModifierTag
   });
 
+  /**
+   * @deprecated Use `AedocDefinitions.getTsdocConfiguration()` instead, to allow customization of supported tags
+   * without polluting a global object.
+   */
   public static get tsdocConfiguration(): TSDocConfiguration {
     if (!AedocDefinitions._tsdocConfiguration) {
-      const configuration: TSDocConfiguration = new TSDocConfiguration();
-      configuration.addTagDefinitions([
-        AedocDefinitions.betaDocumentation,
-        AedocDefinitions.internalRemarks,
-        AedocDefinitions.preapprovedTag
-      ], true);
-
-      configuration.setSupportForTags(
-        [
-          StandardTags.alpha,
-          StandardTags.beta,
-          StandardTags.defaultValue,
-          StandardTags.deprecated,
-          StandardTags.eventProperty,
-          StandardTags.example,
-          StandardTags.inheritDoc,
-          StandardTags.internal,
-          StandardTags.link,
-          StandardTags.override,
-          StandardTags.packageDocumentation,
-          StandardTags.param,
-          StandardTags.privateRemarks,
-          StandardTags.public,
-          StandardTags.readonly,
-          StandardTags.remarks,
-          StandardTags.returns,
-          StandardTags.sealed,
-          StandardTags.virtual
-        ],
-        true
-      );
-
-      AedocDefinitions._tsdocConfiguration = configuration;
+      AedocDefinitions._tsdocConfiguration = AedocDefinitions.getTsdocConfiguration([]);
     }
     return AedocDefinitions._tsdocConfiguration;
   }
 
   private static _tsdocConfiguration: TSDocConfiguration | undefined;
+
+  /**
+   * Gets a TSDoc configuration, optionally with additional supported tags.
+   */
+  public static getTsdocConfiguration(additionalTags: ReadonlyArray<TSDocTagDefinition> = []): TSDocConfiguration {
+    const configuration: TSDocConfiguration = new TSDocConfiguration();
+    configuration.addTagDefinitions([
+      AedocDefinitions.betaDocumentation,
+      AedocDefinitions.internalRemarks,
+      AedocDefinitions.preapprovedTag,
+      ...additionalTags
+    ], true);
+
+    configuration.setSupportForTags(
+      [
+        StandardTags.alpha,
+        StandardTags.beta,
+        StandardTags.defaultValue,
+        StandardTags.deprecated,
+        StandardTags.eventProperty,
+        StandardTags.example,
+        StandardTags.inheritDoc,
+        StandardTags.internal,
+        StandardTags.link,
+        StandardTags.override,
+        StandardTags.packageDocumentation,
+        StandardTags.param,
+        StandardTags.privateRemarks,
+        StandardTags.public,
+        StandardTags.readonly,
+        StandardTags.remarks,
+        StandardTags.returns,
+        StandardTags.sealed,
+        StandardTags.virtual
+      ],
+      true
+    );
+
+    return configuration;
+  }
 }

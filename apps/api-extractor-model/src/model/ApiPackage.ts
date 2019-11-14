@@ -2,6 +2,7 @@
 // See LICENSE in the project root for license information.
 
 import { DeclarationReference } from '@microsoft/tsdoc/lib/beta/DeclarationReference';
+import * as tsdoc from '@microsoft/tsdoc';
 import { ApiItem, ApiItemKind, IApiItemJson } from '../items/ApiItem';
 import { ApiItemContainerMixin, IApiItemContainerMixinOptions } from '../mixins/ApiItemContainerMixin';
 import { JsonFile, IJsonFileSaveOptions, PackageJsonLookup, IPackageJson } from '@microsoft/node-core-library';
@@ -106,7 +107,7 @@ export class ApiPackage extends ApiItemContainerMixin(ApiNameMixin(ApiDocumented
     super(options);
   }
 
-  public static loadFromJsonFile(apiJsonFilename: string): ApiPackage {
+  public static loadFromJsonFile(apiJsonFilename: string, tsdocConfig?: tsdoc.TSDocConfiguration): ApiPackage {
     const jsonObject: IApiPackageJson = JsonFile.load(apiJsonFilename);
 
     if (!jsonObject
@@ -152,7 +153,8 @@ export class ApiPackage extends ApiItemContainerMixin(ApiNameMixin(ApiDocumented
       apiJsonFilename,
       toolPackage: jsonObject.metadata.toolPackage,
       toolVersion: jsonObject.metadata.toolVersion,
-      versionToDeserialize: versionToDeserialize
+      versionToDeserialize: versionToDeserialize,
+      tsdocConfig
     });
 
     return ApiItem.deserialize(jsonObject, context) as ApiPackage;

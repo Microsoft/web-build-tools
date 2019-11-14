@@ -65,6 +65,7 @@ export class ExtractorConfig {
     readonly skipLibCheck: boolean;
     readonly testMode: boolean;
     readonly tsconfigFilePath: string;
+    readonly tsdocConfig: tsdoc.TSDocConfiguration;
     readonly tsdocMetadataEnabled: boolean;
     readonly tsdocMetadataFilePath: string;
     readonly untrimmedFilePath: string;
@@ -186,6 +187,11 @@ export interface IConfigFile {
     messages?: IExtractorMessagesConfig;
     projectFolder?: string;
     testMode?: boolean;
+    // Warning: (ae-forgotten-export) The symbol "IConfigTsdoc" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-unresolved-inheritdoc-reference) The @inheritDoc reference could not be resolved: The package "@microsoft/api-extractor" does not have an export "IConfigTsdoc"
+    // 
+    // (undocumented)
+    tsdoc?: IConfigTsdoc;
     // @beta
     tsdocMetadata?: IConfigTsdocMetadata;
 }

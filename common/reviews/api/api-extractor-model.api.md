@@ -5,7 +5,6 @@
 ```ts
 
 import { DeclarationReference } from '@microsoft/tsdoc/lib/beta/DeclarationReference';
-import { DocDeclarationReference } from '@microsoft/tsdoc';
 import { IJsonFileSaveOptions } from '@microsoft/node-core-library';
 import * as tsdoc from '@microsoft/tsdoc';
 import { TSDocConfiguration } from '@microsoft/tsdoc';
@@ -17,11 +16,12 @@ import { TSDocTagDefinition } from '@microsoft/tsdoc';
 export class AedocDefinitions {
     // (undocumented)
     static readonly betaDocumentation: TSDocTagDefinition;
+    static getTsdocConfiguration(additionalTags?: ReadonlyArray<TSDocTagDefinition>): TSDocConfiguration;
     // (undocumented)
     static readonly internalRemarks: TSDocTagDefinition;
     // (undocumented)
     static readonly preapprovedTag: TSDocTagDefinition;
-    // (undocumented)
+    // @deprecated (undocumented)
     static readonly tsdocConfiguration: TSDocConfiguration;
     }
 
@@ -362,7 +362,8 @@ export class ApiMethodSignature extends ApiMethodSignature_base {
 // 
 // @public
 export class ApiModel extends ApiModel_base {
-    constructor();
+    // Warning: (ae-forgotten-export) The symbol "IApiModelOptions" needs to be exported by the entry point index.d.ts
+    constructor(options?: IApiModelOptions);
     // @override (undocumented)
     addMember(member: ApiPackage): void;
     // @beta @override (undocumented)
@@ -376,9 +377,9 @@ export class ApiModel extends ApiModel_base {
     // (undocumented)
     readonly packages: ReadonlyArray<ApiPackage>;
     // (undocumented)
-    resolveDeclarationReference(declarationReference: DocDeclarationReference, contextApiItem: ApiItem | undefined): IResolveDeclarationReferenceResult;
+    resolveDeclarationReference(declarationReference: tsdoc.DocDeclarationReference, contextApiItem: ApiItem | undefined): IResolveDeclarationReferenceResult;
     tryGetPackageByName(packageName: string): ApiPackage | undefined;
-}
+    }
 
 // @public
 export function ApiNameMixin<TBaseClass extends IApiItemConstructor>(baseClass: TBaseClass): TBaseClass & (new (...args: any[]) => ApiNameMixin);
@@ -428,7 +429,7 @@ export class ApiPackage extends ApiPackage_base {
     // @override (undocumented)
     readonly kind: ApiItemKind;
     // (undocumented)
-    static loadFromJsonFile(apiJsonFilename: string): ApiPackage;
+    static loadFromJsonFile(apiJsonFilename: string, tsdocConfig?: tsdoc.TSDocConfiguration): ApiPackage;
     // (undocumented)
     saveToJsonFile(apiJsonFilename: string, options?: IApiPackageSaveOptions): void;
 }

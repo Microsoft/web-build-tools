@@ -142,6 +142,21 @@
       "additionalProperties": false
     },
 
+    "tsdoc": {
+      "description": "Custom configuration for TSDoc.",
+      "type": "object",
+      "properties": {
+        "tagDefinitions": {
+          "description": "Additional tags to support when parsing documentation comments with TSDoc.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tsdocTagDefinition"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
     "messages": {
       "description": "Configures how API Extractor reports error and warning messages produced during analysis.",
       "type": "object",
@@ -171,6 +186,28 @@
   "additionalProperties": false,
 
   "definitions": {
+    "tsdocTagDefinition": {
+      "description": "Configuration for a custom supported TSDoc tag.",
+      "type": "object",
+      "properties": {
+        "tagName": {
+          "description": "Name of the custom tag. TSDoc tag names start with an at-sign (@) followed by ASCII letters using camelCase capitalization.",
+          "type": "string"
+        },
+        "syntaxKind": {
+          "description": "Syntax kind of the custom tag. \"inline\" means that this tag can appear inside other documentation sections (example: {@link}). \"block\" means that this tag starts a new documentation section (example: @remarks). \"modifier\" means that this tag's presence indicates an aspect of the associated API item (example: @internal).",
+          "type": "string",
+          "enum": ["inline", "block", "modifier"]
+        },
+        "allowMultiple": {
+          "description": "If true, then this tag may appear multiple times in a doc comment. By default, a tag may only appear once.",
+          "type": "boolean"
+        }
+      },
+      "required": ["tagName", "syntaxKind"],
+      "additionalProperties": false
+    },
+
     "extractorMessageReportingTable": {
       "type":"object",
       "description": "Specifies a table of reporting rules for different message identifiers, and also the default rule used for identifiers that do not appear in the table. The key is a message identifier for the associated type of message, or \"default\" to specify the default policy. For example, the key might be \"TS2551\" (a compiler message), \"tsdoc-link-tag-unescaped-text\" (a TSDOc message), or \"ae-extra-release-tag\" (a message related to the API Extractor analysis).",

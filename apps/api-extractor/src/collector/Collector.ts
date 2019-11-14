@@ -112,7 +112,7 @@ export class Collector {
     this.program = options.program;
     this.typeChecker = options.program.getTypeChecker();
 
-    this._tsdocParser = new tsdoc.TSDocParser(AedocDefinitions.tsdocConfiguration);
+    this._tsdocParser = new tsdoc.TSDocParser(this.extractorConfig.tsdocConfig);
 
     const bundledPackageNames: Set<string> = new Set<string>(this.extractorConfig.bundledPackages);
 
