@@ -23,6 +23,7 @@
     "gulp-connect": "~5.5.0",
     "gulp-open": "~3.0.1",
     "node-forge": "~0.7.1",
+    "st": "~2.0.0",
     "sudo": "~1.0.3"
   },
   "devDependencies": {

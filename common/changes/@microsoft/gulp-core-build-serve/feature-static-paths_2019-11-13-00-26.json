@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@microsoft/gulp-core-build-serve",
+      "comment": "Implemented functionality in `gulp-connect` for serving additional static paths defined via buildConfig.staticPaths.",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@microsoft/gulp-core-build-serve",
+  "email": "1935258+Js-Brecht@users.noreply.github.com"
+}

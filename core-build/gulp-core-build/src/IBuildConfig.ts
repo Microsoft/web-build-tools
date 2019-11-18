@@ -33,6 +33,18 @@ export interface IBuildConfig {
   rootPath: string;
 
   /**
+   * Additional static paths to serve
+   * * `path`: The filesystem path to the files you wish to serve.
+   * Best as an absolute path, but relative paths are supported.
+   *    * Relative paths are relative to the directory where the server was
+   * started (usually `process.cwd()`)
+   * * `url`: The URL path relative to the server (domain) root.
+   *    * For example: in https://localhost:4321/common/temp, the `url` would be
+   * '/common/temp'
+   */
+  staticPaths?: { path: string, url: string }[];
+
+  /**
    * Package output folder in which publishable output should be dropped.
    * Defaults to package.json directories/packagePath value.
    */

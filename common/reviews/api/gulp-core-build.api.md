@@ -145,6 +145,10 @@ export interface IBuildConfig {
     shouldWarningsFailBuild: boolean;
     showToast?: boolean;
     srcFolder: string;
+    staticPaths?: {
+        path: string;
+        url: string;
+    }[];
     tempFolder: string;
     uniqueTasks?: IExecutable[];
     verbose: boolean;

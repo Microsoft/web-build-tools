@@ -118,6 +118,7 @@ export class ServeTask<TExtendedConfig = {}> extends GulpTask<IServeTaskConfig &
     /* eslint-disable @typescript-eslint/typedef */
     const gulpConnect = require('gulp-connect');
     const open = require('gulp-open');
+    const st = require('st');
     const http = require('http');
     const https = require('https');
     /* eslint-enable @typescript-eslint/typedef */
@@ -128,18 +129,30 @@ export class ServeTask<TExtendedConfig = {}> extends GulpTask<IServeTaskConfig &
     const portArgumentIndex: number = process.argv.indexOf('--port');
     let { port, initialPage }: IServeTaskConfig = this.taskConfig;
     const { api, hostname }: IServeTaskConfig = this.taskConfig;
-    const { rootPath }: IBuildConfig = this.buildConfig;
+    const { rootPath, staticPaths }: IBuildConfig = this.buildConfig;
     const httpsServerOptions: HttpsType.ServerOptions = this._loadHttpsServerOptions();
 
     if (portArgumentIndex >= 0 && process.argv.length > (portArgumentIndex + 1)) {
       port = Number(process.argv[portArgumentIndex + 1]);
     }
 
+    const middlewareCollection: Function[] = [
+      this._logRequestsMiddleware,
+      this._enableCorsMiddleware,
+    ];
+    if (staticPaths) {
+      const addStaticPaths: IBuildConfig['staticPaths'] = staticPaths instanceof Array ? staticPaths : [staticPaths];
+      for (const stPath of addStaticPaths) {
+        middlewareCollection.push(st({ path: stPath.path, url: stPath.url, dot: true }));
+      }
+    }
+
+
     // Spin up the connect server
     gulpConnect.server({
       https: httpsServerOptions,
       livereload: true,
-      middleware: (): Function[] => [this._logRequestsMiddleware, this._enableCorsMiddleware],
+      middleware: (): Function[] => middlewareCollection,
       port: port,
       root: path.join(rootPath, this.taskConfig.rootFolder || ''),
       preferHttp1: true,

@@ -178,6 +178,7 @@ dependencies:
   semver: 5.3.0
   sinon: 1.17.7
   source-map: 0.6.1
+  st: 2.0.0
   strict-uri-encode: 2.0.0
   sudo: 1.0.3
   tar: 4.4.13
@@ -1001,17 +1002,17 @@ packages:
     dev: false
     resolution:
       integrity: sha1-X6rZwsB/YN12dw9xzwJbYqY8/U4=
-  /abab/2.0.2:
+  /abab/2.0.3:
     dev: false
     resolution:
-      integrity: sha512-2scffjvioEmNz0OyDSLGWDfKCVwaKc6l9Pm9kOIREU13ClXZvHpg/nRL5xyjSSSLhOnXqft2HpsAzNEEA8cFFg==
+      integrity: sha512-tsFzPpcttalNjFBCFMqsKYQcWxxen1pgJR56by//QwvJc4/OUS3kPOOttx2tSIfjsylB0pYu7f5D3K1RCxUnUg==
   /abbrev/1.0.9:
     dev: false
     resolution:
       integrity: sha1-kbR5JYinc4wl813W9jdSovh3YTU=
   /accepts/1.3.7:
     dependencies:
-      mime-types: 2.1.24
+      mime-types: 2.1.25
       negotiator: 0.6.2
     dev: false
     engines:
@@ -1418,6 +1419,12 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-+Ryf6g3BKoRc7jfp7ad8tM4TtMiaWvbF/1/sQcZPkkS7ag3D5nMBCe2UfOTONtAkaG0tO0ij3C5Lwmf1EiyjHg==
+  /async-cache/1.1.0:
+    dependencies:
+      lru-cache: 4.1.5
+    dev: false
+    resolution:
+      integrity: sha1-SppaidBl7F2OUlS9nulrp2xTK1o=
   /async-done/1.3.2:
     dependencies:
       end-of-stream: 1.1.0
@@ -1750,6 +1757,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-FK1hE4EtLTfXLme0ystLtyZQXxE=
+  /bl/4.0.0:
+    dependencies:
+      readable-stream: 3.4.0
+    dev: false
+    resolution:
+      integrity: sha512-QwQvAZZA1Bw1FWnhNj2X5lu+sPxxB2ITH3mqEqYyahN6JZR13ONjk+XiTnBaGEzMPUrAgOkaD68pBH1rvPRPsw==
   /block-stream/0.0.9:
     dependencies:
       inherits: 2.0.4
@@ -1877,7 +1890,7 @@ packages:
   /browserify-des/1.0.2:
     dependencies:
       cipher-base: 1.0.4
-      des.js: 1.0.0
+      des.js: 1.0.1
       inherits: 2.0.4
       safe-buffer: 5.2.0
     dev: false
@@ -1912,7 +1925,7 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001008
       electron-to-chromium: 1.3.306
-      node-releases: 1.1.39
+      node-releases: 1.1.40
     dev: false
     hasBin: true
     resolution:
@@ -2566,7 +2579,7 @@ packages:
       integrity: sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA=
   /data-urls/1.1.0:
     dependencies:
-      abab: 2.0.2
+      abab: 2.0.3
       whatwg-mimetype: 2.3.0
       whatwg-url: 7.1.0
     dev: false
@@ -2744,13 +2757,13 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=
-  /des.js/1.0.0:
+  /des.js/1.0.1:
     dependencies:
       inherits: 2.0.4
       minimalistic-assert: 1.0.1
     dev: false
     resolution:
-      integrity: sha1-wHTS4qpqipoH29YfmhXCzYPsjsw=
+      integrity: sha512-Q0I4pfFrv2VPd34/vfLrFOoRmlYj3OV50i7fskps1jZWK1kApMWWT9G6RRUeYedLcBDIhnSDaUvJMb3AhUlaEA==
   /destroy/1.0.4:
     dev: false
     resolution:
@@ -2938,7 +2951,7 @@ packages:
       has-symbols: 1.0.0
       is-callable: 1.1.4
       is-regex: 1.0.4
-      object-inspect: 1.6.0
+      object-inspect: 1.7.0
       object-keys: 1.1.1
       string.prototype.trimleft: 2.1.0
       string.prototype.trimright: 2.1.0
@@ -3602,6 +3615,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-VOmr99+i8mzZsWNsWIwa/AXeXVg=
+  /fd/0.0.3:
+    dev: false
+    resolution:
+      integrity: sha512-iAHrIslQb3U68OcMSP0kkNWabp7sSN6d2TBSb2JO3gcLJVDd4owr/hKM4SFJovFOUeeXeItjYgouEDTMWiVAnA==
   /figures/2.0.0:
     dependencies:
       escape-string-regexp: 1.0.5
@@ -3805,7 +3822,7 @@ packages:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
-      mime-types: 2.1.24
+      mime-types: 2.1.25
     dev: false
     engines:
       node: '>= 0.12'
@@ -4350,7 +4367,7 @@ packages:
       node: '>=0.4.7'
     hasBin: true
     optionalDependencies:
-      uglify-js: 3.6.8
+      uglify-js: 3.6.9
     resolution:
       integrity: sha512-C29UoFzHe9yM61lOsIlCE5/mQVGrnIOrOq7maQl76L7tYPCgC1og0Ajt6uWnX4ZTxBPnjw+CUvawphwCfJgUnA==
   /har-schema/2.0.0:
@@ -6462,20 +6479,20 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-115fLhvZVqWwHPbClyntxEVfVDfl9DLLTuJvq3g2O/Oxi8AiNouAHvDSzHS0viUJc+V5vm3eq91Xwqn9dp4jRA==
-  /mime-db/1.40.0:
+  /mime-db/1.42.0:
     dev: false
     engines:
       node: '>= 0.6'
     resolution:
-      integrity: sha512-jYdeOMPy9vnxEqFRRo6ZvTZ8d9oPb+k18PKoYNYUe2stVEBPPwsln/qWzdbmaIvnhZ9v2P+CuecK+fpUfsV2mA==
-  /mime-types/2.1.24:
+      integrity: sha512-UbfJCR4UAVRNgMpfImz05smAXK7+c+ZntjaA26ANtkXLlOe947Aag5zdIcKQULAiF9Cq4WxBi9jUs5zkA84bYQ==
+  /mime-types/2.1.25:
     dependencies:
-      mime-db: 1.40.0
+      mime-db: 1.42.0
     dev: false
     engines:
       node: '>= 0.6'
     resolution:
-      integrity: sha512-WaFHS3MCl5fapm3oLxU4eYDw77IQM2ACcxQ9RIxfaC3ooc6PFuBMGZZsYpvoXS5D5QTWPieo1jjLdAm3TBP3cQ==
+      integrity: sha512-5KhStqB5xpTAeGqKBAMgwaYMnQik7teQN4IAzC7npDv6kzeU6prfkR67bc87J1kWMPGkoaZSq1npmexMgkmEVg==
   /mime/1.3.4:
     dev: false
     hasBin: true
@@ -6493,6 +6510,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==
+  /mime/2.4.4:
+    dev: false
+    engines:
+      node: '>=4.0.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-LRxmNwziLPT828z+4YkNzloCFC2YM4wrB99k+AV5ZbEyfGNWfG8SO1FUXLmLDBSo89NrJZ4DIWeLjy1CHGhMGA==
   /mimic-fn/1.2.0:
     dev: false
     engines:
@@ -6777,12 +6801,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-M4UBGcs4jeOK9CjTsYwkvH6/MzuUmGCyTW+kCY7uO+1ZVr0+FHGdPdIf5CCLqAaxnRrWidyoQlNkMIIVwbKB8Q==
-  /node-releases/1.1.39:
+  /node-releases/1.1.40:
     dependencies:
       semver: 6.3.0
     dev: false
     resolution:
-      integrity: sha512-8MRC/ErwNCHOlAFycy9OPca46fQYUjbJRDcZTHVWIGXIjYLM73k70vv3WkYutVnM4cCo4hE0MqBVVZjP6vjISA==
+      integrity: sha512-r4LPcC5b/bS8BdtWH1fbeK88ib/wg9aqmg6/s3ngNLn2Ewkn/8J6Iw3P9RTlfIAdSdvYvQl2thCY5Y+qTAQ2iQ==
   /node-sass/4.12.0:
     dependencies:
       async-foreach: 0.1.3
@@ -6919,10 +6943,10 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-fn2Fi3gb18mRpBupde04EnVOmYw=
-  /object-inspect/1.6.0:
+  /object-inspect/1.7.0:
     dev: false
     resolution:
-      integrity: sha512-GJzfBZ6DgDAmnuaM3104jR4s1Myxr3Y3zfIyN4z3UdqN69oSRacNK8UhnobDdC+7J2AHCjGwxQubNJfE70SXXQ==
+      integrity: sha512-a7pEHdh1xKIAgTySUGgLMx/xwDZskN1Ud6egYYN3EdRW4ZMPNEDUTF+hwy2LUC+Bl+SyLXANnwz/jyh/qutKUw==
   /object-keys/1.1.1:
     dev: false
     engines:
@@ -7855,6 +7879,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-tQtKA9WIAhBF3+VLAseyMqZeBjW0AHJoxOtYqSUZNJxauErmLbVm2FW1y+J/YA9dUrAC39ITejlZWhVIwawkKw==
+  /readable-stream/3.4.0:
+    dependencies:
+      inherits: 2.0.4
+      string_decoder: 1.3.0
+      util-deprecate: 1.0.2
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-jItXPLmrSR8jmTRmRWJXCnGJsfy85mB3Wd/uINMXA65yrnFo0cPClFIUWzo2najVNSl+mx7/4W8ttlLWJe99pQ==
   /readdir-scoped-modules/1.1.0:
     dependencies:
       debuglog: 1.0.1
@@ -8060,7 +8094,7 @@ packages:
       is-typedarray: 1.0.0
       isstream: 0.1.2
       json-stringify-safe: 5.0.1
-      mime-types: 2.1.24
+      mime-types: 2.1.25
       oauth-sign: 0.9.0
       performance-now: 2.1.0
       qs: 6.5.2
@@ -8363,7 +8397,7 @@ packages:
       debug: 2.6.9
       escape-html: 1.0.3
       http-errors: 1.6.3
-      mime-types: 2.1.24
+      mime-types: 2.1.25
       parseurl: 1.3.3
     dev: false
     engines:
@@ -8646,6 +8680,19 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-HXXqVUq7+pcKeLqqZj6mHFUMvXtOJt1uoUx09pFW6011inTMxqI8BA8PM95myrIyyKwdnzjdFjLiE6KBPVtJIg==
+  /st/2.0.0:
+    dependencies:
+      async-cache: 1.1.0
+      bl: 4.0.0
+      fd: 0.0.3
+      mime: 2.4.4
+      negotiator: 0.6.2
+    dev: false
+    hasBin: true
+    optionalDependencies:
+      graceful-fs: 4.2.3
+    resolution:
+      integrity: sha512-drN+aGYnrZPNYIymmNwIY7LXYJ8MqsqXj4fMRue3FOgGMdGjSX10fhJ3qx0sVQPhcWxhEaN4U/eWM4O4dbYNAw==
   /stack-trace/0.0.10:
     dev: false
     resolution:
@@ -9357,7 +9404,7 @@ packages:
   /type-is/1.6.18:
     dependencies:
       media-typer: 0.3.0
-      mime-types: 2.1.24
+      mime-types: 2.1.25
     dev: false
     engines:
       node: '>= 0.6'
@@ -9474,7 +9521,7 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-0h/qGay016GG2lVav3Kz174F3T2Vjlz2v6HCt+WDQpoXfco0hWwF5gHK9yh88mUYvIC+N7Z8NT8WpjSp1yoqGA==
-  /uglify-js/3.6.8:
+  /uglify-js/3.6.9:
     dependencies:
       commander: 2.20.3
       source-map: 0.6.1
@@ -9484,7 +9531,7 @@ packages:
     hasBin: true
     optional: true
     resolution:
-      integrity: sha512-XhHJ3S3ZyMwP8kY1Gkugqx3CJh2C3O0y8NPiSxtm1tyD/pktLAkFZsFGpuNfTZddKDQ/bbDBLAd2YyA1pbi8HQ==
+      integrity: sha512-pcnnhaoG6RtrvHJ1dFncAe8Od6Nuy30oaJ82ts6//sGSXOP5UjBMEthiProjXmMNHOfd93sqlkztifFMcb+4yw==
   /uglify-to-browserify/1.0.2:
     dev: false
     optional: true
@@ -10135,7 +10182,7 @@ packages:
     dev: false
     name: '@rush-temp/api-documenter-test'
     resolution:
-      integrity: sha512-/q6DUtvjLrpXcO7Qyaw86fkPezfSkgzwj59NfoWGM95C5TLm9oHs7VOfc37yFU+F2BEKhflIygWKq1Iy4HeDMg==
+      integrity: sha512-hZvuW+L65Di6MbMPzFymEWAkExQSTcZi0XCF3mHe+mQAvMZt4vrWLx5zbFagAEDaYQOtN6Zu67OMt9mzKTGtTQ==
       tarball: 'file:projects/api-documenter-test.tgz'
     version: 0.0.0
   'file:projects/api-documenter.tgz':
@@ -10153,7 +10200,7 @@ packages:
     dev: false
     name: '@rush-temp/api-documenter'
     resolution:
-      integrity: sha512-5Al/lmm3zcsOUu1shql9yBJmU5bCH7cCbrY+cJr3tU1+E7A+iVeIfwbvnTZx0S+vFkZU9IA/rEPpjfnIU7XJqg==
+      integrity: sha512-WWE8vwJqhueM2fLXoO5u3drnKcTL/v/AvedAUaNek6duNFDMIaAQ1+yEvC1TqBYr0GPkUi+ylS03IwfRsCBeWg==
       tarball: 'file:projects/api-documenter.tgz'
     version: 0.0.0
   'file:projects/api-extractor-lib1-test.tgz':
@@ -10165,7 +10212,7 @@ packages:
     dev: false
     name: '@rush-temp/api-extractor-lib1-test'
     resolution:
-      integrity: sha512-Y9I/cAdHpwgvSQ7vIussDXEeAyQQ0Rk8ZuDjSoDQesHC2AjzN9ZrrV07MHlnC/oFlbNeCFz0KAL6RPXJ0S+uGA==
+      integrity: sha512-9OvS3N5d8S6MZ5/WLv6q8UM8KpmZwEDBgbu6TUmEsYzIEHYVY6lFinkEN9dgaLF649QHgSMKPaTmDqiUtfj73g==
       tarball: 'file:projects/api-extractor-lib1-test.tgz'
     version: 0.0.0
   'file:projects/api-extractor-lib2-test.tgz':
@@ -10177,7 +10224,7 @@ packages:
     dev: false
     name: '@rush-temp/api-extractor-lib2-test'
     resolution:
-      integrity: sha512-Puf+1++6izvxyKEPmGT/Eoxo8yLc6/t+pCqWtLb5oXoACWLqQFxuobMUTjkY3yVXxbrG1jsdcu5nQqMQe86dww==
+      integrity: sha512-qWyoxLGIfwag2in6d3zEXJfc2t2jC5TKYCjDNPa+wzXJ7SnfF3IXtBAxvQ6KpuZpNVBOy5LDl4v1tazPMG7/9g==
       tarball: 'file:projects/api-extractor-lib2-test.tgz'
     version: 0.0.0
   'file:projects/api-extractor-lib3-test.tgz':
@@ -10189,7 +10236,7 @@ packages:
     dev: false
     name: '@rush-temp/api-extractor-lib3-test'
     resolution:
-      integrity: sha512-uVYfk4YUkXdWyVQqM1f1kkZ5cK/9NckTxyIurNvbXCUY0tQx2KbFQzBJLqzB8Xy2ZpBiHBnq+kuTlMd2LVXolg==
+      integrity: sha512-2hcz9tEfI4fKweKWXFKrupDopG/1JXmceQIBgYpfxfoj3dAjkSzQtqW/01xC/NySNrp5hG0Nlp2nWcgSnAhA5g==
       tarball: 'file:projects/api-extractor-lib3-test.tgz'
     version: 0.0.0
   'file:projects/api-extractor-model.tgz':
@@ -10203,7 +10250,7 @@ packages:
     dev: false
     name: '@rush-temp/api-extractor-model'
     resolution:
-      integrity: sha512-LK59eyWwJbjBzc5kJJmo8hyGgyFdTIfA6hwqU1TXefgiVI01afswITFktOTTwXgnx9/UpLMczGYOPMj3kDO+nw==
+      integrity: sha512-X/ad9BGXaWbQjVN3Xf9jYtPkwKxvZT2pGkr7RKPGhL4vnzKbZ6Y7QN9ATPBNkilYfIbGKtp7Oy4H4GYuNOc/Fg==
       tarball: 'file:projects/api-extractor-model.tgz'
     version: 0.0.0
   'file:projects/api-extractor-scenarios.tgz':
@@ -10217,7 +10264,7 @@ packages:
     dev: false
     name: '@rush-temp/api-extractor-scenarios'
     resolution:
-      integrity: sha512-NknPatmA2Z1hWT0O7G3ZOo1cygjiNaQL4XFgrNyjZ4MdyT2AkVgwDrLHyQDx9lavi/UL9/lpaDX5I+Njf6YSdg==
+      integrity: sha512-bxscstrKgUgXJOiP4oLPhvWzyRzbtjSSAkxFslavfw8F1tYDm584MZLTBPUCyQDpUMKnis9MTEpNYEJhnvfHHA==
       tarball: 'file:projects/api-extractor-scenarios.tgz'
     version: 0.0.0
   'file:projects/api-extractor-test-01.tgz':
@@ -10231,7 +10278,7 @@ packages:
     dev: false
     name: '@rush-temp/api-extractor-test-01'
     resolution:
-      integrity: sha512-pX3MSxmn71D2LS+TE7KmiIUJn1P1xVXXwXd6fEdaJG8Gc1U3R0b/clw2oAsvKqe9PbWNAE8T9W08Av8RweVBGA==
+      integrity: sha512-oKwgHUdyjMe5V9+PYHsVpCdkcOH6DWhpLk0iVb8e+71jp8heeoG3sE55ntMkq9H4e24+hg0kiy1IfUWM8XknWw==
       tarball: 'file:projects/api-extractor-test-01.tgz'
     version: 0.0.0
   'file:projects/api-extractor-test-02.tgz':
@@ -10244,7 +10291,7 @@ packages:
     dev: false
     name: '@rush-temp/api-extractor-test-02'
     resolution:
-      integrity: sha512-3LANEay7i578s/i2hLygmyf3Q/gw6yCLVebw4ZlI2gVMDguTCaCKNWVZI2PXa77vXD+lJwxIj8gaTX7CVmRVzw==
+      integrity: sha512-OdDjA7TF/BRnvmAZEOKRPsfJnknjlhGoWAc8Ucsis2I8TMGL/ej49zJOcdonKJkFk+Y3Tl4XY83UGgrsDrswGQ==
       tarball: 'file:projects/api-extractor-test-02.tgz'
     version: 0.0.0
   'file:projects/api-extractor-test-03.tgz':
@@ -10266,7 +10313,7 @@ packages:
     dev: false
     name: '@rush-temp/api-extractor-test-04'
     resolution:
-      integrity: sha512-YB6LgY9J75/wTOQA2Cgslnhpq4xiT+kHKISIRhJ1EKzkoeJHGpPg/5Y2xAhVpkK5+MKaonrO0E1TaYba/5C+4w==
+      integrity: sha512-rjg3fZnz7CIgKF/wbXlhJGbaxRcRntozqvvne3sGj7AQCnf4TtY0iNLRlj4ZaPcMGC2YXfoRQDEiNL4Wr4KMmw==
       tarball: 'file:projects/api-extractor-test-04.tgz'
     version: 0.0.0
   'file:projects/api-extractor.tgz':
@@ -10286,7 +10333,7 @@ packages:
     dev: false
     name: '@rush-temp/api-extractor'
     resolution:
-      integrity: sha512-Wo6Pkgaz8ASdoJdgAPtnJObsVNz6lBgA6DYTv9ZP7d0DZHKgJhq1M7FhpSX/ogidLH6He/wml3BgBddJdsU0Pw==
+      integrity: sha512-U4S0pTBBqKlQTrDefj0r4006PVuEnicBDOMtXfkI8fD3kmkwpum58gkL9VZJAJEOg0FdLxEn8odLwBYhp4ZpeQ==
       tarball: 'file:projects/api-extractor.tgz'
     version: 0.0.0
   'file:projects/doc-plugin-rush-stack.tgz':
@@ -10299,7 +10346,7 @@ packages:
     dev: false
     name: '@rush-temp/doc-plugin-rush-stack'
     resolution:
-      integrity: sha512-y4gVcBJ1w84vW9XYhtlYzsothjkRsD3EU9npdlls/cCnu8H12x43TARJ0Hli5nfCGGZhOt5VpUczdQn6OESo/Q==
+      integrity: sha512-PcXNK50hrScCXB44gTEDDN8yUNuJPJcZ9YG9IZaYiGRFLqawynhssMIu4/i8ITueIQ5WdHJMqyDBHO3Qcze9Fg==
       tarball: 'file:projects/doc-plugin-rush-stack.tgz'
     version: 0.0.0
   'file:projects/eslint-config.tgz':
@@ -10324,7 +10371,7 @@ packages:
     dev: false
     name: '@rush-temp/generate-api-docs'
     resolution:
-      integrity: sha512-uN0aud48wD/6vopgBLLRD/LMuyRMUojj5mI/65iRPTA3E48rhtsDKnfa0naPMLfroLCyom0nh1n6d9sDagNfKg==
+      integrity: sha512-qT/N2Xq9SGVBpMktaP3U1Y+NQ0NrMbfKaxdNxPUN3rc7buw4qNs3J/cZRYCIQfX0VXyVtm67rZgmeJ35xl0Vtw==
       tarball: 'file:projects/generate-api-docs.tgz'
     version: 0.0.0
   'file:projects/gulp-core-build-mocha.tgz':
@@ -10345,7 +10392,7 @@ packages:
     dev: false
     name: '@rush-temp/gulp-core-build-mocha'
     resolution:
-      integrity: sha512-m0RXvd/SsBaiT2ukG32qTKkVdsqdfeXMm/oI1vJMTecYSI1N+tlN1K6/77PqE/s8sM9bTI9B5VVkzmRt34YY2w==
+      integrity: sha512-qu83mXO6H/zbbgFeRsqixaPuDoPMzXfrgbENioR8LilWs/JAXSXNSn67Qnzam+gc6gDXr/TRBSyB6NVrIlWw6Q==
       tarball: 'file:projects/gulp-core-build-mocha.tgz'
     version: 0.0.0
   'file:projects/gulp-core-build-sass.tgz':
@@ -10367,7 +10414,7 @@ packages:
     dev: false
     name: '@rush-temp/gulp-core-build-sass'
     resolution:
-      integrity: sha512-VoNzj/kDz6yXgdaFwnh40PH0KvZc4m0Kv6EJSyAk2TCg6jre6lnTgrhwMiGCY2Udh7igF0f4/iT85k35ArQdjA==
+      integrity: sha512-/mCVROrsZaIbk4ZFVCCenkHeLXRzZJFGp2n3uCyeI1bGoMUWzd8y297vej28s5VNLMjBIY76n28Eq2a7/rGkyQ==
       tarball: 'file:projects/gulp-core-build-sass.tgz'
     version: 0.0.0
   'file:projects/gulp-core-build-serve.tgz':
@@ -10389,11 +10436,12 @@ packages:
       gulp-connect: 5.5.0
       gulp-open: 3.0.1
       node-forge: 0.7.6
+      st: 2.0.0
       sudo: 1.0.3
     dev: false
     name: '@rush-temp/gulp-core-build-serve'
     resolution:
-      integrity: sha512-lB4RB6cZvRDVTdgP8qg6U0KmFKxVWM2OE6+ljvX/bmh2yuw857+nyfPYX3rTO+fbNvIhkOo8dx1pOQmEVPmT0g==
+      integrity: sha512-OZA8HsvtsOP5CYtDNpu4ASU/B5PsqLR+Y7UIQRLDOMVQQUNmf7YsDgMT6LX8Uwz5ga/JoSfKlceLzNDd9vEKkA==
       tarball: 'file:projects/gulp-core-build-serve.tgz'
     version: 0.0.0
   'file:projects/gulp-core-build-typescript.tgz':
@@ -10412,7 +10460,7 @@ packages:
     dev: false
     name: '@rush-temp/gulp-core-build-typescript'
     resolution:
-      integrity: sha512-EJJmIEK4QErO8AxF7UJ2nrjyEPUxi+PZtFRAca1/rjMuQrzqekw3Q6hebBQMn/PBmFXQuMlBPhzy+RehSaT7RA==
+      integrity: sha512-YqAC3mF8sUG7//b/ugZRdcxsw7i8IjYM5kxxK+pzybHy1OgD/3/I1jGUGIYwo0IhKayrJ4MgLfPJSYwzyCB0bQ==
       tarball: 'file:projects/gulp-core-build-typescript.tgz'
     version: 0.0.0
   'file:projects/gulp-core-build-webpack.tgz':
@@ -10430,7 +10478,7 @@ packages:
     dev: false
     name: '@rush-temp/gulp-core-build-webpack'
     resolution:
-      integrity: sha512-uy3wxQsNzOHFjFUn+atGUasC3qWMeA93YTg+S8zd7pg8xDtT3g9mcySgMKu8C7ns2kQoRcDBAFM3cz+ePeEmNw==
+      integrity: sha512-VnzVRAzLdb84P1IyzFTNZYNY8UJ9Iij3k7OlsAiLJ311G3GvtsS0kL3RavsmB1UGJjyd+Cxof2tCrRiMR5ix5Q==
       tarball: 'file:projects/gulp-core-build-webpack.tgz'
     version: 0.0.0
   'file:projects/gulp-core-build.tgz':
@@ -10478,7 +10526,7 @@ packages:
     dev: false
     name: '@rush-temp/gulp-core-build'
     resolution:
-      integrity: sha512-pOqZn6vivptdECFpiGnYbMnsyxh9tGMP6ygmXFceDVVUMRa8aGS6mlD9E2ihBTYGaTSfRZkOpg20lKkbhPKvYw==
+      integrity: sha512-WulUEpWx7qNI9GnfGhOz7bo55sU+qpCC3ZAUAhgT/2XwWyURpI3KRy498FeRGHGZOTt6CSC925fRCTYRRBa9PQ==
       tarball: 'file:projects/gulp-core-build.tgz'
     version: 0.0.0
   'file:projects/load-themed-styles.tgz':
@@ -10491,7 +10539,7 @@ packages:
     dev: false
     name: '@rush-temp/load-themed-styles'
     resolution:
-      integrity: sha512-Yb5I3fvSjB8Qo5LytXONgQMxSMDO+Lf7zLqeTrDq1eCXS9ZZEPLM6vhVbXiCEzAMketVs3ZMR56S2ZDeMGiq1Q==
+      integrity: sha512-2aNqc/BAMVHQaIAJEybZXi7z5tO3BffypCy3ThlHnNTvkVr6ibupMtY/PMH1lln+DVjtfFV7CYPI4sERHnxvhQ==
       tarball: 'file:projects/load-themed-styles.tgz'
     version: 0.0.0
   'file:projects/loader-load-themed-styles.tgz':
@@ -10506,7 +10554,7 @@ packages:
     dev: false
     name: '@rush-temp/loader-load-themed-styles'
     resolution:
-      integrity: sha512-3ISSrXJg6dqMIh4LtDlP7UW2a+hjbO/NYe8lnUTyPUBdyO54YGPBRMvuyUMPRni/HaH3ezrnjhMhfXe++J0+RQ==
+      integrity: sha512-navoicquovWX4BvKYk1FXNizj4oAueUaMqF3A4BELCZ3W7gKkC8/xuvZaCRR3vngnmOUa2VWLlAH+lEkzfQoNg==
       tarball: 'file:projects/loader-load-themed-styles.tgz'
     version: 0.0.0
   'file:projects/loader-raw-script.tgz':
@@ -10520,7 +10568,7 @@ packages:
     dev: false
     name: '@rush-temp/loader-raw-script'
     resolution:
-      integrity: sha512-6j3DAzjCIPaNFaCfGzcouAmzF8QxgcT7zGKIacacawL2zAcq61T4o9AqUpJTASlFjKUC0Ns/wPm9rIUKeQoPCw==
+      integrity: sha512-CYN3rcIQhG4+Cpss0q7u5RsXhLDJo/MBNGkYmMXDhEbCS4QiC7Fes3OAuV8Cjm2X38PG89LziuaWt04xe6PvEQ==
       tarball: 'file:projects/loader-raw-script.tgz'
     version: 0.0.0
   'file:projects/loader-set-webpack-public-path.tgz':
@@ -10536,7 +10584,7 @@ packages:
     dev: false
     name: '@rush-temp/loader-set-webpack-public-path'
     resolution:
-      integrity: sha512-D1lIWWz2VTB7hn/pQSDOYDs3v6mDDdURq5ZqkD2GLzyejhPnyYqRtKFn4hZntaye7I0SGeZL6Xv0ZNlkyTjk0A==
+      integrity: sha512-qpftqDm6/uErQdGyHdShDezdFV1cN/gRulX1XMNUTOR8aEMvbMaeHxGY7S0nPvvEkyBDeCExl0jghKTRiQoY/g==
       tarball: 'file:projects/loader-set-webpack-public-path.tgz'
     version: 0.0.0
   'file:projects/node-core-library.tgz':
@@ -10560,7 +10608,7 @@ packages:
     dev: false
     name: '@rush-temp/node-core-library'
     resolution:
-      integrity: sha512-Hl/4L7nz+nZRue5Viz7Ej4sJ297IeQnGkVJxwH2X7XKqyneQhQvoPBM04u9EEz3Esy7vBea90nyCiZECHFXK7g==
+      integrity: sha512-XNiSIkEBS2yPKMVp5X4UXCXTb70rO/iqmR4Pcl9X08OPumWw5ODkty1MBdNrSGi1h0iag/eTUmSLkVs0LhXqvg==
       tarball: 'file:projects/node-core-library.tgz'
     version: 0.0.0
   'file:projects/node-library-build-eslint-test.tgz':
@@ -10573,7 +10621,7 @@ packages:
     dev: false
     name: '@rush-temp/node-library-build-eslint-test'
     resolution:
-      integrity: sha512-4dr5SlMtxzAbkZ02m7B8jbU30Q+i5l264EgX8a7Vpi6/5kiFXF2P9u+385G472JDq6/i+P0CfpKDDNYWduOUhA==
+      integrity: sha512-IZhetHW3qSQJp5jmOUEo5GEBFqzZ1qjJ8g36t7d4Q59Pi+lMxoLkMmNZljSf2jsLwUbXFgyYjlFHHd1f/zBASg==
       tarball: 'file:projects/node-library-build-eslint-test.tgz'
     version: 0.0.0
   'file:projects/node-library-build-tslint-test.tgz':
@@ -10586,7 +10634,7 @@ packages:
     dev: false
     name: '@rush-temp/node-library-build-tslint-test'
     resolution:
-      integrity: sha512-Y3OFdAmCICERaUggCTQ3GTj6e+I9phv0f1XjTt3Xk14QYkk5LkfaV/xL1T+ZkJWko3q5R47CfMGt6P5tD7eQzg==
+      integrity: sha512-trKA84icon/PtY3d32gVfuAg6+CdQ7xZpnhgZWvQe8nYNrSGMlfv93qtIWikjEvhHPC6LIdapKnAaYN3pZPMXA==
       tarball: 'file:projects/node-library-build-tslint-test.tgz'
     version: 0.0.0
   'file:projects/node-library-build.tgz':
@@ -10597,7 +10645,7 @@ packages:
     dev: false
     name: '@rush-temp/node-library-build'
     resolution:
-      integrity: sha512-odWtrja8Qpe7pQ9YLoZ9H0lhiCDTBzSXIKHKiNapDLiFnZhTq2kk8Mnk8XbZ2WD8b9OgG7AeflAnXQLJ6E41sg==
+      integrity: sha512-sNoUedt/ei5jK0DGeFuB+KTZS2eNIba1V/+v1dhsZbbvqO7UILFNOrwGsK6SeTrSwiikjo1gxqH2aDfYfJ+nkQ==
       tarball: 'file:projects/node-library-build.tgz'
     version: 0.0.0
   'file:projects/package-deps-hash.tgz':
@@ -10610,7 +10658,7 @@ packages:
     dev: false
     name: '@rush-temp/package-deps-hash'
     resolution:
-      integrity: sha512-sNofDDuHoxRC1+L9v5m1He1DQXNBKaQR/9MoXg8kmQkGO5lQkPo7uo/XWzJnq9sTpWwmIZF63s0uVHLhK1c3+w==
+      integrity: sha512-P7GQpKgNKtYnhfOCozQRAEwe4jYtm0WWIklqJM8R+3/vnZ/BkBSX1tZiKWr6/4QMyoDzlc9HlcDWWNwAPbB8/g==
       tarball: 'file:projects/package-deps-hash.tgz'
     version: 0.0.0
   'file:projects/repo-toolbox.tgz':
@@ -10620,7 +10668,7 @@ packages:
     dev: false
     name: '@rush-temp/repo-toolbox'
     resolution:
-      integrity: sha512-hps/P0ni2Dy0lE7X3OWa1eVGy6Xqd0XjE2DwmOjGf88jNzvJKaNIzeK70uy1nPdfvQFwz/1EG2yVlbLaiK2Tzw==
+      integrity: sha512-xL9OUHIdHtLHqiIdJhcP5rjRXBkiIAjM3vL2mTfD3Bxa5Q69WSddwKcph5P0rQyGzLWTNqbP3mY+rUiUODMlAw==
       tarball: 'file:projects/repo-toolbox.tgz'
     version: 0.0.0
   'file:projects/resolve-chunk-plugin.tgz':
@@ -10634,7 +10682,7 @@ packages:
     dev: false
     name: '@rush-temp/resolve-chunk-plugin'
     resolution:
-      integrity: sha512-a5ubMTngkG8RZnV8albUI1qHNnhnETG4npM3uFVTEwrsRZj1iruWFDfgENem6rtJCh47J22YaCcVFcqkWTrDTQ==
+      integrity: sha512-6CH1g0ro4yBlJauMf6rXk2VZMdpSHLICz9Etbrf24ImDaVPTimUFRaqOh+eAk0IKmArABdfoZtLFTmzH+OxBkQ==
       tarball: 'file:projects/resolve-chunk-plugin.tgz'
     version: 0.0.0
   'file:projects/rush-buildxl.tgz':
@@ -10645,7 +10693,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-buildxl'
     resolution:
-      integrity: sha512-ufPfcLalFw5zQVFHQ+J1qnvVoNIqwRPqDNH/ymD40s+COVDaoceOKoz10amLEqWy4YpDdJkvVj8xgNSg1apH4g==
+      integrity: sha512-LCxZtKsReaKQFAfwaldNQB5hmnmUTg0HwyKFLt90vtoI+7AFK09/wisQZ2PJkf/GhUr7FlmBxyVCfEQjPq0jOQ==
       tarball: 'file:projects/rush-buildxl.tgz'
     version: 0.0.0
   'file:projects/rush-lib.tgz':
@@ -10689,7 +10737,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-lib'
     resolution:
-      integrity: sha512-CSHl5Gq58AdUbnETJ7JJBbcJSrfEzg9d080mgKFtsOzxoDy+6BPu5LBURQdCvdtN53YQitd9bqKVNnsr1detZw==
+      integrity: sha512-Sf8mkO9EClb/f1jMYHMkm9fFI32tw1Kx9fVQCLcXemNQlrW+IGd4ecL+t+jinKPEv3XveVotcUQRfDcxkMAImw==
       tarball: 'file:projects/rush-lib.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-2.4-library-test.tgz':
@@ -10699,7 +10747,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-2.4-library-test'
     resolution:
-      integrity: sha512-pwi4wiB2rznUmvkgOmic1lFz5OqffDrwfRlr7RvPcibZQOes42ym6ngbPvCwHz5gKg8KaBrGkSc6AQHFr4+tfA==
+      integrity: sha512-8mEjVHv+INKo79A/28M9Vc1qb1bGsTgBA9e8iOJWa7Cr9LLqU8HOtlbU/VI1IqF0vgHlqrWvqNvbSY3DRLhjZA==
       tarball: 'file:projects/rush-stack-compiler-2.4-library-test.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-2.4.tgz':
@@ -10715,7 +10763,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-2.4'
     resolution:
-      integrity: sha512-MKxyfEfJCaOqthAzVk41/OD9wE/P2iKESAyOOIpqp9G/oIW4rUVnZhTj5b5UfKmnSN4wg/fkg1VYOn+stcBEEg==
+      integrity: sha512-aGk760iyr0FkA9bKSpvt8QBZeASUxL6WthYyYUkdW/x7X3ikfqVgmqNkp80yI8dkXH1YJTEuNygGotJB+7bDmg==
       tarball: 'file:projects/rush-stack-compiler-2.4.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-2.7-library-test.tgz':
@@ -10725,7 +10773,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-2.7-library-test'
     resolution:
-      integrity: sha512-6SWT6MqTF3SOUs+7LRoPenU4fxSG8wMzgwJIPcU7djoZQYace7Y9Da6atVULReCAIiGqsdTmaBRavTUoZbRHgA==
+      integrity: sha512-CbnQ0uc51L8cvEC98ns6QQAiiEn7cdwVAdM9tn9oS3Wtu6dtfshI012Z6Rk9xL9jV36aEb0Lt1zA5hI50wRUQA==
       tarball: 'file:projects/rush-stack-compiler-2.7-library-test.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-2.7.tgz':
@@ -10741,7 +10789,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-2.7'
     resolution:
-      integrity: sha512-SK5cHLpcGlkUEBz3KWl9aB1Lu9UZmmzD4tm4humPSeKa8y810ZTV/3AVlh43fnaTWSirYyt1LG8CcOhZ5AB4DQ==
+      integrity: sha512-Ef6ro7SNuW7wF7fW+tcNoouKw8AlXrjOOTuSMcg37In8yGxbgKcli+bHTqBGIcb55cBosL3ued4uikNo7bdjqg==
       tarball: 'file:projects/rush-stack-compiler-2.7.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-2.8-library-test.tgz':
@@ -10751,7 +10799,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-2.8-library-test'
     resolution:
-      integrity: sha512-qYxsQRGH12jHy3r7cJwUG5vzv639+oMQzXhomoiBGFKvwthriouH35+v1UDPv5CH0/YtLXs+bqxm9oL03Hn/Qg==
+      integrity: sha512-skPIGYZTDu5bQBtbNSidCBKpv1M+EEAjHUL+YYs70xfxBxx9vo0toeWXtpDvNcyJwhqGlfZj5L0aDtj2c9O/Rg==
       tarball: 'file:projects/rush-stack-compiler-2.8-library-test.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-2.8.tgz':
@@ -10767,7 +10815,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-2.8'
     resolution:
-      integrity: sha512-V/rmeFYFN09X7QvLTO/MmKyj27iyTcI5/VnoOMye0AhhRa26Wdy2D2VbrnABhzK2zYYo+tQGKtZI29ozGJ4swA==
+      integrity: sha512-gHbbs2RoP5ml1IpF+Q4ltNAezkYz/rdg6YArlBa7QfNhPmmhKwu+5WZUVEX+WJledZNmo13/J4HgAcCNk83HiA==
       tarball: 'file:projects/rush-stack-compiler-2.8.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-2.9-library-test.tgz':
@@ -10777,7 +10825,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-2.9-library-test'
     resolution:
-      integrity: sha512-EoEKGXfwnpdS//aOWznXq2tvrVrQ9S8VdPns8AKMEwl6RTorOF5MeVVBf9npKEv1Qgc29+dGDmpu+aaTtSciGg==
+      integrity: sha512-2fMEbgwheOQVrL3MEvusv055wE83D2r+Z8SW7BTVYDhhogO9vX5lSv/jUpxb8OthyX0BtbdZxsYFs9IvQRemHg==
       tarball: 'file:projects/rush-stack-compiler-2.9-library-test.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-2.9.tgz':
@@ -10793,7 +10841,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-2.9'
     resolution:
-      integrity: sha512-ZhxYMu4XpMkXt4Eni/cpiPlFBeavXwsUSw7w2HyCi7I0AZIebS8oVSg+N4x59xxJICqa98HMtooSmC1HnETEZw==
+      integrity: sha512-Ix5QuFncqAeG5i7bksBeG6X9zc6lN515WL1bwfyhsERPNquN25MhzZROUuZRcbfHtOtCkPJpbBguWE7desw+jQ==
       tarball: 'file:projects/rush-stack-compiler-2.9.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-3.0-library-test.tgz':
@@ -10803,7 +10851,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-3.0-library-test'
     resolution:
-      integrity: sha512-AvCuMZQSBKi2ogHNiOeG9Ayl9QQnb58Ti7R0FlIiF00EbpQjfoOa4niHpixKPiXBs7yLucr0lNeXUjx6MV82jQ==
+      integrity: sha512-1ULs/soeiZnm5NbQt3hlokxMA5k+wOUfV46xNBGjC9D8P3QThAT7gClq7O5eEFSDXLPo7nRQKgWU2Zy/fGlSDw==
       tarball: 'file:projects/rush-stack-compiler-3.0-library-test.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-3.0.tgz':
@@ -10819,7 +10867,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-3.0'
     resolution:
-      integrity: sha512-O+4S7WlriLKRW2AvqaAzmFwE4fw2+4qcFMRSojz5NkSjIShwGZXsmA+AMFGJVSsm56Z64dIT2THQUymmCYokQw==
+      integrity: sha512-6NAfsHq61BNR+OakRJ/d/f1L/XEsDD5c18b7uy7RMaUrkEToiUOKfNqfb94eI+Mo9ULbXHxSljXIS0PTgwaK3g==
       tarball: 'file:projects/rush-stack-compiler-3.0.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-3.1-library-test.tgz':
@@ -10829,7 +10877,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-3.1-library-test'
     resolution:
-      integrity: sha512-ONAgqL8UdIzpGuwyuYmJwbbo0tiMuSHElk0e37wx5OEvBlCLsgLydGbGi4IZ5lXzpWefy7YEeI7bPRVcZYx7Nw==
+      integrity: sha512-UGuQXuW8vWEycPXHFPj1YD2fkDngDYv/S1sLuADpdavpaS646wtoa/hxxewjs4axU4I7qYaSogWwJ1EdKIxLLw==
       tarball: 'file:projects/rush-stack-compiler-3.1-library-test.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-3.1.tgz':
@@ -10845,7 +10893,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-3.1'
     resolution:
-      integrity: sha512-E0GrmKVJnNNGd7q+voseJ0DId7+8dDXEX0+X4ufdKW2yE7cY2r466pKRRvHl0RYU4CiJ2ElHXE3AX/ogtkWkow==
+      integrity: sha512-D1+LOdsoi5evHHGCGQsAzO8626SZYYNyI4xOa3Qo5LO9Bb+lR/nOEao0o01QOHJcrbtorZm+eRjFn3M7Z2C5hA==
       tarball: 'file:projects/rush-stack-compiler-3.1.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-3.2-library-test.tgz':
@@ -10855,7 +10903,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-3.2-library-test'
     resolution:
-      integrity: sha512-li2lt6+z0BG8WQZMNBAEBVLkT6Fs+uJM62owhvDAetYeTfDpDeNQ2u6BJCHHRz+VITEg8YLzyfco6sYKLgulJQ==
+      integrity: sha512-DaYNCjW5CMSX6rzKG2tb3eZ+xDtUbRdkwMOEBPOYej6rsqBkvinSztTofGoP/2z3BwJJedEvHY6u/XRqUt5XBA==
       tarball: 'file:projects/rush-stack-compiler-3.2-library-test.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-3.2.tgz':
@@ -10871,7 +10919,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-3.2'
     resolution:
-      integrity: sha512-KRX+c6Qlr/ciZOGw5NdS1efeWMNQqb7+nfu7V+kEG7/hGByCBHJ0+d/TgOSttEbGiYXiNPfGYts2ceDGYV3wLQ==
+      integrity: sha512-LTTsbx8GoNQxv5fK6bQwEZQ38gT2zEc3gaWJo9rFDhXC5XbEbb8cYRlKOm5CyyGuo1MEiBC9UO2qq9Pwi+KJ4A==
       tarball: 'file:projects/rush-stack-compiler-3.2.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-3.3-library-test.tgz':
@@ -10881,7 +10929,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-3.3-library-test'
     resolution:
-      integrity: sha512-gbGP6O0VEckRBjTzMRgeI7WhsJ6B8vANj8gtRBdpW/ECJ6797PLCqlzdB4W/q1kp5jGLCS1IIN3DKddFpQzrwg==
+      integrity: sha512-EoQXDj6kzbK3dKpsOSs3bLFvVuDD2fgdjomBpYW9eQ58XE2a7WCF2rL+UdTE6RbNYhA632GxNBxApIcLCDEJxQ==
       tarball: 'file:projects/rush-stack-compiler-3.3-library-test.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-3.3.tgz':
@@ -10897,7 +10945,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-3.3'
     resolution:
-      integrity: sha512-5G6sVQ9mo4mr2rQAvYi5qcF9ZRJXjLSGQpWcRfEWx0EHIOfPMWBGNBPVvWXahn20CM+qPvfr8Df7SnJLCLG/Cw==
+      integrity: sha512-YA2Df8iRDHu1zAQH0spJUvuXRaIrzIhgqtVtOxe3RqV8PQiuw4sUo5R9ToPW5EyUzrdwZNPUHnYR3YaknNgEqQ==
       tarball: 'file:projects/rush-stack-compiler-3.3.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-3.4-library-test.tgz':
@@ -10907,7 +10955,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-3.4-library-test'
     resolution:
-      integrity: sha512-NIV9wQ1t9V/6NkIikmq/Z4dDBzYXdzcHfUehTOTEFyx3rrUHK/FoHO+ry7o5TDLgpCd+EkMD/WaR89TghjTyLA==
+      integrity: sha512-y+QSyqwuaPsTD5o3z7FoPSxX4MmAF5g+zDiI7PN6UxL06j+HFyvSe0zBSzHD6Yy1C4r8n2w3mUGuq8Z+azQQ4w==
       tarball: 'file:projects/rush-stack-compiler-3.4-library-test.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-3.4.tgz':
@@ -10923,7 +10971,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-3.4'
     resolution:
-      integrity: sha512-q7NQVvvD/cem1u6iqpJGgXQUCttsvoej2aHbgmLFOp4MWq2NeJxUDwX9aX1HQlepUxW9aIeSkYyc1TmrqThYyA==
+      integrity: sha512-0nUUfsLdUtVh7BIpwdzANDfKoPhkYEC1DQhtJi3QUk+4pR2lnBy6nKLqplL8YmOxw+wxF8j6shj8TJcNe3mmvw==
       tarball: 'file:projects/rush-stack-compiler-3.4.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-3.5-library-test.tgz':
@@ -10933,7 +10981,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-3.5-library-test'
     resolution:
-      integrity: sha512-1hsI5cskje6jyEVVfshHErW5/9WU1eoSQryAdMgIh0v3EDAbhw/dCO9GIhO3UaRAEwTtodnPWxrvpxTu7jbayA==
+      integrity: sha512-QSxcSC+qfK3irq7+zykmhxdRJLmZM3klNjm1CFJM6KTgMZ83C1HDm4F4VixLXAaMNsS1vz6sIvvJSlaAtpYfqw==
       tarball: 'file:projects/rush-stack-compiler-3.5-library-test.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-3.5.tgz':
@@ -10949,7 +10997,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-compiler-3.5'
     resolution:
-      integrity: sha512-nkosV/X+kUuKtpur+ifBhZ+P0FtK9l53IPkb5/HZ6QyHuAUDfQd/qlUzfeG/YUqfsIZZtljWXMpYibpv7GnSLA==
+      integrity: sha512-yAfHpTrYIc1VqbTRsCA5jdSeZBhXFBeShmcrbnww5FpXs/SLBkTnjUoDgnoeel+hK0nU57LDFBQTo5F8eKw2vg==
       tarball: 'file:projects/rush-stack-compiler-3.5.tgz'
     version: 0.0.0
   'file:projects/rush-stack-compiler-shared.tgz':
@@ -10963,7 +11011,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack-library-test'
     resolution:
-      integrity: sha512-+UBdUub3yLvxelPW6/eXOXWaOwditPEi+DFNTnU3da1OgFhgg22+jzZ2dtSMnsHrC5TN0EuFstQnjGetewZR7Q==
+      integrity: sha512-wRIWLybJcgxDT1XrRYCHOYKRv3u+h1eu5nCfkT/xK1X+kcUjcLOBfUqgChhTumHWzvHggrYNDcrmPC7tVB6hUg==
       tarball: 'file:projects/rush-stack-library-test.tgz'
     version: 0.0.0
   'file:projects/rush-stack.tgz':
@@ -10974,7 +11022,7 @@ packages:
     dev: false
     name: '@rush-temp/rush-stack'
     resolution:
-      integrity: sha512-ttC54YyPxRqbyg+GlaJSN7bH4XCjce4n2Vi8kNLillEKarFDKEjZxpUzLPtRm39QjZPwaaGjHlQQsEHXtmd9CA==
+      integrity: sha512-byUExxDV9qREHIR5gr09UpTN9UzUqSeKquMfT+4QcvwmlmXY3s6//41IuhpUkekIuWAan/yqmDtgmieY6tHA1g==
       tarball: 'file:projects/rush-stack.tgz'
     version: 0.0.0
   'file:projects/rush.tgz':
@@ -10992,7 +11040,7 @@ packages:
     dev: false
     name: '@rush-temp/rush'
     resolution:
-      integrity: sha512-bOmwAWnR/OAIqvmOP7dLmwjD9tTSTjUbn6zxP1HxN/xZf+hrpxYL71fR03BTkqSST2Sp9PQws4eUjWMCPGw4mg==
+      integrity: sha512-Yy5uHoYvktJawEf+DQfYoCZveP9RVIVSVD4n6DPhn+VIdoNc8HZ1CIZYH36/VLzod7SsY15uRJJOePQIX/LdbQ==
       tarball: 'file:projects/rush.tgz'
     version: 0.0.0
   'file:projects/rushell.tgz':
@@ -11005,7 +11053,7 @@ packages:
     dev: false
     name: '@rush-temp/rushell'
     resolution:
-      integrity: sha512-jJXeAy5bH0qrLh50E2oRwRPCUMYMWi/kbLq5FOv8sn2ZsRoM6QOUpDJJBobWqK4ZWm7wkGBkQ0oGtE5qwZPcxQ==
+      integrity: sha512-xGb7UKsatp0/ykeWob6YCLA25ozBX48Myp/GtHnDWBZomzNkPbOCyOsB3gMQ8zG1BgOWqxoiW0i67ShNgohYHQ==
       tarball: 'file:projects/rushell.tgz'
     version: 0.0.0
   'file:projects/set-webpack-public-path-plugin.tgz':
@@ -11024,7 +11072,7 @@ packages:
     dev: false
     name: '@rush-temp/set-webpack-public-path-plugin'
     resolution:
-      integrity: sha512-+7saB2H8EaTNet8wRL3DCu9GsnR9+LeYLSGrxnVEFw/63P4Ap1q/tw8SU8rkt0z3NAmZLNR8r7Er1faVwt7Lvw==
+      integrity: sha512-XNzxg6aGhgV7+gsakynvkVGIJDi790k4mA0ZX6vlt3WzVQ18NnlhXuEF0naG3aVPwE8PZaDWiFnXgajPcwGT/A==
       tarball: 'file:projects/set-webpack-public-path-plugin.tgz'
     version: 0.0.0
   'file:projects/stream-collator.tgz':
@@ -11039,7 +11087,7 @@ packages:
     dev: false
     name: '@rush-temp/stream-collator'
     resolution:
-      integrity: sha512-pJ1vuuyxWDTNkB88wGpqZebvm+QRchZdEPyi3+fosC9wH3TAY5F9ebL73MQSZpcXz0zoPuiS1/6CplmUy1R9LQ==
+      integrity: sha512-k9z577ZCrirvHwSDDe9QumduImE0YT8ECbxAodAubArBAa58r7bv2W6YpwwQSilstTgrdBCtYm/XB1uOrg+s9A==
       tarball: 'file:projects/stream-collator.tgz'
     version: 0.0.0
   'file:projects/ts-command-line.tgz':
@@ -11055,7 +11103,7 @@ packages:
     dev: false
     name: '@rush-temp/ts-command-line'
     resolution:
-      integrity: sha512-j7c4AHTq2+Vq7/VNn5b2hktxuoFlGbB3TYjdKhsG9rpc8V0D025usnuDN966hX/HDB+46btMiuJBa4gIysCInA==
+      integrity: sha512-H4MoJciNjV9m9lLcGZUAbBazNyMEhUzFsHiJf3sg/mwxEIcPWCQhy6LQkXhCqM68mPjbMGs1uLmL5hhEmuWahg==
       tarball: 'file:projects/ts-command-line.tgz'
     version: 0.0.0
   'file:projects/web-library-build-test.tgz':
@@ -11067,7 +11115,7 @@ packages:
     dev: false
     name: '@rush-temp/web-library-build-test'
     resolution:
-      integrity: sha512-Sd36Idkltf0oQ5OZDPq/6MvCw1ZBs1tgCe5GUbbCguDyWi664+n+T4SM6xT68zOmnL3Hb41xme+1TABAn8W9Ig==
+      integrity: sha512-iaOkhnYYHMAdh2XCoT8eY5UxwIFnm0QalzwiDJqZOf5SQdUrBofAweh5N4EPyd4NpJHCRh/eZch6QfmcNjYm/A==
       tarball: 'file:projects/web-library-build-test.tgz'
     version: 0.0.0
   'file:projects/web-library-build.tgz':
@@ -11079,9 +11127,10 @@ packages:
     dev: false
     name: '@rush-temp/web-library-build'
     resolution:
-      integrity: sha512-7tuaGDh4f4QBERbId3b09utAA0LEfrfPnMfJS+UYBgezw0KxANBQx6l19iI+ucdXiTUgGTsjRUCg6XE2FlRehQ==
+      integrity: sha512-LJhlF7VIp2VF3Bj4sjv3l4WnP+mAMIP5p2+x+x8SY39+vrhshI0vmn6W1lJPdsgugvxJbA5C2FRauwLDnVa/KA==
       tarball: 'file:projects/web-library-build.tgz'
     version: 0.0.0
+registry: ''
 specifiers:
   '@microsoft/node-library-build': 6.3.2
   '@microsoft/rush-stack-compiler-3.4': 0.3.2
@@ -11262,6 +11311,7 @@ specifiers:
   semver: ~5.3.0
   sinon: ~1.17.3
   source-map: ~0.6.1
+  st: ~2.0.0
   strict-uri-encode: ~2.0.0
   sudo: ~1.0.3
   tar: ~4.4.1

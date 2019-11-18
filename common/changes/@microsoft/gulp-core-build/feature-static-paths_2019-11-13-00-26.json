@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@microsoft/gulp-core-build",
+      "comment": "Added API endpoint for serving additionnal static paths with `gulp serve`",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@microsoft/gulp-core-build",
+  "email": "1935258+Js-Brecht@users.noreply.github.com"
+}
