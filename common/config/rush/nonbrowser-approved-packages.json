@@ -423,6 +423,10 @@
       "allowedCategories": [ "libraries" ]
     },
     {
+      "name": "is-ci",
+      "allowedCategories": [ "libraries" ]
+    },
+    {
       "name": "istanbul-instrumenter-loader",
       "allowedCategories": [ "libraries" ]
     },

@@ -102,16 +102,15 @@ export class Rush {
   private static _printStartupBanner(isManaged: boolean): void {
     const nodeVersion: string = process.versions.node;
     const nodeReleaseLabel: string = (NodeJsCompatibility.isOddNumberedVersion)
-    ? 'unstable'
-    : (NodeJsCompatibility.isLtsVersion ? 'LTS' : 'pre-LTS');
+      ? 'unstable'
+      : (NodeJsCompatibility.isLtsVersion ? 'LTS' : 'pre-LTS');
 
     console.log(
       EOL +
       colors.bold(`Rush Multi-Project Build Tool ${Rush.version}` + colors.yellow(isManaged ? '' : ' (unmanaged)')) +
-      colors.cyan(` - ${RushConstants.rushWebSiteUrl}`) +
+      colors.cyan(` - ${RushConstants.rushWebSiteUrl}`) + `.` +
       EOL +
-      `Node.js version is ${nodeVersion} (${nodeReleaseLabel})` +
-      EOL
+      `Node.js version is ${nodeVersion} (${nodeReleaseLabel}).`
     );
   }
 }

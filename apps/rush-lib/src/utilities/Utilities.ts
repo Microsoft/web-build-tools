@@ -154,7 +154,7 @@ export class Utilities {
     let looped: boolean = false;
 
     let result: TResult;
-    for (;;) {
+    for (; ;) {
       try {
         result = fn();
         break;
@@ -343,7 +343,7 @@ export class Utilities {
     keepEnvironment: boolean = false
   ): string {
 
-    const  result: child_process.SpawnSyncReturns<Buffer> = Utilities._executeCommandInternal(
+    const result: child_process.SpawnSyncReturns<Buffer> = Utilities._executeCommandInternal(
       command,
       args,
       workingDirectory,
@@ -359,7 +359,7 @@ export class Utilities {
    * Attempts to run Utilities.executeCommand() up to maxAttempts times before giving up.
    */
   public static executeCommandWithRetry(maxAttempts: number, command: string, args: string[],
-    workingDirectory: string,  environment?: IEnvironment, suppressOutput: boolean = false,
+    workingDirectory: string, environment?: IEnvironment, suppressOutput: boolean = false,
     retryCallback?: () => void): void {
 
     if (maxAttempts < 1) {
@@ -368,7 +368,7 @@ export class Utilities {
 
     let attemptNumber: number = 1;
 
-    for (;;) {
+    for (; ;) {
       try {
         Utilities.executeCommand(command, args, workingDirectory, environment, suppressOutput);
       } catch (error) {
@@ -701,7 +701,7 @@ export class Utilities {
    */
   private static _executeCommandInternal(
     command: string, args: string[], workingDirectory: string,
-    stdio: 'pipe'|'ignore'|'inherit'|(number|'pipe'|'ignore'|'inherit'|'ipc'|Stream|null|undefined)[]|undefined,
+    stdio: 'pipe' | 'ignore' | 'inherit' | (number | 'pipe' | 'ignore' | 'inherit' | 'ipc' | Stream | null | undefined)[] | undefined,
     environment?: IEnvironment,
     keepEnvironment: boolean = false
   ): child_process.SpawnSyncReturns<Buffer> {

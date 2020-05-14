@@ -29,6 +29,7 @@ import { NpmPackageManager } from './packageManager/NpmPackageManager';
 import { YarnPackageManager } from './packageManager/YarnPackageManager';
 import { PnpmPackageManager } from './packageManager/PnpmPackageManager';
 import { ExperimentsConfiguration } from './ExperimentsConfiguration';
+import { RushCiMode } from '../logic/RushCiMode';
 
 const MINIMUM_SUPPORTED_RUSH_JSON_VERSION: string = '0.0.0';
 const DEFAULT_BRANCH: string = 'master';
@@ -204,6 +205,7 @@ export interface IRushVariantOptionsJson {
  */
 export interface IRushConfigurationJson {
   $schema: string;
+  rushCiModeOverride?: string;
   npmVersion?: string;
   pnpmVersion?: string;
   yarnVersion?: string;
@@ -430,6 +432,7 @@ export class RushConfiguration {
   private _commonTempFolder: string;
   private _commonScriptsFolder: string;
   private _commonRushConfigFolder: string;
+  private _isCI: boolean;
   private _packageManager: PackageManagerName;
   private _packageManagerWrapper: PackageManager;
   private _npmCacheFolder: string;
@@ -614,6 +617,8 @@ export class RushConfiguration {
     }
 
     this._approvedPackagesPolicy = new ApprovedPackagesPolicy(this, rushConfigurationJson);
+
+    this._isCI = new RushCiMode(EnvironmentConfiguration.ciModeOverride, rushConfigurationJson.rushCiModeOverride).isCI;
 
     this._gitAllowedEmailRegExps = [];
     this._gitSampleEmail = '';
@@ -910,6 +915,13 @@ export class RushConfiguration {
         + ` (See the ${RushConstants.rushWebSiteUrl} documentation for details.)\n\n`
         + pinnedVersionsFilename);
     }
+  }
+
+  /**
+   * Returns true if the current mode is CI
+   */
+  public get isCI(): boolean {
+    return this._isCI;
   }
 
   /**

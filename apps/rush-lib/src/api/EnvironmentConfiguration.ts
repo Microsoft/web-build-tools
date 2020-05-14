@@ -55,7 +55,14 @@ export const enum EnvironmentVariableNames {
    * If a relative path is used, then the store path will be resolved relative to the process's
    * current working directory.  An absolute path is recommended.
    */
-  RUSH_PNPM_STORE_PATH = 'RUSH_PNPM_STORE_PATH'
+  RUSH_PNPM_STORE_PATH = 'RUSH_PNPM_STORE_PATH',
+
+  /**
+   * Use environment variable RUSH_CI_MODE to force a mode:
+   *   To force CI mode, set the environment variable to 'CI'
+   *   To force non-CI mode, set the environment variable to 'NON-CI'
+   */
+  RUSH_CI_MODE = 'RUSH_CI_MODE'
 }
 
 /**
@@ -75,6 +82,8 @@ export class EnvironmentConfiguration {
   private static _allowUnsupportedNodeVersion: boolean = false;
 
   private static _pnpmStorePathOverride: string | undefined;
+
+  private static _ciModeOverride: string | undefined = undefined;
 
   /**
    * An override for the common/temp folder path.
@@ -112,6 +121,15 @@ export class EnvironmentConfiguration {
   public static get pnpmStorePathOverride(): string | undefined {
     EnvironmentConfiguration._ensureInitialized();
     return EnvironmentConfiguration._pnpmStorePathOverride;
+  }
+
+  /**
+   * An override for the PNPM store path, if `pnpmStore` configuration is set to 'path'
+   * See {@link EnvironmentVariableNames.RUSH_CI_MODE}
+   */
+  public static get ciModeOverride(): string | undefined {
+    EnvironmentConfiguration._ensureInitialized();
+    return EnvironmentConfiguration._ciModeOverride;
   }
 
   /**
@@ -155,6 +173,11 @@ export class EnvironmentConfiguration {
           case EnvironmentVariableNames.RUSH_VARIANT:
             // Handled by @microsoft/rush front end
             break;
+
+          case EnvironmentVariableNames.RUSH_CI_MODE:
+            EnvironmentConfiguration._ciModeOverride = value;
+            break;
+
           default:
             unknownEnvVariables.push(envVarName);
             break;

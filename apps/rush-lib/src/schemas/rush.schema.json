@@ -29,6 +29,13 @@
       "type": "string"
     },
 
+    "rushCiModeOverride": {
+      "description": "If specified, overrides the Rush mode to be either CI or NON-CI.",
+      "type": "string",
+      "pattern": "^(CI|NON-CI)$"
+    },
+
+
     "npmVersion": {
       "description": "If specified, selects NPM as the package manager and specifies the deterministic version to be installed by Rush.",
       "type": "string",
