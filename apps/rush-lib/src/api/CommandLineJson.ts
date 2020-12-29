@@ -23,6 +23,7 @@ export interface IBulkCommandJson extends IBaseCommandJson {
   commandKind: 'bulk';
   enableParallelism: boolean;
   ignoreDependencyOrder?: boolean;
+  script?: string | string[];
   ignoreMissingScript?: boolean;
   incremental?: boolean;
   allowWarningsInSuccessfulBuild?: boolean;

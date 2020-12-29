@@ -34,6 +34,7 @@ export class CommandLineConfiguration {
       ' build command is tracked by the "arguments" field in the "package-deps_build.json" file contained' +
       ' therein; a full rebuild is forced whenever the command has changed (e.g. "--production" or not).',
     enableParallelism: true,
+    script: RushConstants.buildScriptName,
     ignoreMissingScript: false,
     ignoreDependencyOrder: false,
     incremental: true,
@@ -44,6 +45,7 @@ export class CommandLineConfiguration {
   public static readonly defaultRebuildCommandJson: CommandJson = {
     commandKind: RushConstants.bulkCommandKind,
     name: RushConstants.rebuildCommandName,
+    script: [RushConstants.buildScriptName, RushConstants.buildCommandName],
     summary: 'Clean and rebuild the entire set of projects',
     description:
       'This command assumes that the package.json file for each project contains' +

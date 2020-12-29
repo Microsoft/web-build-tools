@@ -192,6 +192,11 @@ export class RushConstants {
   public static readonly buildCommandName: string = 'build';
 
   /**
+   * The name of the package.json script to execute when building via rush.
+   */
+  public static readonly buildScriptName: string = 'rush-build';
+
+  /**
    * The name of the non-incremental build command.
    */
   public static readonly rebuildCommandName: string = 'rebuild';

@@ -13,7 +13,7 @@ export interface ITaskSelectorConstructor {
   buildCacheConfiguration: BuildCacheConfiguration | undefined;
   toProjects: ReadonlyArray<RushConfigurationProject>;
   fromProjects: ReadonlyArray<RushConfigurationProject>;
-  commandToRun: string;
+  commandToRun: string[];
   customParameterValues: string[];
   isQuietMode: boolean;
   isIncrementalBuildAllowed: boolean;
@@ -211,17 +211,19 @@ export class TaskSelector {
     return process.platform === 'win32' ? convertSlashesForWindows(taskCommand) : taskCommand;
   }
 
-  private _getScriptCommand(rushProject: RushConfigurationProject, script: string): string | undefined {
+  private _getScriptCommand(rushProject: RushConfigurationProject, script: string[]): string | undefined {
     if (!rushProject.packageJson.scripts) {
       return undefined;
     }
 
-    const rawCommand: string = rushProject.packageJson.scripts[script];
+    for (const candidate of script) {
+      const rawCommand: string = rushProject.packageJson.scripts[candidate];
 
-    if (rawCommand === undefined || rawCommand === null) {
-      return undefined;
+      if (typeof rawCommand === 'string') {
+        return rawCommand;
+      }
     }
 
-    return rawCommand;
+    return undefined;
   }
 }
