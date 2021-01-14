@@ -24,7 +24,15 @@ export enum Event {
   /**
    * Post Rush build event
    */
-  postRushBuild = 4
+  postRushBuild = 4,
+  /**
+   * Pre Rush add event
+   */
+  preRushAdd = 5,
+  /**
+   * Post Rush add event
+   */
+  postRushAdd = 6
 }
 
 /**
