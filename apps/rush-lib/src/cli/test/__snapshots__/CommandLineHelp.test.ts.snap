@@ -69,6 +69,8 @@ Optional arguments:
 
 exports[`CommandLineHelp prints the help for each action: add 1`] = `
 "usage: rush add [-h] -p PACKAGE [--exact] [--caret] [--dev] [-m] [-s] [--all]
+                [--ignore-hooks]
+                
 
 Adds a specified package as a dependency of the current project (as 
 determined by the current working directory) and then runs \\"rush update\\". If 
@@ -106,6 +108,9 @@ Optional arguments:
                         run after updating the package.json files.
   --all                 If specified, the dependency will be added to all 
                         projects.
+  --ignore-hooks        Skips execution of the \\"eventHooks\\" scripts defined 
+                        in rush.json. Make sure you know what you are 
+                        skipping.
 "
 `;
 
