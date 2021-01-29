@@ -15,8 +15,8 @@ proven turnkey solution for monorepo management, Rush is for you.
 
 Positional arguments:
   <command>
-    add                 Adds a dependency to the package.json and runs rush 
-                        upgrade.
+    add                 Adds a dependency or dependencies to the package.json 
+                        and runs rush upgrade.
     change              Records changes made to projects, indicating how the 
                         package version number should be bumped for the next 
                         publish.
@@ -70,10 +70,10 @@ Optional arguments:
 exports[`CommandLineHelp prints the help for each action: add 1`] = `
 "usage: rush add [-h] -p PACKAGE [--exact] [--caret] [--dev] [-m] [-s] [--all]
 
-Adds a specified package as a dependency of the current project (as 
-determined by the current working directory) and then runs \\"rush update\\". If 
-no version is specified, a version will be automatically detected (typically 
-either the latest version or a version that won't break the 
+Adds a specified package or specified packages as a dependency of the current 
+project (as determined by the current working directory) and then runs \\"rush 
+update\\". If no version is specified, a version will be automatically detected 
+(typically either the latest version or a version that won't break the 
 \\"ensureConsistentVersions\\" policy). If a version range (or a workspace range) 
 is specified, the latest version in the range will be used. The version will 
 be automatically prepended with a tilde, unless the \\"--exact\\" or \\"--caret\\" 
@@ -89,7 +89,8 @@ Optional arguments:
                         characters are usually interpreted by your shell, so 
                         it's recommended to use quotes. For example, write 
                         \\"rush add --package \\"example@^1.2.3\\"\\" instead of 
-                        \\"rush add --package example@^1.2.3\\".
+                        \\"rush add --package example@^1.2.3\\". To add multiple 
+                        packges, write \\"rush add -p foo -p bar\\".
   --exact               If specified, the SemVer specifier added to the 
                         package.json will be an exact version (e.g. without 
                         tilde or caret).

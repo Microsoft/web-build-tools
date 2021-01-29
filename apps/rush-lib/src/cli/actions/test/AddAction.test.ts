@@ -50,7 +50,7 @@ describe('AddAction', () => {
         expect(doRushAddMock).toHaveBeenCalledTimes(1);
         expect(doRushAddMock.mock.calls[0][0].projects).toHaveLength(1);
         expect(doRushAddMock.mock.calls[0][0].projects[0].packageName).toEqual('a');
-        expect(doRushAddMock.mock.calls[0][0].packageName).toEqual('assert');
+        expect(doRushAddMock.mock.calls[0][0].packageNames).toContain('assert');
       });
     });
 
@@ -76,7 +76,7 @@ describe('AddAction', () => {
         expect(doRushAddMock.mock.calls[0][0].projects).toHaveLength(2);
         expect(doRushAddMock.mock.calls[0][0].projects[0].packageName).toEqual('a');
         expect(doRushAddMock.mock.calls[0][0].projects[1].packageName).toEqual('b');
-        expect(doRushAddMock.mock.calls[0][0].packageName).toEqual('assert');
+        expect(doRushAddMock.mock.calls[0][0].packageNames).toContain('assert');
       });
     });
   });
