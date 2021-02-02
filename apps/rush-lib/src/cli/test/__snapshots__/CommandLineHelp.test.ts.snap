@@ -90,7 +90,7 @@ Optional arguments:
                         it's recommended to use quotes. For example, write 
                         \\"rush add --package \\"example@^1.2.3\\"\\" instead of 
                         \\"rush add --package example@^1.2.3\\". To add multiple 
-                        packges, write \\"rush add -p foo -p bar\\".
+                        packges, write \\"rush add --package foo --package bar\\".
   --exact               If specified, the SemVer specifier added to the 
                         package.json will be an exact version (e.g. without 
                         tilde or caret).
