@@ -55,7 +55,7 @@ export class AddAction extends BaseRushAction {
         ' A SemVer version specifier can be appended after an "@" sign.  WARNING: Symbol characters' +
         " are usually interpreted by your shell, so it's recommended to use quotes." +
         ' For example, write "rush add --package "example@^1.2.3"" instead of "rush add --package example@^1.2.3".' +
-        ' To add multiple packges, write "rush add -p foo -p bar".'
+        ' To add multiple packges, write "rush add --package foo --package bar".'
     });
     this._exactFlag = this.defineFlagParameter({
       parameterLongName: '--exact',
