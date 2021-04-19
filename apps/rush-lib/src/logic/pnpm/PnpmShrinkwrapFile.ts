@@ -488,9 +488,10 @@ export class PnpmShrinkwrapFile extends BaseShrinkwrapFile {
         // this means the current temp project doesn't provide this dependency,
         // however, we may be able to use a different version. we prefer the latest version
         let latestVersion: string | undefined = undefined;
+        let usedOtherTempProject: string | undefined = undefined;
 
         for (const otherTempProject of this.getTempProjectNames()) {
-          const otherVersionSpecifier: DependencySpecifier | undefined = this._getDependencyVersion(
+          const otherVersionSpecifier: DependencySpecifier | undefined = this._getDependencySpecifier(
             dependencySpecifier.packageName,
             otherTempProject
           );
@@ -501,16 +502,20 @@ export class PnpmShrinkwrapFile extends BaseShrinkwrapFile {
             if (semver.satisfies(otherVersion, dependencySpecifier.versionSpecifier)) {
               if (!latestVersion || semver.gt(otherVersion, latestVersion)) {
                 latestVersion = otherVersion;
+                usedOtherTempProject = otherTempProject;
               }
             }
           }
         }
 
-        if (latestVersion) {
+        if (latestVersion && usedOtherTempProject) {
           // go ahead and fixup the shrinkwrap file to point at this
           const dependencies: { [key: string]: string } | undefined =
             this._shrinkwrapJson.packages[tempProjectDependencyKey].dependencies || {};
-          dependencies[packageName] = latestVersion;
+
+          // _getDependencySpecifier should ensure the existence of the dependencyVersion
+          const dependencyVersion: string = this._getDependencyVersion(packageName, usedOtherTempProject)!;
+          dependencies[packageName] = dependencyVersion;
           this._shrinkwrapJson.packages[tempProjectDependencyKey].dependencies = dependencies;
 
           return new DependencySpecifier(dependencySpecifier.packageName, latestVersion);
@@ -587,10 +592,7 @@ export class PnpmShrinkwrapFile extends BaseShrinkwrapFile {
   /**
    * Returns the version of a dependency being used by a given project
    */
-  private _getDependencyVersion(
-    dependencyName: string,
-    tempProjectName: string
-  ): DependencySpecifier | undefined {
+  private _getDependencyVersion(dependencyName: string, tempProjectName: string): string | undefined {
     const tempProjectDependencyKey: string | undefined = this.getTempProjectDependencyKey(tempProjectName);
     if (!tempProjectDependencyKey) {
       throw new Error(`Cannot get dependency key for temp project: ${tempProjectName}`);
@@ -607,7 +609,23 @@ export class PnpmShrinkwrapFile extends BaseShrinkwrapFile {
       return undefined;
     }
 
-    return this._parsePnpmDependencyKey(dependencyName, packageDescription.dependencies[dependencyName]);
+    return packageDescription.dependencies[dependencyName];
+  }
+
+  /**
+   * Returns the dependency specifier of a dependency being used by a given project
+   */
+  private _getDependencySpecifier(
+    dependencyName: string,
+    tempProjectName: string
+  ): DependencySpecifier | undefined {
+    const dependencyVersion: string | undefined = this._getDependencyVersion(dependencyName, tempProjectName);
+
+    if (!dependencyVersion) {
+      return undefined;
+    }
+
+    return this._parsePnpmDependencyKey(dependencyName, dependencyVersion);
   }
 
   /**
