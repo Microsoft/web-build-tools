@@ -58,6 +58,9 @@ jspm_packages/
 # OS X temporary files
 .DS_Store
 
+# npm auto-generated file
+package-lock.json
+
 # Rush temporary files
 common/deploy/
 common/temp/

@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@rushstack/node-core-library",
+      "comment": "",
+      "type": "none"
+    }
+  ],
+  "packageName": "@rushstack/node-core-library",
+  "email": "zhas@microsoft.com"
+}

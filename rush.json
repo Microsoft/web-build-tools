@@ -314,7 +314,7 @@
     /**
      * The list of shell commands to run after the Rush installation finishes
      */
-    "postRushInstall": [],
+    "postRushInstall": ["npm i -g --save-dev prettier || exit $?"],
 
     /**
      * The list of shell commands to run before the Rush build command starts
