@@ -18,7 +18,7 @@
           "title": "Command Kind",
           "description": "Indicates the kind of command: \"bulk\" commands are run separately for each project; \"global\" commands are run once for the entire repository.",
           "type": "string",
-          "enum": ["bulk", "global"]
+          "enum": ["bulk", "global", "phased"]
         },
         "name": {
           "title": "Custom Command Name",
@@ -156,6 +156,132 @@
         }
       ]
     },
+    "phasedCommand": {
+      "title": "Phased Command",
+      "description": "A command that contains multiple phases, that are run separately for each project",
+      "type": "object",
+      "allOf": [
+        { "$ref": "#/definitions/baseCommand" },
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "required": ["phases"],
+          "properties": {
+            "commandKind": {
+              "enum": ["phased"]
+            },
+
+            "phases": {
+              "title": "Phases",
+              "description": "TBA",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+
+            "disableBuildCache ": {
+              "title": "Disable build cache.",
+              "description": "Disable build cache for this action. This may be useful if this command affects state outside of projects' own folders.",
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "commandKind": { "$ref": "#/definitions/anything" },
+            "name": { "$ref": "#/definitions/anything" },
+            "summary": { "$ref": "#/definitions/anything" },
+            "description": { "$ref": "#/definitions/anything" },
+            "safeForSimultaneousRushProcesses": { "$ref": "#/definitions/anything" },
+            "allowWarningsInSuccessfulBuild": { "$ref": "#/definitions/anything" },
+
+            "phases": { "$ref": "#/definitions/anything" },
+            "disableBuildCache": { "$ref": "#/definitions/anything" }
+          }
+        }
+      ]
+    },
+
+    "phase": {
+      "title": "Phase",
+      "description": "TBA",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "summary"],
+      "properties": {
+        "name": {
+          "title": "Name",
+          "description": "TBA",
+          "type": "string"
+        },
+
+        "summary": {
+          "title": "Summary",
+          "description": "TBA",
+          "type": "string"
+        },
+
+        "description": {
+          "title": "Description",
+          "description": "TBA",
+          "type": "string"
+        },
+
+        "dependencies": {
+          "title": "Dependencies",
+          "description": "TBA",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "self": {
+              "title": "Self",
+              "description": "TBA",
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            "upstream": {
+              "title": "Upstream",
+              "description": "TBA",
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+
+        "enableParallelism": {
+          "title": "enableParallelism",
+          "description": "TBA",
+          "type": "boolean"
+        },
+
+        "incremental": {
+          "title": "Incremental",
+          "description": "If true then this command will be incremental like the built-in \"build\" and \"rebuild\" commands",
+          "type": "boolean"
+        },
+
+        "ignoreMissingScript": {
+          "title": "Ignore Missing Script",
+          "description": "TBA",
+          "type": "boolean"
+        },
+
+        "allowWarningsOnSuccess": {
+          "title": "Allow Warnings in Successful Build",
+          "description": "TBA",
+          "type": "boolean"
+        }
+      }
+    },
 
     "baseParameter": {
       "type": "object",
@@ -189,7 +315,14 @@
           "title": "Associated Commands",
           "description": "A list of custom commands and/or built-in Rush commands that this parameter may be used with",
           "type": "array",
-          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "associatedPhases": {
+          "title": "Associated Phases",
+          "description": "TBA",
+          "type": "array",
           "items": {
             "type": "string"
           }
@@ -225,6 +358,7 @@
             "shortName": { "$ref": "#/definitions/anything" },
             "description": { "$ref": "#/definitions/anything" },
             "associatedCommands": { "$ref": "#/definitions/anything" },
+            "associatedPhases": { "$ref": "#/definitions/anything" },
             "required": { "$ref": "#/definitions/anything" }
           }
         }
@@ -260,6 +394,7 @@
             "shortName": { "$ref": "#/definitions/anything" },
             "description": { "$ref": "#/definitions/anything" },
             "associatedCommands": { "$ref": "#/definitions/anything" },
+            "associatedPhases": { "$ref": "#/definitions/anything" },
             "required": { "$ref": "#/definitions/anything" },
 
             "argumentName": { "$ref": "#/definitions/anything" }
@@ -320,6 +455,7 @@
             "shortName": { "$ref": "#/definitions/anything" },
             "description": { "$ref": "#/definitions/anything" },
             "associatedCommands": { "$ref": "#/definitions/anything" },
+            "associatedPhases": { "$ref": "#/definitions/anything" },
             "required": { "$ref": "#/definitions/anything" },
 
             "alternatives": { "$ref": "#/definitions/anything" },
@@ -345,7 +481,20 @@
       "type": "array",
       "items": {
         "type": "object",
-        "oneOf": [{ "$ref": "#/definitions/bulkCommand" }, { "$ref": "#/definitions/globalCommand" }]
+        "oneOf": [
+          { "$ref": "#/definitions/bulkCommand" },
+          { "$ref": "#/definitions/globalCommand" },
+          { "$ref": "#/definitions/phasedCommand" }
+        ]
+      }
+    },
+
+    "phases": {
+      "title": "Phases",
+      "description": "TBA",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/phase"
       }
     },
 

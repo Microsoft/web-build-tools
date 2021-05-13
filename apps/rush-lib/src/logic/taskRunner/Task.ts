@@ -89,6 +89,8 @@ export class Task {
    */
   public stopwatch!: Stopwatch;
 
+  public allowWarningsOnSuccess: boolean | undefined;
+
   public constructor(builder: BaseBuilder, initialStatus: TaskStatus) {
     this.builder = builder;
     this.status = initialStatus;

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommandLineConfiguration Detects a cycle among phases 1`] = `"In command-line.json, there exists a cycle within the set of _phase:B dependencies: _phase:B, _phase:C, _phase:A"`;
+
+exports[`CommandLineConfiguration Detects a cycle among phases 2`] = `"In command-line.json, there exists a cycle within the set of _phase:B dependencies: _phase:B, _phase:C, _phase:A"`;
+
+exports[`CommandLineConfiguration Detects a missing phase 1`] = `"In command-line.json, in the command \\"example\\", the phase \\"_phase:A\\" does not exist."`;
+
+exports[`CommandLineConfiguration Detects a missing phase dependency 1`] = `"In command-line.json, in the phase \\"_phase:A\\", the upstream dependency phase \\"_phase:B\\" does not exist."`;
+
+exports[`CommandLineConfiguration Detects a missing phase dependency 2`] = `"In command-line.json, in the phase \\"_phase:A\\", the self dependency phase \\"_phase:B\\" does not exist."`;
+
+exports[`CommandLineConfiguration Forbids a misnamed phase 1`] = `"In command-line.json, the phase \\"_faze:A\\"'s name does not begin with the required prefix \\"_phase:\\"."`;
+
+exports[`CommandLineConfiguration Forbids a misnamed phase 2`] = `"In command-line.json, the phase \\"_phase:\\"'s name must have characters after \\"_phase:\\""`;

@@ -34,6 +34,12 @@ export interface IExperimentsJson {
    * This normalization can help ensure consistent tarball integrity across platforms.
    */
   noChmodFieldInTarHeaderNormalization?: boolean;
+
+  /**
+   * If true, the multi-phase commands feature is enabled. To use this feature, create a "phased" command
+   * in common/config/rush/command-line.json.
+   */
+  multiPhaseCommands?: boolean;
 }
 
 /**

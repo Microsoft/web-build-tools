@@ -28,5 +28,13 @@
    * If true, the chmod field in temporary project tar headers will not be normalized.
    * This normalization can help ensure consistent tarball integrity across platforms.
    */
-  /*[LINE "HYPOTHETICAL"]*/ "noChmodFieldInTarHeaderNormalization": true
+  /*[LINE "HYPOTHETICAL"]*/ "noChmodFieldInTarHeaderNormalization": true,
+
+  /**
+   * If true, the multi-phase commands feature is enabled. To use this feature, create a "phased" command
+   * in common/config/rush/command-line.json.
+   *
+   * See https://github.com/microsoft/rushstack/issues/2300 for details about this experimental feature.
+   */
+  /*[LINE "HYPOTHETICAL"]*/ "multiPhaseCommands": true
 }

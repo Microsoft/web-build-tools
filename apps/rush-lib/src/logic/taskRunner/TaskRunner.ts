@@ -23,7 +23,6 @@ export interface ITaskRunnerOptions {
   quietMode: boolean;
   parallelism: string | undefined;
   changedProjectsOnly: boolean;
-  allowWarningsInSuccessfulBuild: boolean;
   repoCommandLineConfiguration: CommandLineConfiguration | undefined;
   destination?: TerminalWritable;
 }
@@ -40,13 +39,12 @@ export class TaskRunner {
 
   private readonly _tasks: Task[];
   private readonly _changedProjectsOnly: boolean;
-  private readonly _allowWarningsInSuccessfulBuild: boolean;
   private readonly _buildQueue: Task[];
   private readonly _quietMode: boolean;
   private readonly _parallelism: number;
   private readonly _repoCommandLineConfiguration: CommandLineConfiguration | undefined;
   private _hasAnyFailures: boolean;
-  private _hasAnyWarnings: boolean;
+  private _hasAnyDisallowedWarnings: boolean;
   private _currentActiveTasks!: number;
   private _totalTasks!: number;
   private _completedTasks!: number;
@@ -58,20 +56,13 @@ export class TaskRunner {
   private _terminal: CollatedTerminal;
 
   public constructor(orderedTasks: Task[], options: ITaskRunnerOptions) {
-    const {
-      quietMode,
-      parallelism,
-      changedProjectsOnly,
-      allowWarningsInSuccessfulBuild,
-      repoCommandLineConfiguration
-    } = options;
+    const { quietMode, parallelism, changedProjectsOnly, repoCommandLineConfiguration } = options;
     this._tasks = orderedTasks;
     this._buildQueue = orderedTasks.slice(0);
     this._quietMode = quietMode;
     this._hasAnyFailures = false;
-    this._hasAnyWarnings = false;
+    this._hasAnyDisallowedWarnings = false;
     this._changedProjectsOnly = changedProjectsOnly;
-    this._allowWarningsInSuccessfulBuild = allowWarningsInSuccessfulBuild;
     this._repoCommandLineConfiguration = repoCommandLineConfiguration;
 
     // TERMINAL PIPELINE:
@@ -184,7 +175,7 @@ export class TaskRunner {
     if (this._hasAnyFailures) {
       this._terminal.writeStderrLine(colors.red('Projects failed to build.') + '\n');
       throw new AlreadyReportedError();
-    } else if (this._hasAnyWarnings && !this._allowWarningsInSuccessfulBuild) {
+    } else if (this._hasAnyDisallowedWarnings) {
       this._terminal.writeStderrLine(colors.yellow('Projects succeeded with warnings.') + '\n');
       throw new AlreadyReportedError();
     }
@@ -250,23 +241,35 @@ export class TaskRunner {
 
       this._currentActiveTasks--;
       switch (result) {
-        case TaskStatus.Success:
+        case TaskStatus.Success: {
           this._markTaskAsSuccess(task);
           break;
-        case TaskStatus.SuccessWithWarning:
-          this._hasAnyWarnings = true;
+        }
+
+        case TaskStatus.SuccessWithWarning: {
+          if (!task.allowWarningsOnSuccess) {
+            this._hasAnyDisallowedWarnings = true;
+          }
+
           this._markTaskAsSuccessWithWarning(task);
           break;
-        case TaskStatus.FromCache:
+        }
+
+        case TaskStatus.FromCache: {
           this._markTaskAsFromCache(task);
           break;
-        case TaskStatus.Skipped:
+        }
+
+        case TaskStatus.Skipped: {
           this._markTaskAsSkipped(task);
           break;
-        case TaskStatus.Failure:
+        }
+
+        case TaskStatus.Failure: {
           this._hasAnyFailures = true;
           this._markTaskAsFailed(task);
           break;
+        }
       }
     } catch (error) {
       task.stdioSummarizer.close();

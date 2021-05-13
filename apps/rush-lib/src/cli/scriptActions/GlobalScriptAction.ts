@@ -167,7 +167,7 @@ export class GlobalScriptAction extends BaseScriptAction {
     // Collect all custom parameter values
     const customParameterValues: string[] = [];
 
-    for (const customParameter of this.customParameters) {
+    for (const customParameter of this.customParameters.values()) {
       customParameter.appendToArgList(customParameterValues);
     }
 

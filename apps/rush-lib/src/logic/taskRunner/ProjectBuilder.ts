@@ -42,12 +42,14 @@ export interface IProjectBuildDeps {
 }
 
 export interface IProjectBuilderOptions {
+  name: string;
   rushProject: RushConfigurationProject;
   rushConfiguration: RushConfiguration;
   buildCacheConfiguration: BuildCacheConfiguration | undefined;
   commandToRun: string;
   commandName: string;
   isIncrementalBuildAllowed: boolean;
+  allowWarningsOnSuccess: boolean;
   packageChangeAnalyzer: PackageChangeAnalyzer;
   packageDepsFilename: string;
 }
@@ -74,11 +76,9 @@ type UNINITIALIZED = 'UNINITIALIZED';
  * incremental state.
  */
 export class ProjectBuilder extends BaseBuilder {
-  public get name(): string {
-    return ProjectBuilder.getTaskName(this._rushProject);
-  }
-
+  public readonly name: string;
   public readonly isIncrementalBuildAllowed: boolean;
+  public readonly allowWarningsOnSuccess: boolean;
   public hadEmptyScript: boolean = false;
 
   private readonly _rushProject: RushConfigurationProject;
@@ -97,12 +97,14 @@ export class ProjectBuilder extends BaseBuilder {
 
   public constructor(options: IProjectBuilderOptions) {
     super();
+    this.name = options.name;
     this._rushProject = options.rushProject;
     this._rushConfiguration = options.rushConfiguration;
     this._buildCacheConfiguration = options.buildCacheConfiguration;
     this._commandName = options.commandName;
     this._commandToRun = options.commandToRun;
     this.isIncrementalBuildAllowed = options.isIncrementalBuildAllowed;
+    this.allowWarningsOnSuccess = options.allowWarningsOnSuccess;
     this._packageChangeAnalyzer = options.packageChangeAnalyzer;
     this._packageDepsFilename = options.packageDepsFilename;
   }
@@ -111,8 +113,12 @@ export class ProjectBuilder extends BaseBuilder {
    * A helper method to determine the task name of a ProjectBuilder. Used when the task
    * name is required before a task is created.
    */
-  public static getTaskName(rushProject: RushConfigurationProject): string {
-    return rushProject.packageName;
+  public static getTaskName(rushProject: RushConfigurationProject, phaseName?: string): string {
+    if (phaseName) {
+      return `${rushProject.packageName} (${phaseName})`;
+    } else {
+      return rushProject.packageName;
+    }
   }
 
   public async executeAsync(context: IBuilderContext): Promise<TaskStatus> {

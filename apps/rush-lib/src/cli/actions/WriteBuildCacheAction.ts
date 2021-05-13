@@ -13,7 +13,7 @@ import { BuildCacheConfiguration } from '../../api/BuildCacheConfiguration';
 import { ProjectBuilder } from '../../logic/taskRunner/ProjectBuilder';
 import { PackageChangeAnalyzer } from '../../logic/PackageChangeAnalyzer';
 import { Utilities } from '../../utilities/Utilities';
-import { TaskSelector } from '../../logic/TaskSelector';
+import { TaskSelectorBase } from '../../logic/taskSelector/TaskSelectorBase';
 import { RushConstants } from '../../logic/RushConstants';
 import { CommandLineConfiguration } from '../../api/CommandLineConfiguration';
 
@@ -72,16 +72,18 @@ export class WriteBuildCacheAction extends BaseRushAction {
     );
 
     const command: string = this._command.value!;
-    const commandToRun: string | undefined = TaskSelector.getScriptToRun(project, command, []);
+    const commandToRun: string | undefined = TaskSelectorBase.getScriptToRun(project, command, []);
 
     const packageChangeAnalyzer: PackageChangeAnalyzer = new PackageChangeAnalyzer(this.rushConfiguration);
     const projectBuilder: ProjectBuilder = new ProjectBuilder({
+      name: ProjectBuilder.getTaskName(project),
       rushProject: project,
       rushConfiguration: this.rushConfiguration,
       buildCacheConfiguration,
       commandName: command,
       commandToRun: commandToRun || '',
       isIncrementalBuildAllowed: false,
+      allowWarningsOnSuccess: false,
       packageChangeAnalyzer,
       packageDepsFilename: Utilities.getPackageDepsFilenameForCommand(command)
     });

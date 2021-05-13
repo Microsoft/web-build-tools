@@ -208,9 +208,9 @@ export class RushProjectConfiguration {
         RushConstants.rebuildCommandName
       ]);
       if (repoCommandLineConfiguration) {
-        for (const command of repoCommandLineConfiguration.commands) {
+        for (const [commandName, command] of repoCommandLineConfiguration.commands) {
           if (command.commandKind === RushConstants.bulkCommandKind) {
-            commandNames.add(command.name);
+            commandNames.add(commandName);
           }
         }
       }

@@ -54,6 +54,14 @@ describe('TaskRunner', () => {
   });
 
   beforeEach(() => {
+    taskRunnerOptions = {
+      quietMode: false,
+      parallelism: '1',
+      changedProjectsOnly: false,
+      destination: mockWritable,
+      repoCommandLineConfiguration: undefined
+    };
+
     mockWritable.reset();
   });
 
@@ -66,7 +74,6 @@ describe('TaskRunner', () => {
             parallelism: 'tequila',
             changedProjectsOnly: false,
             destination: mockWritable,
-            allowWarningsInSuccessfulBuild: false,
             repoCommandLineConfiguration: undefined
           })
       ).toThrowErrorMatchingSnapshot();
@@ -74,17 +81,6 @@ describe('TaskRunner', () => {
   });
 
   describe('Error logging', () => {
-    beforeEach(() => {
-      taskRunnerOptions = {
-        quietMode: false,
-        parallelism: '1',
-        changedProjectsOnly: false,
-        destination: mockWritable,
-        allowWarningsInSuccessfulBuild: false,
-        repoCommandLineConfiguration: undefined
-      };
-    });
-
     it('printedStderrAfterError', async () => {
       taskRunner = createTaskRunner(
         taskRunnerOptions,
@@ -131,17 +127,6 @@ describe('TaskRunner', () => {
 
   describe('Warning logging', () => {
     describe('Fail on warning', () => {
-      beforeEach(() => {
-        taskRunnerOptions = {
-          quietMode: false,
-          parallelism: '1',
-          changedProjectsOnly: false,
-          destination: mockWritable,
-          allowWarningsInSuccessfulBuild: false,
-          repoCommandLineConfiguration: undefined
-        };
-      });
-
       it('Logs warnings correctly', async () => {
         taskRunner = createTaskRunner(
           taskRunnerOptions,
@@ -166,26 +151,18 @@ describe('TaskRunner', () => {
     });
 
     describe('Success on warning', () => {
-      beforeEach(() => {
-        taskRunnerOptions = {
-          quietMode: false,
-          parallelism: '1',
-          changedProjectsOnly: false,
-          destination: mockWritable,
-          allowWarningsInSuccessfulBuild: true,
-          repoCommandLineConfiguration: undefined
-        };
-      });
-
       it('Logs warnings correctly', async () => {
-        taskRunner = createTaskRunner(
-          taskRunnerOptions,
-          new MockBuilder('success with warnings (success)', async (terminal: CollatedTerminal) => {
+        const builder: MockBuilder = new MockBuilder(
+          'success with warnings (success)',
+          async (terminal: CollatedTerminal) => {
             terminal.writeStdoutLine('Build step 1' + EOL);
             terminal.writeStdoutLine('Warning: step 1 succeeded with warnings' + EOL);
             return TaskStatus.SuccessWithWarning;
-          })
+          }
         );
+        builder.allowWarningsOnSuccess = true;
+
+        taskRunner = createTaskRunner(taskRunnerOptions, builder);
 
         await taskRunner.executeAsync();
         const allMessages: string = mockWritable.getAllOutput();

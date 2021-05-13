@@ -29,6 +29,7 @@ export class TaskCollection {
 
     const task: Task = new Task(builder, TaskStatus.Ready);
     task.criticalPathLength = undefined;
+    task.allowWarningsOnSuccess = builder.allowWarningsOnSuccess;
     this._tasks.set(task.name, task);
   }
 

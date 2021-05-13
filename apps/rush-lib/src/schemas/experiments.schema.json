@@ -25,6 +25,10 @@
     "noChmodFieldInTarHeaderNormalization": {
       "description": "If true, the chmod field in temporary project tar headers will not be normalized. This normalization can help ensure consistent tarball integrity across platforms.",
       "type": "boolean"
+    },
+    "multiPhaseCommands": {
+      "description": "If true, the multi-phase commands feature is enabled. To use this feature, create a \"phased\" command in common/config/rush/command-line.json.",
+      "type": "boolean"
     }
   },
   "additionalProperties": false

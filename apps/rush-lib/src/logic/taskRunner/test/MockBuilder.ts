@@ -9,6 +9,7 @@ import { BaseBuilder, IBuilderContext } from '../BaseBuilder';
 export class MockBuilder extends BaseBuilder {
   private readonly _action: ((terminal: CollatedTerminal) => Promise<TaskStatus>) | undefined;
   public readonly name: string;
+  public allowWarningsOnSuccess: boolean;
   public readonly hadEmptyScript: boolean = false;
   public readonly isIncrementalBuildAllowed: boolean = false;
 
@@ -17,6 +18,7 @@ export class MockBuilder extends BaseBuilder {
 
     this.name = name;
     this._action = action;
+    this.allowWarningsOnSuccess = false;
   }
 
   public async executeAsync(context: IBuilderContext): Promise<TaskStatus> {
