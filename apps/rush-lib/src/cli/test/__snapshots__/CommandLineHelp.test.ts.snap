@@ -53,6 +53,7 @@ Positional arguments:
     update-cloud-credentials
                         (EXPERIMENTAL) Update the credentials used by the 
                         build cache provider.
+    upgrade-self        Upgrade rush version in current repository
     version             Manage package versions in the repo.
     write-build-cache   Writes the current state of the current project to 
                         the cache.
@@ -1090,6 +1091,23 @@ Optional arguments:
   --credential CREDENTIAL_STRING
                         A static credential, to be cached.
   -d, --delete          If specified, delete stored credentials.
+"
+`;
+
+exports[`CommandLineHelp prints the help for each action: upgrade-self 1`] = `
+"usage: rush upgrade-self [-h] [--debug] [-s]
+
+The \\"rush upgrade-self\\" command is used to upgrade rush version in current 
+repository.It helps maintainer to upgrade rushVersion in rush.json, settle 
+down the versions of the dependency of rush self, and update lockfile in 
+autoinstallers if changed.
+
+Optional arguments:
+  -h, --help         Show this help message and exit.
+  --debug            Show the full call stack if an error occurs while 
+                     executing the tool
+  -s, --skip-update  If specified, the \\"rush update\\" command will not be run 
+                     after updating the package.json files.
 "
 `;
 
