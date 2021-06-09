@@ -3,7 +3,7 @@
 
 import * as path from 'path';
 import * as semver from 'semver';
-import * as child_process from 'child_process';
+import type * as child_process from 'child_process';
 import colors from 'colors/safe';
 import {
   ConsoleTerminalProvider,
