@@ -65,7 +65,7 @@ export class UpgradeSelfAction extends BaseRushAction {
       }
     }
 
-    console.log(os.EOL + colors.green(`Rush version upgrade successfully`));
+    console.log(os.EOL + colors.green(`Rush version successfully updated`));
   }
 
   private async _runRushUpdate(): Promise<boolean> {
