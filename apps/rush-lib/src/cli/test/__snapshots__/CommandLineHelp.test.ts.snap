@@ -1095,17 +1095,15 @@ Optional arguments:
 `;
 
 exports[`CommandLineHelp prints the help for each action: upgrade-self 1`] = `
-"usage: rush upgrade-self [-h] [--debug] [-s]
+"usage: rush upgrade-self [-h] [-s]
 
 The \\"rush upgrade-self\\" command is used to upgrade rush version in current 
-repository.It helps maintainer to upgrade rushVersion in rush.json, settle 
+repository. It helps maintainer to upgrade rushVersion in rush.json, settle 
 down the versions of the dependency of rush self, and update lockfile in 
 autoinstallers if changed.
 
 Optional arguments:
   -h, --help         Show this help message and exit.
-  --debug            Show the full call stack if an error occurs while 
-                     executing the tool
   -s, --skip-update  If specified, the \\"rush update\\" command will not be run 
                      after updating the package.json files.
 "

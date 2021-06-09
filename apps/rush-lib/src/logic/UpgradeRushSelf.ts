@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import * as path from 'path';
 import * as semver from 'semver';
 import type * as child_process from 'child_process';
-import colors from 'colors/safe';
 import {
-  ConsoleTerminalProvider,
+  Colors,
   Executable,
   FileSystem,
   Import,
@@ -25,7 +23,7 @@ const inquirer: typeof inquirerTypes = Import.lazy('inquirer', require);
 
 export interface IUpgradeRushSelfOptions {
   rushConfiguration: RushConfiguration;
-  isDebug: boolean;
+  terminal: Terminal;
 }
 
 export interface IUpgradeResult {
@@ -35,16 +33,10 @@ export interface IUpgradeResult {
 export class UpgradeRushSelf {
   private readonly _rushConfiguration: RushConfiguration;
   private readonly _terminal: Terminal;
-  private readonly _isDebug: boolean = false;
 
   public constructor(options: IUpgradeRushSelfOptions) {
     this._rushConfiguration = options.rushConfiguration;
-    this._isDebug = options.isDebug;
-    this._terminal = new Terminal(
-      new ConsoleTerminalProvider({
-        verboseEnabled: options.isDebug
-      })
-    );
+    this._terminal = options.terminal;
   }
 
   public getAvaiableRushVersions(): string[] {
@@ -73,22 +65,22 @@ export class UpgradeRushSelf {
     const rushJsonFile: string = this._rushConfiguration.rushJsonFile;
     const json: JsonObject = await JsonFile.loadAsync(rushJsonFile);
     if (json.rushVersion === version) {
-      console.log();
-      console.log(colors.yellow(`Rush version "${version}" is the version that is already used in this repository.`));
+      this._terminal.writeWarningLine(
+        `Rush version "${version}" is the version that is already used in this repository.`
+      );
       return {
         needRushUpdate: false
       };
     }
     json.rushVersion = version;
     await JsonFile.saveAsync(json, rushJsonFile, { updateExistingFile: true, onlyIfChanged: true });
-    if (this._isDebug) {
-      console.log(colors.gray(`upgrade rushVersion in rush.json to ${version}`));
-    }
+    this._terminal.writeVerbose(Colors.gray(`upgrade rushVersion in rush.json to ${version}`));
 
     const dependencies: Record<string, string> = this._npmView(`@microsoft/rush@${version}`, 'dependencies');
-    const targetPackageNames: string[] = Object.keys(dependencies).filter(
-      (k) => k.startsWith('@microsoft/') || k.startsWith('@rushstack/')
-    );
+    /**
+     * Currently, we only update @microsoft/rush-lib dependencies in package.json
+     */
+    const targetPackageNames: string[] = Object.keys(dependencies).filter((k) => k === '@microsoft/rush-lib');
     let needRushUpdate: boolean = false;
     if (targetPackageNames.length) {
       const targetPackages: Record<string, string> = {};
@@ -107,9 +99,7 @@ export class UpgradeRushSelf {
 
         const saved: boolean = versionMismatchFinderProject.saveIfModified();
         if (saved) {
-          if (this._isDebug) {
-            console.log(colors.gray(`${project.packageName} package.json changed`));
-          }
+          this._terminal.writeVerbose(Colors.gray(`${project.packageName} package.json changed`));
           needRushUpdate = true;
         }
       }
@@ -131,9 +121,7 @@ export class UpgradeRushSelf {
 
         if (saved) {
           autoinstaller.update();
-          if (this._isDebug) {
-            console.log(colors.gray(`autoinstaller ${autoinstallerName} updated`));
-          }
+          this._terminal.writeVerbose(Colors.gray(`autoinstaller ${autoinstallerName} updated`));
         }
       }
     }

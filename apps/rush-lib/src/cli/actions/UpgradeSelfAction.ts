@@ -1,11 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import * as os from 'os';
-import colors from 'colors/safe';
-
 import { CommandLineFlagParameter } from '@rushstack/ts-command-line';
-import { Import } from '@rushstack/node-core-library';
+import { ConsoleTerminalProvider, Colors, Import, Terminal } from '@rushstack/node-core-library';
 import { BaseRushAction } from './BaseRushAction';
 import { RushCommandLineParser } from '../RushCommandLineParser';
 import { UpgradeRushSelf } from '../../logic/UpgradeRushSelf';
@@ -14,8 +11,8 @@ import type * as inquirerTypes from 'inquirer';
 const inquirer: typeof inquirerTypes = Import.lazy('inquirer', require);
 
 export class UpgradeSelfAction extends BaseRushAction {
-  private _debugFlag!: CommandLineFlagParameter;
   private _skipUpdateFlag!: CommandLineFlagParameter;
+  private readonly _terminal: Terminal;
 
   public constructor(parser: RushCommandLineParser) {
     super({
@@ -27,13 +24,14 @@ export class UpgradeSelfAction extends BaseRushAction {
         ' dependency of rush self, and update lockfile in autoinstallers if changed.',
       parser
     });
+    this._terminal = new Terminal(
+      new ConsoleTerminalProvider({
+        verboseEnabled: this.parser.isDebug
+      })
+    );
   }
 
   protected onDefineParameters(): void {
-    this._debugFlag = this.defineFlagParameter({
-      parameterLongName: '--debug',
-      description: 'Show the full call stack if an error occurs while executing the tool'
-    });
     this._skipUpdateFlag = this.defineFlagParameter({
       parameterLongName: '--skip-update',
       parameterShortName: '-s',
@@ -45,10 +43,10 @@ export class UpgradeSelfAction extends BaseRushAction {
   protected async runAsync(): Promise<void> {
     const upgradeRushSelf: UpgradeRushSelf = new UpgradeRushSelf({
       rushConfiguration: this.rushConfiguration,
-      isDebug: this._debugFlag.value
+      terminal: this._terminal
     });
 
-    const { needRushUpdate } = await upgradeRushSelf.upgrade();
+    const { needRushUpdate } = await upgradeRushSelf.upgradeAsync();
 
     if (needRushUpdate && !this._skipUpdateFlag.value) {
       const promptModule: inquirerTypes.PromptModule = inquirer.createPromptModule();
@@ -58,14 +56,18 @@ export class UpgradeSelfAction extends BaseRushAction {
         message: `Confirm run rush update?`
       });
       if (confirmRushUpdate) {
-        await this._runRushUpdate();
+        const executeResult: boolean = await this._runRushUpdate();
+        if (!executeResult) {
+          this._terminal.writeErrorLine(`Run "rush update" failed...`);
+        }
       } else {
-        console.log();
-        console.log(colors.yellow('There are package.json changes. Run "rush update" to update the lockfile.'));
+        this._terminal.writeWarningLine(
+          'There are package.json changes. Run "rush update" to update the lockfile.'
+        );
       }
     }
 
-    console.log(os.EOL + colors.green(`Rush version successfully updated`));
+    this._terminal.writeLine(Colors.green(`Rush version successfully updated`));
   }
 
   private async _runRushUpdate(): Promise<boolean> {
