@@ -56,7 +56,7 @@ export class UpgradeRushSelf {
     return versions;
   }
 
-  public async upgrade(): Promise<IUpgradeResult> {
+  public async upgradeAsync(): Promise<IUpgradeResult> {
     const versions: string[] = this.getAvaiableRushVersions();
 
     const promptModule: inquirerTypes.PromptModule = inquirer.createPromptModule();
