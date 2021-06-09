@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "@microsoft/rush",
-      "comment": "add rush upgrade-self action",
+      "comment": "Add a \"rush upgrade-self\" action that upgrades the version of Rush in the current repository.",
       "type": "none"
     }
   ],
