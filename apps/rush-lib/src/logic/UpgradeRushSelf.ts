@@ -50,7 +50,7 @@ export class UpgradeRushSelf {
 
     const { versions }: { versions: string[] } = this._npmView('@microsoft/rush');
     if (!Array.isArray(versions)) {
-      throw new Error('Get @microsoft/rush versions incorrectly');
+      throw new Error('Unable to retrieve @microsoft/rush versions');
     }
 
     return versions;
