@@ -69,7 +69,7 @@ export class UpgradeRushSelf {
 
     // update rush.json
     const rushJsonFile: string = this._rushConfiguration.rushJsonFile;
-    const json: JsonObject = JsonFile.load(rushJsonFile);
+    const json: JsonObject = await JsonFile.loadAsync(rushJsonFile);
     if (json.rushVersion === version) {
       console.log();
       console.log(colors.yellow(`upgrading same rush version: ${version}`));
