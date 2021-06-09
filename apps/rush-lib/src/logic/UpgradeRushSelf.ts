@@ -78,7 +78,7 @@ export class UpgradeRushSelf {
       };
     }
     json.rushVersion = version;
-    JsonFile.save(json, rushJsonFile, { updateExistingFile: true, onlyIfChanged: true });
+    await JsonFile.saveAsync(json, rushJsonFile, { updateExistingFile: true, onlyIfChanged: true });
     if (this._isDebug) {
       console.log(colors.gray(`upgrade rushVersion in rush.json to ${version}`));
     }
