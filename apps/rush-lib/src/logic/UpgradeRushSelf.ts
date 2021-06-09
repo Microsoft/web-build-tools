@@ -19,6 +19,8 @@ import {
 import { RushConfiguration } from '../api/RushConfiguration';
 import type * as inquirerTypes from 'inquirer';
 import { Autoinstaller } from './Autoinstaller';
+import { VersionMismatchFinderProject } from './versionMismatch/VersionMismatchFinderProject';
+import { DependencyType, PackageJsonEditor } from '../api/PackageJsonEditor';
 const inquirer: typeof inquirerTypes = Import.lazy('inquirer', require);
 
 export interface IUpgradeRushSelfOptions {
@@ -95,21 +97,15 @@ export class UpgradeRushSelf {
       }
 
       for (const project of this._rushConfiguration.projects) {
-        const packageJsonFile: string = path.resolve(project.projectFolder, 'package.json');
-        const packageJson: JsonObject = JsonFile.load(packageJsonFile);
+        const versionMismatchFinderProject: VersionMismatchFinderProject = new VersionMismatchFinderProject(
+          project
+        );
         for (const [k, v] of Object.entries(targetPackages)) {
-          if ('dependencies' in packageJson && k in packageJson.dependencies) {
-            packageJson.dependencies[k] = v;
-          }
-          if ('devDependencies' in packageJson && k in packageJson.devDependencies) {
-            packageJson.devDependencies[k] = v;
-          }
+          versionMismatchFinderProject.updateDependencyOnlyExists(k, v, DependencyType.Regular);
+          versionMismatchFinderProject.updateDependencyOnlyExists(k, v, DependencyType.Dev);
         }
 
-        const saved: boolean = JsonFile.save(packageJson, packageJsonFile, {
-          updateExistingFile: true,
-          onlyIfChanged: true
-        });
+        const saved: boolean = versionMismatchFinderProject.saveIfModified();
         if (saved) {
           if (this._isDebug) {
             console.log(colors.gray(`${project.packageName} package.json changed`));
@@ -125,20 +121,13 @@ export class UpgradeRushSelf {
       for (const autoinstallerName of autoinstallerNames) {
         const autoinstaller: Autoinstaller = new Autoinstaller(autoinstallerName, this._rushConfiguration);
         const packageJsonFile: string = autoinstaller.packageJsonPath;
-        const packageJson: JsonObject = JsonFile.load(packageJsonFile);
+        const packageJsonEditor: PackageJsonEditor = PackageJsonEditor.load(packageJsonFile);
         for (const [k, v] of Object.entries(targetPackages)) {
-          if ('dependencies' in packageJson && k in packageJson.dependencies) {
-            packageJson.dependencies[k] = v;
-          }
-          if ('devDependencies' in packageJson && k in packageJson.devDependencies) {
-            packageJson.devDependencies[k] = v;
-          }
+          packageJsonEditor.updateDependencyOnlyExists(k, v, DependencyType.Regular);
+          packageJsonEditor.updateDependencyOnlyExists(k, v, DependencyType.Dev);
         }
 
-        const saved: boolean = JsonFile.save(packageJson, packageJsonFile, {
-          updateExistingFile: true,
-          onlyIfChanged: true
-        });
+        const saved: boolean = packageJsonEditor.saveIfModified();
 
         if (saved) {
           autoinstaller.update();
