@@ -2,13 +2,10 @@
 // See LICENSE in the project root for license information.
 
 import { CommandLineFlagParameter } from '@rushstack/ts-command-line';
-import { ConsoleTerminalProvider, Colors, Import, Terminal } from '@rushstack/node-core-library';
+import { ConsoleTerminalProvider, Colors, Terminal } from '@rushstack/node-core-library';
 import { BaseRushAction } from './BaseRushAction';
 import { RushCommandLineParser } from '../RushCommandLineParser';
 import { UpgradeRushSelf } from '../../logic/UpgradeRushSelf';
-
-import type * as inquirerTypes from 'inquirer';
-const inquirer: typeof inquirerTypes = Import.lazy('inquirer', require);
 
 export class UpgradeSelfAction extends BaseRushAction {
   private _skipUpdateFlag!: CommandLineFlagParameter;
@@ -49,21 +46,9 @@ export class UpgradeSelfAction extends BaseRushAction {
     const { needRushUpdate } = await upgradeRushSelf.upgradeAsync();
 
     if (needRushUpdate && !this._skipUpdateFlag.value) {
-      const promptModule: inquirerTypes.PromptModule = inquirer.createPromptModule();
-      const { confirmRushUpdate } = await promptModule({
-        type: 'confirm',
-        name: 'confirmRushUpdate',
-        message: `Confirm run rush update?`
-      });
-      if (confirmRushUpdate) {
-        const executeResult: boolean = await this._runRushUpdate();
-        if (!executeResult) {
-          this._terminal.writeErrorLine(`Run "rush update" failed...`);
-        }
-      } else {
-        this._terminal.writeWarningLine(
-          'There are package.json changes. Run "rush update" to update the lockfile.'
-        );
+      const executeResult: boolean = await this._runRushUpdate();
+      if (!executeResult) {
+        this._terminal.writeErrorLine(`Run "rush update" failed...`);
       }
     }
 
