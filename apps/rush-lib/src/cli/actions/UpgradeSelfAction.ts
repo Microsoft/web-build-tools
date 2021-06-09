@@ -22,7 +22,7 @@ export class UpgradeSelfAction extends BaseRushAction {
       actionName: 'upgrade-self',
       summary: 'Upgrade rush version in current repository',
       documentation:
-        'The "rush upgrade-self" command is used to upgrade rush version in current repository.' +
+        'The "rush upgrade-self" command is used to upgrade rush version in current repository. ' +
         'It helps maintainer to upgrade rushVersion in rush.json, settle down the versions of the' +
         ' dependency of rush self, and update lockfile in autoinstallers if changed.',
       parser
