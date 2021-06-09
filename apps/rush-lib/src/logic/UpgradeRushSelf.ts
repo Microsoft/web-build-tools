@@ -63,7 +63,7 @@ export class UpgradeRushSelf {
     const { version } = await promptModule({
       type: 'list',
       name: 'version',
-      message: `Select a version to upgrade`,
+      message: `Select the version to update the repo to use`,
       choices: versions.sort((a, b) => semver.rcompare(a, b))
     });
 
