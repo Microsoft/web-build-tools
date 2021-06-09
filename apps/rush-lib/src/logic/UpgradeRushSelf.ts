@@ -72,7 +72,7 @@ export class UpgradeRushSelf {
     const json: JsonObject = await JsonFile.loadAsync(rushJsonFile);
     if (json.rushVersion === version) {
       console.log();
-      console.log(colors.yellow(`upgrading same rush version: ${version}`));
+      console.log(colors.yellow(`Rush version "${version}" is the version that is already used in this repository.`));
       return {
         needRushUpdate: false
       };
