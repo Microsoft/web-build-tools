@@ -61,7 +61,7 @@ export class UpgradeSelfAction extends BaseRushAction {
         await this._runRushUpdate();
       } else {
         console.log();
-        console.log(colors.yellow('package.json changes, please run rush update by yourself :)'));
+        console.log(colors.yellow('There are package.json changes. Run "rush update" to update the lockfile.'));
       }
     }
 
