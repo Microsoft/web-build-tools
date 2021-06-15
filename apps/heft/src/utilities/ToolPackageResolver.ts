@@ -2,9 +2,11 @@
 // See LICENSE in the project root for license information.
 
 import * as path from 'path';
-import { Terminal, PackageJsonLookup, INodePackageJson, Import } from '@rushstack/node-core-library';
-import { HeftConfiguration } from '../configuration/HeftConfiguration';
+import { PackageJsonLookup, INodePackageJson, Import } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 import { RigConfig } from '@rushstack/rig-package';
+
+import { HeftConfiguration } from '../configuration/HeftConfiguration';
 
 export interface IToolPackageResolution {
   typeScriptPackagePath: string | undefined;
@@ -22,7 +24,7 @@ export class ToolPackageResolver {
 
   public async resolveToolPackagesAsync(
     heftConfiguration: HeftConfiguration,
-    terminal: Terminal
+    terminal: ITerminal
   ): Promise<IToolPackageResolution> {
     const buildFolder: string = heftConfiguration.buildFolder;
     const projectFolder: string | undefined = this._packageJsonLookup.tryGetPackageFolderFor(buildFolder);
@@ -42,7 +44,7 @@ export class ToolPackageResolver {
 
   private async _resolveToolPackagesInnerAsync(
     heftConfiguration: HeftConfiguration,
-    terminal: Terminal
+    terminal: ITerminal
   ): Promise<IToolPackageResolution> {
     // The following rules will apply independently to each tool (TypeScript, AE, ESLint, TSLint)
     // - If the local project has a devDependency (not regular or peer dependency) on the tool,
@@ -91,7 +93,7 @@ export class ToolPackageResolver {
   private async _tryResolveToolPackageAsync(
     toolPackageName: string,
     heftConfiguration: HeftConfiguration,
-    terminal: Terminal
+    terminal: ITerminal
   ): Promise<string | undefined> {
     // See if the project has a devDependency on the package
     if (

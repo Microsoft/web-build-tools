@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@rushstack/heft",
+      "comment": "",
+      "type": "none"
+    }
+  ],
+  "packageName": "@rushstack/heft",
+  "email": "iclanton@users.noreply.github.com"
+}

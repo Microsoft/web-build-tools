@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { Terminal, InternalError, Import } from '@rushstack/node-core-library';
+import { InternalError, Import } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 
 import { HeftConfiguration } from '../configuration/HeftConfiguration';
 import { IHeftPlugin } from './IHeftPlugin';
@@ -25,13 +26,13 @@ import { ToolPackageResolver } from '../utilities/ToolPackageResolver';
 import { NodeServicePlugin } from '../plugins/NodeServicePlugin';
 
 export interface IPluginManagerOptions {
-  terminal: Terminal;
+  terminal: ITerminal;
   heftConfiguration: HeftConfiguration;
   internalHeftSession: InternalHeftSession;
 }
 
 export class PluginManager {
-  private _terminal: Terminal;
+  private _terminal: ITerminal;
   private _heftConfiguration: HeftConfiguration;
   private _internalHeftSession: InternalHeftSession;
   private _appliedPlugins: IHeftPlugin[] = [];

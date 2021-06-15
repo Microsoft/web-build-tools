@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { StringBufferTerminalProvider, Terminal } from '@rushstack/node-core-library';
+import { StringBufferTerminalProvider, Terminal, ITerminal } from '@rushstack/terminal';
 
 import { EnvironmentConfiguration } from '../../../../api/EnvironmentConfiguration';
 import { AmazonS3BuildCacheProvider } from '../AmazonS3BuildCacheProvider';
@@ -72,7 +72,7 @@ describe('AmazonS3BuildCacheProvider', () => {
       .spyOn(CredentialCache.prototype, 'saveIfModifiedAsync')
       .mockImplementation(() => Promise.resolve());
 
-    const terminal: Terminal = new Terminal(new StringBufferTerminalProvider());
+    const terminal: ITerminal = new Terminal(new StringBufferTerminalProvider());
     await cacheProvider.updateCachedCredentialAsync(terminal, 'credential');
 
     expect(credentialsCacheSetCacheEntrySpy).toHaveBeenCalledTimes(1);

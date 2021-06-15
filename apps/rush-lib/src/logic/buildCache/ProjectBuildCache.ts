@@ -6,7 +6,8 @@ import * as events from 'events';
 import * as crypto from 'crypto';
 import type * as stream from 'stream';
 import * as tar from 'tar';
-import { FileSystem, LegacyAdapters, Path, Terminal } from '@rushstack/node-core-library';
+import { FileSystem, LegacyAdapters, Path } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 import * as fs from 'fs';
 
 import { RushConfigurationProject } from '../../api/RushConfigurationProject';
@@ -25,7 +26,7 @@ interface IProjectBuildCacheOptions {
   command: string;
   trackedProjectFiles: string[] | undefined;
   packageChangeAnalyzer: PackageChangeAnalyzer;
-  terminal: Terminal;
+  terminal: ITerminal;
 }
 
 interface IPathsToCache {
@@ -56,7 +57,7 @@ export class ProjectBuildCache {
     this._cacheId = cacheId;
   }
 
-  private static _tryGetTarUtility(terminal: Terminal): TarExecutable | undefined {
+  private static _tryGetTarUtility(terminal: ITerminal): TarExecutable | undefined {
     if (ProjectBuildCache._tarUtility === null) {
       ProjectBuildCache._tarUtility = TarExecutable.tryInitialize(terminal);
     }
@@ -81,7 +82,7 @@ export class ProjectBuildCache {
   }
 
   private static _validateProject(
-    terminal: Terminal,
+    terminal: ITerminal,
     projectConfiguration: RushProjectConfiguration,
     trackedProjectFiles: string[]
   ): boolean {
@@ -115,7 +116,7 @@ export class ProjectBuildCache {
     }
   }
 
-  public async tryRestoreFromCacheAsync(terminal: Terminal): Promise<boolean> {
+  public async tryRestoreFromCacheAsync(terminal: ITerminal): Promise<boolean> {
     const cacheId: string | undefined = this._cacheId;
     if (!cacheId) {
       terminal.writeWarningLine('Unable to get cache ID. Ensure Git is installed.');
@@ -230,7 +231,7 @@ export class ProjectBuildCache {
     return restoreSuccess;
   }
 
-  public async trySetCacheEntryAsync(terminal: Terminal): Promise<boolean> {
+  public async trySetCacheEntryAsync(terminal: ITerminal): Promise<boolean> {
     const cacheId: string | undefined = this._cacheId;
     if (!cacheId) {
       terminal.writeWarningLine('Unable to get cache ID. Ensure Git is installed.');
@@ -346,7 +347,7 @@ export class ProjectBuildCache {
     return success;
   }
 
-  private async _tryCollectPathsToCacheAsync(terminal: Terminal): Promise<IPathsToCache | undefined> {
+  private async _tryCollectPathsToCacheAsync(terminal: ITerminal): Promise<IPathsToCache | undefined> {
     const projectFolderPath: string = this._project.projectFolder;
     const outputFolderNamesThatExist: boolean[] = await Promise.all(
       this._projectOutputFolderNames.map((outputFolderName) =>
@@ -395,7 +396,7 @@ export class ProjectBuildCache {
   }
 
   private async *_getPathsInFolder(
-    terminal: Terminal,
+    terminal: ITerminal,
     symbolicLinkPathCallback: (path: string) => void,
     posixPrefix: string,
     folderPath: string

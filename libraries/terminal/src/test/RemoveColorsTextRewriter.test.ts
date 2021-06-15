@@ -5,7 +5,7 @@ import colors from 'colors';
 
 import { RemoveColorsTextRewriter } from '../RemoveColorsTextRewriter';
 import { TextRewriterState } from '../TextRewriter';
-import { AnsiEscape } from '@rushstack/node-core-library';
+import { AnsiEscape } from '../AnsiEscape';
 
 function testCase(inputs: string[]): void {
   const matcher: RemoveColorsTextRewriter = new RemoveColorsTextRewriter();

@@ -4,7 +4,8 @@
 import * as path from 'path';
 import type * as TTslint from 'tslint';
 import * as crypto from 'crypto';
-import { Import, Terminal, JsonFile } from '@rushstack/node-core-library';
+import { Import, JsonFile } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 
 import { LinterBase, ILinterBaseOptions } from './LinterBase';
 import { IExtendedSourceFile, IExtendedProgram } from './internalTypings/TypeScriptInternals';
@@ -45,7 +46,7 @@ export class Tslint extends LinterBase<TTslint.RuleFailure> {
    */
   public static getConfigHash(
     configFilePath: string,
-    terminal: Terminal,
+    terminal: ITerminal,
     cachedFileSystem: TypeScriptCachedFileSystem,
     previousHash?: crypto.Hash
   ): crypto.Hash {

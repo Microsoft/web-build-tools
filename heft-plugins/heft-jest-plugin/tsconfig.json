@@ -2,6 +2,7 @@
   "extends": "./node_modules/@rushstack/heft-node-rig/profiles/default/tsconfig-base.json",
 
   "compilerOptions": {
-    "types": ["heft-jest", "node"]
+    "types": ["heft-jest", "node"],
+    "skipLibCheck": true // TS is incorrectly emitting an error saying that the cyclic node-core-library does not export "Terminal"
   }
 }

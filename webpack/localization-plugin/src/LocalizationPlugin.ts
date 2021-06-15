@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { JsonFile, FileSystem, Terminal, NewlineKind } from '@rushstack/node-core-library';
+import { JsonFile, FileSystem, NewlineKind } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 import * as Webpack from 'webpack';
 import * as path from 'path';
 import * as Tapable from 'tapable';
@@ -461,7 +462,7 @@ export class LocalizationPlugin implements Webpack.Plugin {
    * @returns
    */
   public addDefaultLocFile(
-    terminal: Terminal,
+    terminal: ITerminal,
     localizedResourcePath: string,
     localizedResourceData: ILocalizationFile
   ): IAddDefaultLocFileResult {

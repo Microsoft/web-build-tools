@@ -4,14 +4,9 @@
 import * as nodeJsPath from 'path';
 
 import { ConfigurationFile, PathResolutionMethod, InheritanceType } from '../ConfigurationFile';
-import {
-  FileSystem,
-  JsonFile,
-  Path,
-  StringBufferTerminalProvider,
-  Terminal
-} from '@rushstack/node-core-library';
+import { FileSystem, JsonFile, Path } from '@rushstack/node-core-library';
 import { RigConfig } from '@rushstack/rig-package';
+import { StringBufferTerminalProvider, Terminal } from '@rushstack/terminal';
 
 describe('ConfigurationFile', () => {
   const projectRoot: string = nodeJsPath.resolve(__dirname, '..', '..');

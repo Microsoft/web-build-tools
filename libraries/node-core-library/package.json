@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@types/node": "10.17.13",
-    "colors": "~1.2.1",
     "fs-extra": "~7.0.1",
     "import-lazy": "~4.0.0",
     "jju": "~1.4.0",

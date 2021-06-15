@@ -20,6 +20,7 @@
   "dependencies": {
     "@rushstack/node-core-library": "workspace:*",
     "@rushstack/rig-package": "workspace:*",
+    "@rushstack/terminal": "workspace:*",
     "jsonpath-plus": "~4.0.0"
   },
   "devDependencies": {

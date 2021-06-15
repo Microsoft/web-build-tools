@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { Terminal } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 
 import { EnvironmentConfiguration, EnvironmentVariableNames } from '../../../api/EnvironmentConfiguration';
 import { CloudBuildCacheProviderBase } from '../CloudBuildCacheProviderBase';
@@ -94,7 +94,7 @@ export class AmazonS3BuildCacheProvider extends CloudBuildCacheProviderBase {
   }
 
   public async tryGetCacheEntryBufferByIdAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     cacheId: string
   ): Promise<Buffer | undefined> {
     try {
@@ -107,7 +107,7 @@ export class AmazonS3BuildCacheProvider extends CloudBuildCacheProviderBase {
   }
 
   public async trySetCacheEntryBufferAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     cacheId: string,
     objectBuffer: Buffer
   ): Promise<boolean> {
@@ -126,7 +126,7 @@ export class AmazonS3BuildCacheProvider extends CloudBuildCacheProviderBase {
     }
   }
 
-  public async updateCachedCredentialAsync(terminal: Terminal, credential: string): Promise<void> {
+  public async updateCachedCredentialAsync(terminal: ITerminal, credential: string): Promise<void> {
     await CredentialCache.usingAsync(
       {
         supportEditing: true
@@ -138,14 +138,14 @@ export class AmazonS3BuildCacheProvider extends CloudBuildCacheProviderBase {
     );
   }
 
-  public async updateCachedCredentialInteractiveAsync(terminal: Terminal): Promise<void> {
+  public async updateCachedCredentialInteractiveAsync(terminal: ITerminal): Promise<void> {
     throw new Error(
       'The interactive cloud credentials flow is not supported for Amazon S3.\n' +
         'Install and authenticate with aws-cli, or provide your credentials to rush using the --credential flag instead.'
     );
   }
 
-  public async deleteCachedCredentialsAsync(terminal: Terminal): Promise<void> {
+  public async deleteCachedCredentialsAsync(terminal: ITerminal): Promise<void> {
     await CredentialCache.usingAsync(
       {
         supportEditing: true

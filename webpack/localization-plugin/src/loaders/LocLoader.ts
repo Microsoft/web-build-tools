@@ -2,7 +2,7 @@
 // See LICENSE in the project root for license information.
 
 import { loader } from 'webpack';
-import { Terminal } from '@rushstack/node-core-library';
+import { Terminal, ITerminal } from '@rushstack/terminal';
 
 import { LocalizationPlugin } from '../LocalizationPlugin';
 import { ILocalizationFile } from '../interfaces';
@@ -22,7 +22,7 @@ export default loaderFactory(function (
   options: ILocLoaderOptions
 ) {
   const { pluginInstance } = options;
-  const terminal: Terminal = new Terminal(LoaderTerminalProvider.getTerminalProviderForLoader(this));
+  const terminal: ITerminal = new Terminal(LoaderTerminalProvider.getTerminalProviderForLoader(this));
   const locFileData: ILocalizationFile = LocFileParser.parseLocFile({
     content,
     terminal,

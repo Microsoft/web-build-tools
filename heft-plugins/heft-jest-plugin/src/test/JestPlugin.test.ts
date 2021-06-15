@@ -4,7 +4,7 @@
 import * as path from 'path';
 import type { Config } from '@jest/types';
 import { ConfigurationFile } from '@rushstack/heft-config-file';
-import { StringBufferTerminalProvider, Terminal } from '@rushstack/node-core-library';
+import { StringBufferTerminalProvider, Terminal } from '@rushstack/terminal';
 
 import { IHeftJestConfiguration, JestPlugin } from '../JestPlugin';
 

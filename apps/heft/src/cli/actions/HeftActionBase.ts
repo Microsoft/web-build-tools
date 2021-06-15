@@ -16,13 +16,8 @@ import {
   CommandLineStringListParameter,
   ICommandLineStringListDefinition
 } from '@rushstack/ts-command-line';
-import {
-  Terminal,
-  IPackageJson,
-  Colors,
-  ConsoleTerminalProvider,
-  AlreadyReportedError
-} from '@rushstack/node-core-library';
+import { IPackageJson, AlreadyReportedError } from '@rushstack/node-core-library';
+import { ITerminal, Colors, ConsoleTerminalProvider } from '@rushstack/terminal';
 import { performance } from 'perf_hooks';
 
 import { MetricsCollector } from '../../metrics/MetricsCollector';
@@ -40,7 +35,7 @@ export interface IStages {
 }
 
 export interface IHeftActionBaseOptions {
-  terminal: Terminal;
+  terminal: ITerminal;
   loggingManager: LoggingManager;
   metricsCollector: MetricsCollector;
   heftConfiguration: HeftConfiguration;
@@ -48,7 +43,7 @@ export interface IHeftActionBaseOptions {
 }
 
 export abstract class HeftActionBase extends CommandLineAction {
-  protected readonly terminal: Terminal;
+  protected readonly terminal: ITerminal;
   protected readonly loggingManager: LoggingManager;
   protected readonly metricsCollector: MetricsCollector;
   protected readonly heftConfiguration: HeftConfiguration;

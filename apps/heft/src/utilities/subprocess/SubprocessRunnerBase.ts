@@ -3,7 +3,7 @@
 
 import * as childProcess from 'child_process';
 import * as path from 'path';
-import { ITerminalProvider, Terminal } from '@rushstack/node-core-library';
+import { ITerminalProvider, Terminal, ITerminal } from '@rushstack/terminal';
 
 import {
   ISubprocessMessageBase,
@@ -57,7 +57,7 @@ export abstract class SubprocessRunnerBase<TSubprocessConfiguration> {
   public _runningAsSubprocess: boolean = false;
   protected readonly _configuration: TSubprocessConfiguration;
 
-  protected _globalTerminal!: Terminal;
+  protected _globalTerminal!: ITerminal;
   private readonly _subprocessCommunicationManagers: SubprocessCommunicationManagerBase[] = [];
 
   /**
@@ -267,7 +267,7 @@ export abstract class SubprocessRunnerBase<TSubprocessConfiguration> {
     this.registerSubprocessCommunicationManager(this._scopedLoggerManager);
   }
 
-  private _processNodeArgsForSubprocess(terminal: Terminal, nodeArgs: string[]): string[] {
+  private _processNodeArgsForSubprocess(terminal: ITerminal, nodeArgs: string[]): string[] {
     nodeArgs = [...nodeArgs]; // Clone the args array
     const inspectPort: number = SubprocessRunnerBase._subprocessInspectorPort++;
     let willUseInspector: boolean = false;

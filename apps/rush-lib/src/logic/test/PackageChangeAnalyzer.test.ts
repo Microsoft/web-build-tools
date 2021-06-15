@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { StringBufferTerminalProvider, Terminal } from '@rushstack/node-core-library';
+import { StringBufferTerminalProvider, ITerminal, Terminal } from '@rushstack/terminal';
+
 import { PackageChangeAnalyzer } from '../PackageChangeAnalyzer';
 import { RushConfiguration } from '../../api/RushConfiguration';
 import { EnvironmentConfiguration } from '../../api/EnvironmentConfiguration';
@@ -62,7 +63,7 @@ describe('PackageChangeAnalyzer', () => {
         ['apps/banana/peel.js', 'b201']
       ]);
       const subject: PackageChangeAnalyzer = createTestSubject(projects, files);
-      const terminal: Terminal = new Terminal(new StringBufferTerminalProvider());
+      const terminal: ITerminal = new Terminal(new StringBufferTerminalProvider());
 
       expect(await subject.getPackageDeps('apple', terminal)).toEqual(
         new Map([['apps/apple/core.js', 'a101']])
@@ -101,7 +102,7 @@ describe('PackageChangeAnalyzer', () => {
         ['apps/banana/peel.js.map', 'b202']
       ]);
       const subject: PackageChangeAnalyzer = createTestSubject(projects, files);
-      const terminal: Terminal = new Terminal(new StringBufferTerminalProvider());
+      const terminal: ITerminal = new Terminal(new StringBufferTerminalProvider());
 
       expect(await subject.getPackageDeps('apple', terminal)).toEqual(
         new Map([
@@ -139,7 +140,7 @@ describe('PackageChangeAnalyzer', () => {
         ['apps/apple/src/index.ts', 'a106']
       ]);
       const subject: PackageChangeAnalyzer = createTestSubject(projects, files);
-      const terminal: Terminal = new Terminal(new StringBufferTerminalProvider());
+      const terminal: ITerminal = new Terminal(new StringBufferTerminalProvider());
 
       // In a dot-ignore file, the later rule '!assets/important/**' should override the previous
       // rule of '*.png'. This unit test verifies that this behavior doesn't change later if
@@ -173,7 +174,7 @@ describe('PackageChangeAnalyzer', () => {
         ['tools/random-file.js', 'e00e']
       ]);
       const subject: PackageChangeAnalyzer = createTestSubject(projects, files);
-      const terminal: Terminal = new Terminal(new StringBufferTerminalProvider());
+      const terminal: ITerminal = new Terminal(new StringBufferTerminalProvider());
 
       expect(await subject.getPackageDeps('apple', terminal)).toEqual(
         new Map([
@@ -199,7 +200,7 @@ describe('PackageChangeAnalyzer', () => {
       ];
       const files: Map<string, string> = new Map([['apps/apple/core.js', 'a101']]);
       const subject: PackageChangeAnalyzer = createTestSubject(projects, files);
-      const terminal: Terminal = new Terminal(new StringBufferTerminalProvider());
+      const terminal: ITerminal = new Terminal(new StringBufferTerminalProvider());
 
       expect(await subject.getPackageDeps('carrot', terminal)).toBeUndefined();
     });
@@ -214,7 +215,7 @@ describe('PackageChangeAnalyzer', () => {
       ];
       const files: Map<string, string> = new Map([['apps/apple/core.js', 'a101']]);
       const subject: PackageChangeAnalyzer = createTestSubject(projects, files);
-      const terminal: Terminal = new Terminal(new StringBufferTerminalProvider());
+      const terminal: ITerminal = new Terminal(new StringBufferTerminalProvider());
 
       // Because other unit tests rely on the fact that a freshly instantiated
       // PackageChangeAnalyzer is inert until someone actually requests project data,
@@ -247,7 +248,7 @@ describe('PackageChangeAnalyzer', () => {
         ['apps/apple/slices.js', 'a102']
       ]);
       const subject: PackageChangeAnalyzer = createTestSubject(projects, files);
-      const terminal: Terminal = new Terminal(new StringBufferTerminalProvider());
+      const terminal: ITerminal = new Terminal(new StringBufferTerminalProvider());
 
       expect(await subject.getProjectStateHash('apple', terminal)).toMatchInlineSnapshot(
         `"265536e325cdfac3fa806a51873d927a712fc6c9"`
@@ -283,7 +284,7 @@ describe('PackageChangeAnalyzer', () => {
       ]);
       const subjectB: PackageChangeAnalyzer = createTestSubject(projectsB, filesB);
 
-      const terminal: Terminal = new Terminal(new StringBufferTerminalProvider());
+      const terminal: ITerminal = new Terminal(new StringBufferTerminalProvider());
       expect(await subjectA.getProjectStateHash('apple', terminal)).toEqual(
         await subjectB.getProjectStateHash('apple', terminal)
       );

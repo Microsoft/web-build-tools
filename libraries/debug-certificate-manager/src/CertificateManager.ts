@@ -5,7 +5,8 @@ import * as forge from 'node-forge';
 import * as path from 'path';
 import * as child_process from 'child_process';
 import { EOL } from 'os';
-import { FileSystem, Terminal } from '@rushstack/node-core-library';
+import { FileSystem } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 
 import { runSudoAsync, IRunResult, runAsync } from './exec';
 import { CertificateStore } from './CertificateStore';
@@ -53,7 +54,7 @@ export class CertificateManager {
    */
   public async ensureCertificateAsync(
     canGenerateNewCertificate: boolean,
-    terminal: Terminal
+    terminal: ITerminal
   ): Promise<ICertificate> {
     if (this._certificateStore.certificateData && this._certificateStore.keyData) {
       if (!this._certificateHasSubjectAltName()) {
@@ -89,7 +90,7 @@ export class CertificateManager {
    *
    * @public
    */
-  public async untrustCertificateAsync(terminal: Terminal): Promise<boolean> {
+  public async untrustCertificateAsync(terminal: ITerminal): Promise<boolean> {
     switch (process.platform) {
       case 'win32':
         const winUntrustResult: child_process.SpawnSyncReturns<string> = child_process.spawnSync(
@@ -231,7 +232,7 @@ export class CertificateManager {
     };
   }
 
-  private async _tryTrustCertificateAsync(certificatePath: string, terminal: Terminal): Promise<boolean> {
+  private async _tryTrustCertificateAsync(certificatePath: string, terminal: ITerminal): Promise<boolean> {
     switch (process.platform) {
       case 'win32':
         terminal.writeLine(
@@ -321,7 +322,7 @@ export class CertificateManager {
     }
   }
 
-  private async _trySetFriendlyNameAsync(certificatePath: string, terminal: Terminal): Promise<boolean> {
+  private async _trySetFriendlyNameAsync(certificatePath: string, terminal: ITerminal): Promise<boolean> {
     if (process.platform === 'win32') {
       const basePath: string = path.dirname(certificatePath);
       const fileName: string = path.basename(certificatePath, path.extname(certificatePath));
@@ -358,7 +359,7 @@ export class CertificateManager {
     }
   }
 
-  private async _ensureCertificateInternalAsync(terminal: Terminal): Promise<void> {
+  private async _ensureCertificateInternalAsync(terminal: ITerminal): Promise<void> {
     const certificateStore: CertificateStore = this._certificateStore;
     const generatedCertificate: ICertificate = this._createDevelopmentCertificate();
 

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { AnsiEscape } from '@rushstack/node-core-library';
+import { AnsiEscape } from '@rushstack/terminal';
 import * as colorsPackage from 'colors';
 import * as path from 'path';
 

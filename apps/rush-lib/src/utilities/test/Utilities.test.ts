@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { StringBufferTerminalProvider, Terminal } from '@rushstack/node-core-library';
+import { StringBufferTerminalProvider, Terminal, ITerminal } from '@rushstack/terminal';
 
 import { IDisposable, Utilities } from '../Utilities';
 
@@ -11,7 +11,7 @@ describe('Utilities', () => {
       'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.';
 
     let terminalProvider: StringBufferTerminalProvider;
-    let terminal: Terminal;
+    let terminal: ITerminal;
 
     beforeEach(() => {
       terminalProvider = new StringBufferTerminalProvider(false);

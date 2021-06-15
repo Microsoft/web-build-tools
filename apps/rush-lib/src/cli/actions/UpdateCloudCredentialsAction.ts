@@ -2,7 +2,8 @@
 // See LICENSE in the project root for license information.
 
 import { CommandLineStringParameter, CommandLineFlagParameter } from '@rushstack/ts-command-line';
-import { AlreadyReportedError, ConsoleTerminalProvider, Terminal } from '@rushstack/node-core-library';
+import { AlreadyReportedError } from '@rushstack/node-core-library';
+import { ConsoleTerminalProvider, Terminal, ITerminal } from '@rushstack/terminal';
 
 import { RushCommandLineParser } from '../RushCommandLineParser';
 import { BaseRushAction } from './BaseRushAction';
@@ -45,7 +46,7 @@ export class UpdateCloudCredentialsAction extends BaseRushAction {
   }
 
   protected async runAsync(): Promise<void> {
-    const terminal: Terminal = new Terminal(new ConsoleTerminalProvider());
+    const terminal: ITerminal = new Terminal(new ConsoleTerminalProvider());
 
     const buildCacheConfiguration: BuildCacheConfiguration =
       await BuildCacheConfiguration.loadAndRequireEnabledAsync(terminal, this.rushConfiguration);

@@ -12,11 +12,68 @@ import {
 } from './Colors';
 
 /**
+ * @beta
+ */
+export interface ITerminal {
+  /**
+   * Write a generic message to the terminal
+   */
+  write(...messageParts: (string | IColorableSequence)[]): void;
+
+  /**
+   * Write a generic message to the terminal, followed by a newline
+   */
+  writeLine(...messageParts: (string | IColorableSequence)[]): void;
+
+  /**
+   * Write a warning message to the console with yellow text.
+   *
+   * @remarks
+   * The yellow color takes precedence over any other foreground colors set.
+   */
+  writeWarning(...messageParts: (string | IColorableSequence)[]): void;
+
+  /**
+   * Write a warning message to the console with yellow text, followed by a newline.
+   *
+   * @remarks
+   * The yellow color takes precedence over any other foreground colors set.
+   */
+  writeWarningLine(...messageParts: (string | IColorableSequence)[]): void;
+
+  /**
+   * Write an error message to the console with red text.
+   *
+   * @remarks
+   * The red color takes precedence over any other foreground colors set.
+   */
+  writeError(...messageParts: (string | IColorableSequence)[]): void;
+
+  /**
+   * Write an error message to the console with red text, followed by a newline.
+   *
+   * @remarks
+   * The red color takes precedence over any other foreground colors set.
+   */
+  writeErrorLine(...messageParts: (string | IColorableSequence)[]): void;
+
+  /**
+   * Write a verbose-level message.
+   */
+  writeVerbose(...messageParts: (string | IColorableSequence)[]): void;
+
+  /**
+   * Write a verbose-level message followed by a newline.
+   */
+  writeVerboseLine(...messageParts: (string | IColorableSequence)[]): void;
+}
+
+/**
  * This class facilitates writing to a console.
  *
  * @beta
  */
-export class Terminal {
+export class Terminal implements ITerminal {
   private _providers: Set<ITerminalProvider>;
 
   public constructor(provider: ITerminalProvider) {
@@ -41,24 +98,21 @@ export class Terminal {
   }
 
   /**
-   * Write a generic message to the terminal
+   * {@inheritdoc ITerminal.write}
    */
   public write(...messageParts: (string | IColorableSequence)[]): void {
     this._writeSegmentsToProviders(messageParts, TerminalProviderSeverity.log);
   }
 
   /**
-   * Write a generic message to the terminal, followed by a newline
+   * {@inheritdoc ITerminal.writeLine}
    */
   public writeLine(...messageParts: (string | IColorableSequence)[]): void {
     this.write(...messageParts, eolSequence);
   }
 
   /**
-   * Write a warning message to the console with yellow text.
-   *
-   * @remarks
-   * The yellow color takes precedence over any other foreground colors set.
+   * {@inheritdoc ITerminal.writeWarning}
    */
   public writeWarning(...messageParts: (string | IColorableSequence)[]): void {
     this._writeSegmentsToProviders(
@@ -73,10 +127,7 @@ export class Terminal {
   }
 
   /**
-   * Write a warning message to the console with yellow text, followed by a newline.
-   *
-   * @remarks
-   * The yellow color takes precedence over any other foreground colors set.
+   * {@inheritdoc ITerminal.writeWarningLine}
    */
   public writeWarningLine(...messageParts: (string | IColorableSequence)[]): void {
     this._writeSegmentsToProviders(
@@ -94,10 +145,7 @@ export class Terminal {
   }
 
   /**
-   * Write an error message to the console with red text.
-   *
-   * @remarks
-   * The red color takes precedence over any other foreground colors set.
+   * {@inheritdoc ITerminal.writeError}
    */
   public writeError(...messageParts: (string | IColorableSequence)[]): void {
     this._writeSegmentsToProviders(
@@ -112,10 +160,7 @@ export class Terminal {
   }
 
   /**
-   * Write an error message to the console with red text, followed by a newline.
-   *
-   * @remarks
-   * The red color takes precedence over any other foreground colors set.
+   * {@inheritdoc ITerminal.writeErrorLine}
    */
   public writeErrorLine(...messageParts: (string | IColorableSequence)[]): void {
     this._writeSegmentsToProviders(
@@ -133,14 +178,14 @@ export class Terminal {
   }
 
   /**
-   * Write a verbose-level message.
+   * {@inheritdoc ITerminal.writeVerbose}
    */
   public writeVerbose(...messageParts: (string | IColorableSequence)[]): void {
     this._writeSegmentsToProviders(messageParts, TerminalProviderSeverity.verbose);
   }
 
   /**
-   * Write a verbose-level message followed by a newline.
+   * {@inheritdoc ITerminal.writeVerboseLine}
    */
   public writeVerboseLine(...messageParts: (string | IColorableSequence)[]): void {
     this.writeVerbose(...messageParts, eolSequence);

@@ -6,14 +6,8 @@ import {
   CommandLineStringListParameter,
   CommandLineFlagParameter
 } from '@rushstack/ts-command-line';
-import {
-  Terminal,
-  InternalError,
-  ConsoleTerminalProvider,
-  AlreadyReportedError,
-  Path,
-  FileSystem
-} from '@rushstack/node-core-library';
+import { InternalError, AlreadyReportedError, Path, FileSystem } from '@rushstack/node-core-library';
+import { Terminal, ITerminal, ConsoleTerminalProvider } from '@rushstack/terminal';
 import { ArgumentParser } from 'argparse';
 import { SyncHook } from 'tapable';
 
@@ -45,7 +39,7 @@ interface IPreInitializationArgumentValues {
 
 export class HeftToolsCommandLineParser extends CommandLineParser {
   private _terminalProvider: ConsoleTerminalProvider;
-  private _terminal: Terminal;
+  private _terminal: ITerminal;
   private _loggingManager: LoggingManager;
   private _metricsCollector: MetricsCollector;
   private _pluginManager: PluginManager;
@@ -63,7 +57,7 @@ export class HeftToolsCommandLineParser extends CommandLineParser {
     return !!this._preInitializationArgumentValues.debug;
   }
 
-  public get terminal(): Terminal {
+  public get terminal(): ITerminal {
     return this._terminal;
   }
 

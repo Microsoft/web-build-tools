@@ -655,7 +655,7 @@
       "projectFolder": "heft-plugins/heft-jest-plugin",
       "reviewCategory": "libraries",
       "shouldPublish": true,
-      "cyclicDependencyProjects": ["@rushstack/heft", "@rushstack/heft-node-rig"]
+      "cyclicDependencyProjects": ["@rushstack/heft-node-rig", "@rushstack/heft"]
     },
     {
       "packageName": "@rushstack/heft-webpack4-plugin",
@@ -726,7 +726,8 @@
       "packageName": "@rushstack/terminal",
       "projectFolder": "libraries/terminal",
       "reviewCategory": "libraries",
-      "shouldPublish": true
+      "shouldPublish": true,
+      "cyclicDependencyProjects": ["@rushstack/heft-node-rig", "@rushstack/heft"]
     },
     {
       "packageName": "@rushstack/tree-pattern",

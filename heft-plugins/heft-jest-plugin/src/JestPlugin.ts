@@ -24,7 +24,8 @@ import {
   InheritanceType,
   PathResolutionMethod
 } from '@rushstack/heft-config-file';
-import { FileSystem, JsonFile, JsonSchema, Terminal } from '@rushstack/node-core-library';
+import { FileSystem, JsonFile, JsonSchema } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 
 import { IHeftJestReporterOptions } from './HeftJestReporter';
 import { HeftJestDataFile } from './HeftJestDataFile';
@@ -174,7 +175,7 @@ export class JestPlugin implements IHeftPlugin<IJestPluginOptions> {
     options?: IJestPluginOptions
   ): Promise<void> {
     const jestLogger: ScopedLogger = heftSession.requestScopedLogger('jest');
-    const jestTerminal: Terminal = jestLogger.terminal;
+    const jestTerminal: ITerminal = jestLogger.terminal;
     jestTerminal.writeLine(`Using Jest version ${getVersion()}`);
 
     const buildFolder: string = heftConfiguration.buildFolder;

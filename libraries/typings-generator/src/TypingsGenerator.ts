@@ -1,13 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import {
-  FileSystem,
-  Terminal,
-  ConsoleTerminalProvider,
-  Path,
-  NewlineKind
-} from '@rushstack/node-core-library';
+import { FileSystem, Path, NewlineKind } from '@rushstack/node-core-library';
+import { ITerminal, Terminal, ConsoleTerminalProvider } from '@rushstack/terminal';
 import * as glob from 'glob';
 import * as path from 'path';
 import { EOL } from 'os';
@@ -24,7 +19,7 @@ export interface ITypingsGeneratorOptions<TTypingsResult = string | undefined> {
     fileContents: string,
     filePath: string
   ) => TTypingsResult | Promise<TTypingsResult>;
-  terminal?: Terminal;
+  terminal?: ITerminal;
   filesToIgnore?: string[];
 }
 

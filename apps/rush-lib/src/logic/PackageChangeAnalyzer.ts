@@ -7,7 +7,8 @@ import * as crypto from 'crypto';
 import ignore, { Ignore } from 'ignore';
 
 import { getPackageDeps, getGitHashForFiles } from '@rushstack/package-deps-hash';
-import { Path, InternalError, FileSystem, Terminal, Async } from '@rushstack/node-core-library';
+import { Path, InternalError, FileSystem, Async } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 
 import { RushConfiguration } from '../api/RushConfiguration';
 import { RushProjectConfiguration } from '../api/RushProjectConfiguration';
@@ -33,7 +34,7 @@ export class PackageChangeAnalyzer {
 
   public async getPackageDeps(
     projectName: string,
-    terminal: Terminal
+    terminal: ITerminal
   ): Promise<Map<string, string> | undefined> {
     if (this._data === null) {
       this._data = await this._getData(terminal);
@@ -52,7 +53,7 @@ export class PackageChangeAnalyzer {
    *   Git SHA is fed into the hash
    * - A hex digest of the hash is returned
    */
-  public async getProjectStateHash(projectName: string, terminal: Terminal): Promise<string | undefined> {
+  public async getProjectStateHash(projectName: string, terminal: ITerminal): Promise<string | undefined> {
     let projectState: string | undefined = this._projectStateCache.get(projectName);
     if (!projectState) {
       const packageDeps: Map<string, string> | undefined = await this.getPackageDeps(projectName, terminal);
@@ -76,7 +77,7 @@ export class PackageChangeAnalyzer {
     return projectState;
   }
 
-  private async _getData(terminal: Terminal): Promise<Map<string, Map<string, string>> | undefined> {
+  private async _getData(terminal: ITerminal): Promise<Map<string, Map<string, string>> | undefined> {
     const repoDeps: Map<string, string> | undefined = this._getRepoDeps();
     if (!repoDeps) {
       return undefined;
@@ -179,7 +180,7 @@ export class PackageChangeAnalyzer {
 
   private async _getIgnoreMatcherForProject(
     project: RushConfigurationProject,
-    terminal: Terminal
+    terminal: ITerminal
   ): Promise<Ignore> {
     const projectConfiguration: RushProjectConfiguration | undefined =
       await RushProjectConfiguration.tryLoadForProjectAsync(project, undefined, terminal);

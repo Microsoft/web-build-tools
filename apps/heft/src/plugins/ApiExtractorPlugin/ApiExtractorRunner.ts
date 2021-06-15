@@ -3,7 +3,8 @@
 
 import * as semver from 'semver';
 import * as path from 'path';
-import { Terminal, Path } from '@rushstack/node-core-library';
+import { Path } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 import type * as TApiExtractor from '@microsoft/api-extractor';
 
 import { SubprocessRunnerBase } from '../../utilities/subprocess/SubprocessRunnerBase';
@@ -46,7 +47,7 @@ export interface IApiExtractorRunnerConfiguration {
 
 export class ApiExtractorRunner extends SubprocessRunnerBase<IApiExtractorRunnerConfiguration> {
   private _scopedLogger!: IScopedLogger;
-  private _terminal!: Terminal;
+  private _terminal!: ITerminal;
 
   public get filename(): string {
     return __filename;

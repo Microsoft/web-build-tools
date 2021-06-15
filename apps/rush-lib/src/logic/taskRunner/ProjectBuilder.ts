@@ -9,15 +9,16 @@ import {
   FileSystem,
   JsonObject,
   NewlineKind,
-  InternalError,
-  Terminal
+  InternalError
 } from '@rushstack/node-core-library';
 import {
   TerminalChunkKind,
   TextRewriterTransform,
   StderrLineTransform,
   SplitterTransform,
-  DiscardStdoutTransform
+  DiscardStdoutTransform,
+  Terminal,
+  ITerminal
 } from '@rushstack/terminal';
 import { CollatedTerminal } from '@rushstack/stream-collator';
 
@@ -127,7 +128,7 @@ export class ProjectBuilder extends BaseBuilder {
   }
 
   public async tryWriteCacheEntryAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     trackedFilePaths: string[] | undefined,
     repoCommandLineConfiguration: CommandLineConfiguration | undefined
   ): Promise<boolean | undefined> {
@@ -184,7 +185,7 @@ export class ProjectBuilder extends BaseBuilder {
 
       const collatedTerminal: CollatedTerminal = new CollatedTerminal(normalizeNewlineTransform);
       const terminalProvider: CollatedTerminalProvider = new CollatedTerminalProvider(collatedTerminal);
-      const terminal: Terminal = new Terminal(terminalProvider);
+      const terminal: ITerminal = new Terminal(terminalProvider);
 
       let hasWarningOrError: boolean = false;
       const projectFolder: string = this._rushProject.projectFolder;
@@ -365,7 +366,7 @@ export class ProjectBuilder extends BaseBuilder {
   }
 
   private async _getProjectBuildCacheAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     trackedProjectFiles: string[] | undefined,
     commandLineConfiguration: CommandLineConfiguration | undefined
   ): Promise<ProjectBuildCache | undefined> {

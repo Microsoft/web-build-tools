@@ -11,17 +11,29 @@
  * @packageDocumentation
  */
 
-export * from './CallbackWritable';
-export * from './DiscardStdoutTransform';
-export * from './ITerminalChunk';
-export * from './MockWritable';
-export * from './NormalizeNewlinesTextRewriter';
-export * from './RemoveColorsTextRewriter';
-export * from './SplitterTransform';
-export * from './StdioLineTransform';
-export * from './StdioSummarizer';
-export * from './StdioWritable';
-export * from './TerminalTransform';
-export * from './TerminalWritable';
-export * from './TextRewriter';
-export * from './TextRewriterTransform';
+export { ICallbackWritableOptions, CallbackWritable } from './CallbackWritable';
+export { IDiscardStdoutTransformOptions, DiscardStdoutTransform } from './DiscardStdoutTransform';
+export { TerminalChunkKind, ITerminalChunk } from './ITerminalChunk';
+export { MockWritable } from './MockWritable';
+export {
+  INormalizeNewlinesTextRewriterOptions,
+  NormalizeNewlinesTextRewriter
+} from './NormalizeNewlinesTextRewriter';
+export { RemoveColorsTextRewriter } from './RemoveColorsTextRewriter';
+export { ISplitterTransformOptions, SplitterTransform } from './SplitterTransform';
+export { IStdioLineTransformOptions, StderrLineTransform } from './StdioLineTransform';
+export { IStdioSummarizerOptions, StdioSummarizer } from './StdioSummarizer';
+export { StdioWritable } from './StdioWritable';
+export { ITerminalTransformOptions, TerminalTransform } from './TerminalTransform';
+export { ITerminalWritableOptions, TerminalWritable } from './TerminalWritable';
+export { TextRewriterState, TextRewriter } from './TextRewriter';
+export { ITextRewriterTransformOptions, TextRewriterTransform } from './TextRewriterTransform';
+export { AnsiEscape, IAnsiEscapeConvertForTestsOptions } from './AnsiEscape';
+export { ITerminal, Terminal } from './Terminal/Terminal';
+export { Colors, IColorableSequence, ColorValue, TextAttribute } from './Terminal/Colors';
+export { ITerminalProvider, TerminalProviderSeverity } from './Terminal/ITerminalProvider';
+export { ConsoleTerminalProvider, IConsoleTerminalProviderOptions } from './Terminal/ConsoleTerminalProvider';
+export {
+  StringBufferTerminalProvider,
+  IStringBufferOutputOptions
+} from './Terminal/StringBufferTerminalProvider';

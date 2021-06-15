@@ -4,7 +4,8 @@
 import * as os from 'os';
 import colors from 'colors/safe';
 
-import { AlreadyReportedError, ConsoleTerminalProvider, Terminal } from '@rushstack/node-core-library';
+import { AlreadyReportedError } from '@rushstack/node-core-library';
+import { ConsoleTerminalProvider, ITerminal, Terminal } from '@rushstack/terminal';
 import {
   CommandLineFlagParameter,
   CommandLineStringParameter,
@@ -50,7 +51,7 @@ interface IExecuteInternalOptions {
   taskRunnerOptions: ITaskRunnerOptions;
   stopwatch: Stopwatch;
   ignoreHooks?: boolean;
-  terminal: Terminal;
+  terminal: ITerminal;
 }
 
 /**
@@ -124,7 +125,7 @@ export class BulkScriptAction extends BaseScriptAction {
 
     const changedProjectsOnly: boolean = this._isIncrementalBuildAllowed && this._changedProjectsOnly.value;
 
-    const terminal: Terminal = new Terminal(new ConsoleTerminalProvider());
+    const terminal: ITerminal = new Terminal(new ConsoleTerminalProvider());
     let buildCacheConfiguration: BuildCacheConfiguration | undefined;
     if (!this._disableBuildCacheFlag?.value && !this._disableBuildCache) {
       buildCacheConfiguration = await BuildCacheConfiguration.tryLoadAsync(terminal, this.rushConfiguration);

@@ -2781,6 +2781,7 @@ packages:
       '@rushstack/heft-config-file': file:../temp/tarballs/rushstack-heft-config-file-0.5.0.tgz
       '@rushstack/node-core-library': file:../temp/tarballs/rushstack-node-core-library-3.39.0.tgz
       '@rushstack/rig-package': file:../temp/tarballs/rushstack-rig-package-0.2.12.tgz
+      '@rushstack/terminal': file:../temp/tarballs/rushstack-terminal-0.1.93.tgz
       '@rushstack/ts-command-line': file:../temp/tarballs/rushstack-ts-command-line-4.7.10.tgz
       '@rushstack/typings-generator': file:../temp/tarballs/rushstack-typings-generator-0.3.7.tgz
       '@types/tapable': 1.0.6
@@ -2806,6 +2807,7 @@ packages:
     dependencies:
       '@rushstack/node-core-library': file:../temp/tarballs/rushstack-node-core-library-3.39.0.tgz
       '@rushstack/rig-package': file:../temp/tarballs/rushstack-rig-package-0.2.12.tgz
+      '@rushstack/terminal': file:../temp/tarballs/rushstack-terminal-0.1.93.tgz
       jsonpath-plus: 4.0.0
     dev: true
 
@@ -2834,6 +2836,16 @@ packages:
       strip-json-comments: 3.1.1
     dev: true
 
+  file:../temp/tarballs/rushstack-terminal-0.1.93.tgz:
+    resolution: {tarball: file:../temp/tarballs/rushstack-terminal-0.1.93.tgz}
+    name: '@rushstack/terminal'
+    version: 0.1.93
+    dependencies:
+      '@rushstack/node-core-library': file:../temp/tarballs/rushstack-node-core-library-3.39.0.tgz
+      '@types/node': 10.17.13
+      colors: 1.2.5
+    dev: true
+
   file:../temp/tarballs/rushstack-tree-pattern-0.2.1.tgz:
     resolution: {tarball: file:../temp/tarballs/rushstack-tree-pattern-0.2.1.tgz}
     name: '@rushstack/tree-pattern'
@@ -2857,6 +2869,7 @@ packages:
     version: 0.3.7
     dependencies:
       '@rushstack/node-core-library': file:../temp/tarballs/rushstack-node-core-library-3.39.0.tgz
+      '@rushstack/terminal': file:../temp/tarballs/rushstack-terminal-0.1.93.tgz
       '@types/node': 10.17.13
       chokidar: 3.4.3
       glob: 7.0.6

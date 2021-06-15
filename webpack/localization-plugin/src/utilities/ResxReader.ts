@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { FileSystem, Terminal, Text, NewlineKind } from '@rushstack/node-core-library';
+import { FileSystem, Text, NewlineKind } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 import { XmlDocument, XmlElement } from 'xmldoc';
 
 import { ILocalizedString, ILocalizationFile } from '../interfaces';
@@ -10,7 +11,7 @@ const STRING_NAME_RESX: RegExp = /^[A-z_$][A-z0-9_$]*$/;
 
 export interface IResxReaderOptions {
   resxFilePath: string;
-  terminal: Terminal;
+  terminal: ITerminal;
   newlineNormalization: NewlineKind | undefined;
 }
 

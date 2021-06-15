@@ -8,11 +8,11 @@ import {
   InheritanceType,
   PathResolutionMethod
 } from '@rushstack/heft-config-file';
+import { ITerminal } from '@rushstack/terminal';
 
 import { IApiExtractorPluginConfiguration } from '../plugins/ApiExtractorPlugin/ApiExtractorPlugin';
 import { ITypeScriptConfigurationJson } from '../plugins/TypeScriptPlugin/TypeScriptPlugin';
 import { HeftConfiguration } from '../configuration/HeftConfiguration';
-import { Terminal } from '@rushstack/node-core-library';
 import { ISassConfigurationJson } from '../plugins/SassTypingsPlugin/SassTypingsPlugin';
 import { INodeServicePluginConfiguration } from '../plugins/NodeServicePlugin';
 
@@ -143,7 +143,7 @@ export class CoreConfigFiles {
    * Gets the eventActions from config/heft.json
    */
   public static async getConfigConfigFileEventActionsAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     heftConfiguration: HeftConfiguration
   ): Promise<IHeftEventActions> {
     let result: IHeftEventActions | undefined =

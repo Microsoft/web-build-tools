@@ -2,13 +2,8 @@
 // See LICENSE in the project root for license information.
 
 import * as path from 'path';
-import {
-  Terminal,
-  ITerminalProvider,
-  IPackageJson,
-  PackageJsonLookup,
-  InternalError
-} from '@rushstack/node-core-library';
+import { IPackageJson, PackageJsonLookup, InternalError } from '@rushstack/node-core-library';
+import { Terminal, ITerminal, ITerminalProvider } from '@rushstack/terminal';
 import { trueCasePathSync } from 'true-case-path';
 import { RigConfig } from '@rushstack/rig-package';
 
@@ -24,7 +19,7 @@ export interface IHeftConfigurationInitializationOptions {
   cwd: string;
 
   /**
-   * Terminal instance to facilitate logging.
+   * Terminal provider instance to facilitate logging.
    */
   terminalProvider: ITerminalProvider;
 }
@@ -58,7 +53,7 @@ export class HeftConfiguration {
   private _projectConfigFolder: string | undefined;
   private _buildCacheFolder: string | undefined;
   private _rigConfig: RigConfig | undefined;
-  private _globalTerminal!: Terminal;
+  private _globalTerminal!: ITerminal;
   private _terminalProvider!: ITerminalProvider;
 
   /**
@@ -119,7 +114,7 @@ export class HeftConfiguration {
   /**
    * Terminal instance to facilitate logging.
    */
-  public get globalTerminal(): Terminal {
+  public get globalTerminal(): ITerminal {
     return this._globalTerminal;
   }
 

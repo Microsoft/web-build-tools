@@ -5,16 +5,14 @@ import * as path from 'path';
 import * as child_process from 'child_process';
 import {
   AlreadyReportedError,
-  Colors,
-  ConsoleTerminalProvider,
   Executable,
   FileSystem,
   InternalError,
   JsonObject,
   NewlineKind,
-  Terminal,
   Text
 } from '@rushstack/node-core-library';
+import { Colors, ConsoleTerminalProvider, ITerminal, Terminal } from '@rushstack/terminal';
 
 import { RushConfiguration } from '../../api/RushConfiguration';
 import { Utilities } from '../../utilities/Utilities';
@@ -54,7 +52,7 @@ export interface ISetupPackageRegistryOptions {
 export class SetupPackageRegistry {
   private readonly _options: ISetupPackageRegistryOptions;
   public readonly rushConfiguration: RushConfiguration;
-  private readonly _terminal: Terminal;
+  private readonly _terminal: ITerminal;
   private readonly _artifactoryConfiguration: ArtifactoryConfiguration;
   private readonly _messages: IArtifactoryCustomizableMessages;
 

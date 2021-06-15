@@ -7,7 +7,8 @@
  * Run this program with `node write-colors.js`
  */
 
-import { Terminal, ConsoleTerminalProvider } from '../../index';
+import { Terminal } from '../Terminal';
+import { ConsoleTerminalProvider } from '../ConsoleTerminalProvider';
 import { createColorGrid } from './createColorGrid';
 import { Colors, IColorableSequence } from '../Colors';
 

@@ -3,15 +3,9 @@
 
 import * as nodeJsPath from 'path';
 import { JSONPath } from 'jsonpath-plus';
-import {
-  JsonSchema,
-  JsonFile,
-  PackageJsonLookup,
-  Import,
-  FileSystem,
-  Terminal
-} from '@rushstack/node-core-library';
+import { JsonSchema, JsonFile, PackageJsonLookup, Import, FileSystem } from '@rushstack/node-core-library';
 import { RigConfig } from '@rushstack/rig-package';
+import { ITerminal } from '@rushstack/terminal';
 
 interface IConfigurationJson {
   extends?: string;
@@ -211,7 +205,7 @@ export class ConfigurationFile<TConfigurationFile> {
    * file cannot be found in the rig or project config folder.
    */
   public async loadConfigurationFileForProjectAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     projectPath: string,
     rigConfig?: RigConfig
   ): Promise<TConfigurationFile> {
@@ -229,7 +223,7 @@ export class ConfigurationFile<TConfigurationFile> {
    * that it returns `undefined` instead of throwing an error if the configuration file cannot be found.
    */
   public async tryLoadConfigurationFileForProjectAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     projectPath: string,
     rigConfig?: RigConfig
   ): Promise<TConfigurationFile | undefined> {
@@ -282,7 +276,7 @@ export class ConfigurationFile<TConfigurationFile> {
   }
 
   private async _loadConfigurationFileInnerWithCacheAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     resolvedConfigurationFilePath: string,
     visitedConfigurationFilePaths: Set<string>,
     rigConfig: RigConfig | undefined
@@ -321,7 +315,7 @@ export class ConfigurationFile<TConfigurationFile> {
   // Don't call this function directly, as it does not provide config file loop detection,
   // and you won't get the advantage of queueing up for a config file that is already loading.
   private async _loadConfigurationFileInnerAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     resolvedConfigurationFilePath: string,
     visitedConfigurationFilePaths: Set<string>,
     rigConfig: RigConfig | undefined
@@ -553,7 +547,7 @@ export class ConfigurationFile<TConfigurationFile> {
   }
 
   private async _tryLoadConfigurationFileInRigAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     rigConfig: RigConfig,
     visitedConfigurationFilePaths: Set<string>
   ): Promise<TConfigurationFile | undefined> {

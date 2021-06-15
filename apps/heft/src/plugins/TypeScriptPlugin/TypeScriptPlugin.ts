@@ -3,7 +3,8 @@
 
 import * as path from 'path';
 import glob from 'glob';
-import { LegacyAdapters, ITerminalProvider, Terminal } from '@rushstack/node-core-library';
+import { LegacyAdapters } from '@rushstack/node-core-library';
+import { ITerminalProvider, ITerminal } from '@rushstack/terminal';
 
 import { TypeScriptBuilder, ITypeScriptBuilderConfiguration } from './TypeScriptBuilder';
 import { HeftSession } from '../../pluginFramework/HeftSession';
@@ -178,7 +179,7 @@ export class TypeScriptPlugin implements IHeftPlugin {
   }
 
   private async _ensureConfigFileLoadedAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     heftConfiguration: HeftConfiguration
   ): Promise<ITypeScriptConfigurationJson | undefined> {
     const buildFolder: string = heftConfiguration.buildFolder;

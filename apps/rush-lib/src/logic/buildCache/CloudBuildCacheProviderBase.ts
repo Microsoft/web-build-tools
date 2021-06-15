@@ -1,21 +1,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { Terminal } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 
 export abstract class CloudBuildCacheProviderBase {
   public abstract readonly isCacheWriteAllowed: boolean;
 
   public abstract tryGetCacheEntryBufferByIdAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     cacheId: string
   ): Promise<Buffer | undefined>;
   public abstract trySetCacheEntryBufferAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     cacheId: string,
     entryBuffer: Buffer
   ): Promise<boolean>;
-  public abstract updateCachedCredentialAsync(terminal: Terminal, credential: string): Promise<void>;
-  public abstract updateCachedCredentialInteractiveAsync(terminal: Terminal): Promise<void>;
-  public abstract deleteCachedCredentialsAsync(terminal: Terminal): Promise<void>;
+  public abstract updateCachedCredentialAsync(terminal: ITerminal, credential: string): Promise<void>;
+  public abstract updateCachedCredentialInteractiveAsync(terminal: ITerminal): Promise<void>;
+  public abstract deleteCachedCredentialsAsync(terminal: ITerminal): Promise<void>;
 }

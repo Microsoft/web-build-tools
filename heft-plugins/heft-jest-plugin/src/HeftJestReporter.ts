@@ -2,7 +2,8 @@
 // See LICENSE in the project root for license information.
 
 import * as path from 'path';
-import { Terminal, Colors, InternalError, Text, IColorableSequence } from '@rushstack/node-core-library';
+import { InternalError, Text } from '@rushstack/node-core-library';
+import { ITerminal, Colors, IColorableSequence } from '@rushstack/terminal';
 import {
   Reporter,
   Test,
@@ -32,7 +33,7 @@ export interface IHeftJestReporterOptions {
  * https://github.com/facebook/jest/blob/master/packages/jest-reporters/src/default_reporter.ts
  */
 export default class HeftJestReporter implements Reporter {
-  private _terminal: Terminal;
+  private _terminal: ITerminal;
   private _buildFolder: string;
   private _debugMode: boolean;
 

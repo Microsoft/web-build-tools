@@ -3,7 +3,7 @@
 
 import { ITerminalChunk } from './ITerminalChunk';
 import { TerminalWritable } from './TerminalWritable';
-import { AnsiEscape } from '@rushstack/node-core-library';
+import { AnsiEscape } from './AnsiEscape';
 
 /**
  * A {@link TerminalWritable} subclass for use by unit tests.

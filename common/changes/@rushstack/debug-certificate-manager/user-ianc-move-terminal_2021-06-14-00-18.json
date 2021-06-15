@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@rushstack/debug-certificate-manager",
+      "comment": "",
+      "type": "none"
+    }
+  ],
+  "packageName": "@rushstack/debug-certificate-manager",
+  "email": "iclanton@users.noreply.github.com"
+}

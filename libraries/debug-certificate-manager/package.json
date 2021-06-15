@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@rushstack/node-core-library": "workspace:*",
+    "@rushstack/terminal": "workspace:*",
     "node-forge": "~0.7.1",
     "sudo": "~1.0.3"
   },

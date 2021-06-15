@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@rushstack/node-core-library",
+      "comment": "(BREAKING CHANGE) Move the Terminal APIs out of node-core-library to the @rushstack/terminal package.",
+      "type": "major"
+    }
+  ],
+  "packageName": "@rushstack/node-core-library",
+  "email": "iclanton@users.noreply.github.com"
+}

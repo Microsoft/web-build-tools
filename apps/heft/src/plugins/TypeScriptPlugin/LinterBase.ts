@@ -2,7 +2,8 @@
 // See LICENSE in the project root for license information.
 
 import * as path from 'path';
-import { Terminal, FileSystem, JsonFile } from '@rushstack/node-core-library';
+import { FileSystem, JsonFile } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 
 import {
   IExtendedSourceFile,
@@ -61,7 +62,7 @@ interface ITsLintCacheData {
 
 export abstract class LinterBase<TLintResult> {
   protected readonly _scopedLogger: IScopedLogger;
-  protected readonly _terminal: Terminal;
+  protected readonly _terminal: ITerminal;
   protected readonly _buildFolderPath: string;
   protected readonly _buildCacheFolderPath: string;
   protected readonly _linterConfigFilePath: string;

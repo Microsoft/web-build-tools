@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { Import, Path, Terminal } from '@rushstack/node-core-library';
+import { Import, Path } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 
 import { PackageChangeAnalyzer } from './PackageChangeAnalyzer';
 import { RushConfiguration } from '../api/RushConfiguration';
@@ -14,7 +15,7 @@ export interface IProjectWatcherOptions {
   debounceMilliseconds?: number;
   rushConfiguration: RushConfiguration;
   projectsToWatch: ReadonlySet<RushConfigurationProject>;
-  terminal: Terminal;
+  terminal: ITerminal;
 }
 
 export interface IProjectChangeResult {
@@ -38,7 +39,7 @@ export class ProjectWatcher {
   private readonly _debounceMilliseconds: number;
   private readonly _rushConfiguration: RushConfiguration;
   private readonly _projectsToWatch: ReadonlySet<RushConfigurationProject>;
-  private readonly _terminal: Terminal;
+  private readonly _terminal: ITerminal;
 
   private _initialState: PackageChangeAnalyzer | undefined;
   private _previousState: PackageChangeAnalyzer | undefined;

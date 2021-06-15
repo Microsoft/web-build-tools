@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@rushstack/heft-config-file",
+      "comment": "",
+      "type": "none"
+    }
+  ],
+  "packageName": "@rushstack/heft-config-file",
+  "email": "iclanton@users.noreply.github.com"
+}

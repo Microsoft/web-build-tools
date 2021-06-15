@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { Terminal } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 import { AsyncSeriesBailHook, SyncHook, AsyncSeriesHook } from 'tapable';
+
 import { HeftConfiguration } from '../configuration/HeftConfiguration';
 import { LoggingManager } from '../pluginFramework/logging/LoggingManager';
 
@@ -44,7 +45,7 @@ export abstract class StageBase<
   public readonly stageInitializationHook: SyncHook<IStageContext<TStageHooks, TStageProperties>>;
   protected readonly heftConfiguration: HeftConfiguration;
   protected readonly loggingManager: LoggingManager;
-  protected readonly globalTerminal: Terminal;
+  protected readonly globalTerminal: ITerminal;
   protected stageOptions!: TStageOptions;
   protected stageProperties!: TStageProperties;
   protected stageHooks!: TStageHooks;

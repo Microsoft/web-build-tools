@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import * as colors from 'colors';
-import { AnsiEscape } from '../AnsiEscape';
+import * as colors from 'colors/safe';
+import { AnsiEscape } from '../../AnsiEscape';
 
 describe('AnsiEscape', () => {
   let initialColorsEnabled: boolean;

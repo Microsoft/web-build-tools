@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
+import { StringBufferTerminalProvider } from '@rushstack/terminal';
+
 import { TaskCollection } from '../TaskCollection';
 import { Task } from '../Task';
-import { StringBufferTerminalProvider } from '@rushstack/node-core-library';
 import { MockBuilder } from './MockBuilder';
 import { TaskStatus } from '../TaskStatus';
 

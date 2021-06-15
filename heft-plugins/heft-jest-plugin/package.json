@@ -23,6 +23,7 @@
     "@jest/transform": "~25.4.0",
     "@rushstack/heft-config-file": "workspace:*",
     "@rushstack/node-core-library": "workspace:*",
+    "@rushstack/terminal": "workspace:*",
     "lodash": "~4.17.15",
     "jest-snapshot": "~25.4.0"
   },

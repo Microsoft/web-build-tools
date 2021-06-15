@@ -6,15 +6,14 @@ import * as semver from 'semver';
 import {
   FileSystemStats,
   IFileSystemCreateLinkOptions,
-  Terminal,
   JsonFile,
   IPackageJson,
   InternalError,
-  ITerminalProvider,
   FileSystem,
   Path,
   AlreadyExistsBehavior
 } from '@rushstack/node-core-library';
+import { ITerminal, ITerminalProvider } from '@rushstack/terminal';
 import * as crypto from 'crypto';
 import type * as TTypescript from 'typescript';
 import {
@@ -114,7 +113,7 @@ export class TypeScriptBuilder extends SubprocessRunnerBase<ITypeScriptBuilderCo
   private _eslintConfigFilePath!: string;
   private _tslintConfigFilePath!: string;
   private _typescriptLogger!: IScopedLogger;
-  private _typescriptTerminal!: Terminal;
+  private _typescriptTerminal!: ITerminal;
   private _emitCompletedCallbackManager: EmitCompletedCallbackManager;
 
   private __tsCacheFilePath!: string;

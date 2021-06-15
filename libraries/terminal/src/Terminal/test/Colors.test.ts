@@ -4,7 +4,7 @@
 import { Terminal } from '../Terminal';
 import { StringBufferTerminalProvider } from '../StringBufferTerminalProvider';
 import { createColorGrid } from './createColorGrid';
-import { AnsiEscape } from '../AnsiEscape';
+import { AnsiEscape } from '../../AnsiEscape';
 
 describe('Colors', () => {
   let terminal: Terminal;

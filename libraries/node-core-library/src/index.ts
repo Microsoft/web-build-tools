@@ -8,7 +8,6 @@
  */
 
 export { AlreadyReportedError } from './AlreadyReportedError';
-export { AnsiEscape, IAnsiEscapeConvertForTestsOptions } from './Terminal/AnsiEscape';
 export { Async, IAsyncParallelismOptions } from './Async';
 export { Brand } from './PrimitiveTypes';
 export { FileConstants, FolderConstants } from './Constants';
@@ -78,12 +77,4 @@ export {
 export { FileWriter, IFileWriterFlags } from './FileWriter';
 export { LegacyAdapters, LegacyCallback } from './LegacyAdapters';
 export { StringBuilder, IStringBuilder } from './StringBuilder';
-export { Terminal } from './Terminal/Terminal';
-export { Colors, IColorableSequence, ColorValue, TextAttribute } from './Terminal/Colors';
-export { ITerminalProvider, TerminalProviderSeverity } from './Terminal/ITerminalProvider';
-export { ConsoleTerminalProvider, IConsoleTerminalProviderOptions } from './Terminal/ConsoleTerminalProvider';
-export {
-  StringBufferTerminalProvider,
-  IStringBufferOutputOptions
-} from './Terminal/StringBufferTerminalProvider';
 export { TypeUuid } from './TypeUuid';

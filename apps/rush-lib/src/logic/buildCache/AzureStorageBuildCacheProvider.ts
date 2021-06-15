@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { Terminal } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 import {
   BlobClient,
   BlobServiceClient,
@@ -99,7 +99,7 @@ export class AzureStorageBuildCacheProvider extends CloudBuildCacheProviderBase 
   }
 
   public async tryGetCacheEntryBufferByIdAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     cacheId: string
   ): Promise<Buffer | undefined> {
     const blobClient: BlobClient = await this._getBlobClientForCacheIdAsync(cacheId);
@@ -157,7 +157,7 @@ export class AzureStorageBuildCacheProvider extends CloudBuildCacheProviderBase 
   }
 
   public async trySetCacheEntryBufferAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     cacheId: string,
     entryStream: Buffer
   ): Promise<boolean> {
@@ -213,7 +213,7 @@ export class AzureStorageBuildCacheProvider extends CloudBuildCacheProviderBase 
     }
   }
 
-  public async updateCachedCredentialAsync(terminal: Terminal, credential: string): Promise<void> {
+  public async updateCachedCredentialAsync(terminal: ITerminal, credential: string): Promise<void> {
     await CredentialCache.usingAsync(
       {
         supportEditing: true
@@ -225,7 +225,7 @@ export class AzureStorageBuildCacheProvider extends CloudBuildCacheProviderBase 
     );
   }
 
-  public async updateCachedCredentialInteractiveAsync(terminal: Terminal): Promise<void> {
+  public async updateCachedCredentialInteractiveAsync(terminal: ITerminal): Promise<void> {
     const sasQueryParameters: SASQueryParameters = await this._getSasQueryParametersAsync(terminal);
     const sasString: string = sasQueryParameters.toString();
 
@@ -240,7 +240,7 @@ export class AzureStorageBuildCacheProvider extends CloudBuildCacheProviderBase 
     );
   }
 
-  public async deleteCachedCredentialsAsync(terminal: Terminal): Promise<void> {
+  public async deleteCachedCredentialsAsync(terminal: ITerminal): Promise<void> {
     await CredentialCache.usingAsync(
       {
         supportEditing: true
@@ -305,7 +305,7 @@ export class AzureStorageBuildCacheProvider extends CloudBuildCacheProviderBase 
     return this._containerClient;
   }
 
-  private async _getSasQueryParametersAsync(terminal: Terminal): Promise<SASQueryParameters> {
+  private async _getSasQueryParametersAsync(terminal: ITerminal): Promise<SASQueryParameters> {
     const authorityHost: string | undefined = AzureAuthorityHosts[this._azureEnvironment];
     if (!authorityHost) {
       throw new Error(`Unexpected Azure environment: ${this._azureEnvironment}`);

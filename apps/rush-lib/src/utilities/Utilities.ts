@@ -7,7 +7,8 @@ import * as os from 'os';
 import * as tty from 'tty';
 import * as path from 'path';
 import wordwrap from 'wordwrap';
-import { JsonFile, IPackageJson, FileSystem, FileConstants, Terminal } from '@rushstack/node-core-library';
+import { JsonFile, IPackageJson, FileSystem, FileConstants } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 import type * as stream from 'stream';
 import { CommandLineHelper } from '@rushstack/ts-command-line';
 
@@ -627,7 +628,7 @@ export class Utilities {
 
   public static printMessageInBox(
     message: string,
-    terminal: Terminal,
+    terminal: ITerminal,
     boxWidth: number = Math.floor(Utilities.getConsoleWidth() / 2)
   ): void {
     const maxLineLength: number = boxWidth - 10;

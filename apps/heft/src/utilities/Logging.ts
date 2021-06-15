@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { Terminal } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 import { performance } from 'perf_hooks';
 
 export interface IFinishedWords {
@@ -16,7 +16,7 @@ const DEFAULT_FINISHED_WORDS: IFinishedWords = {
 
 export class Logging {
   public static async runFunctionWithLoggingBoundsAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     name: string,
     fn: () => Promise<void>,
     finishedWords: IFinishedWords = DEFAULT_FINISHED_WORDS

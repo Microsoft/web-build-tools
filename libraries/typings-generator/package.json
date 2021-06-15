@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@rushstack/node-core-library": "workspace:*",
+    "@rushstack/terminal": "workspace:*",
     "@types/node": "10.17.13",
     "chokidar": "~3.4.0",
     "glob": "~7.0.5"

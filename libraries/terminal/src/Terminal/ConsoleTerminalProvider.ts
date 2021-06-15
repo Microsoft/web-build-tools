@@ -20,7 +20,7 @@ export interface IConsoleTerminalProviderOptions {
 
 /**
  * Terminal provider that prints to STDOUT (for log- and verbose-level messages) and
- * STDERR (for warning- and error-level messsages).
+ * STDERR (for warning- and error-level messages).
  *
  * @beta
  */

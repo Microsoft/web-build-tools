@@ -4,7 +4,7 @@
 import * as readline from 'readline';
 import * as process from 'process';
 import colors from 'colors/safe';
-import { AnsiEscape } from '@rushstack/node-core-library';
+import { AnsiEscape } from '@rushstack/terminal';
 
 import { KeyboardLoop } from './KeyboardLoop';
 

@@ -34,6 +34,7 @@
     "@rushstack/heft-config-file": "workspace:*",
     "@rushstack/node-core-library": "workspace:*",
     "@rushstack/rig-package": "workspace:*",
+    "@rushstack/terminal": "workspace:*",
     "@rushstack/ts-command-line": "workspace:*",
     "@rushstack/typings-generator": "workspace:*",
     "@types/tapable": "1.0.6",

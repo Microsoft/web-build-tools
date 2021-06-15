@@ -2,7 +2,7 @@
 // See LICENSE in the project root for license information.
 
 import * as path from 'path';
-import { Terminal } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 import { ConfigurationFile, InheritanceType, PathResolutionMethod } from '@rushstack/heft-config-file';
 
 import { HeftSession } from '../pluginFramework/HeftSession';
@@ -94,7 +94,7 @@ export class CopyStaticAssetsPlugin extends CopyFilesPlugin {
   }
 
   private async _loadCopyStaticAssetsConfigurationAsync(
-    terminal: Terminal,
+    terminal: ITerminal,
     heftConfiguration: HeftConfiguration
   ): Promise<IResolvedDestinationCopyConfiguration> {
     const typescriptConfiguration: ITypeScriptConfigurationJson | undefined =
@@ -137,7 +137,7 @@ export class CopyStaticAssetsPlugin extends CopyFilesPlugin {
 
   private async _tryGetTsconfigOutDirPathAsync(
     projectFolder: string,
-    terminal: Terminal
+    terminal: ITerminal
   ): Promise<string | undefined> {
     const partialTsconfig: IPartialTsconfig | undefined =
       await CopyStaticAssetsPlugin._partialTsconfigFileLoader.tryLoadConfigurationFileForProjectAsync(

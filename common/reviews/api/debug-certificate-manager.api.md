@@ -4,13 +4,13 @@
 
 ```ts
 
-import { Terminal } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 
 // @public
 export class CertificateManager {
     constructor();
-    ensureCertificateAsync(canGenerateNewCertificate: boolean, terminal: Terminal): Promise<ICertificate>;
-    untrustCertificateAsync(terminal: Terminal): Promise<boolean>;
+    ensureCertificateAsync(canGenerateNewCertificate: boolean, terminal: ITerminal): Promise<ICertificate>;
+    untrustCertificateAsync(terminal: ITerminal): Promise<boolean>;
 }
 
 // @public

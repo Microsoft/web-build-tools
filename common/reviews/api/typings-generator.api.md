@@ -4,7 +4,7 @@
 
 ```ts
 
-import { Terminal } from '@rushstack/node-core-library';
+import { ITerminal } from '@rushstack/terminal';
 
 // @public (undocumented)
 export interface IStringValuesTypingsGeneratorOptions extends ITypingsGeneratorOptions<IStringValueTypings | undefined> {
@@ -39,7 +39,7 @@ export interface ITypingsGeneratorOptions<TTypingsResult = string | undefined> {
     // (undocumented)
     srcFolder: string;
     // (undocumented)
-    terminal?: Terminal;
+    terminal?: ITerminal;
 }
 
 // @public
@@ -57,7 +57,7 @@ export class TypingsGenerator {
     registerDependency(target: string, dependency: string): void;
     // (undocumented)
     runWatcherAsync(): Promise<void>;
-}
+    }
 
 
 // (No @packageDocumentation comment for this package)

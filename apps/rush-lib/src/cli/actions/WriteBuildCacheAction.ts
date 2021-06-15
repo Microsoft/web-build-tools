@@ -2,7 +2,8 @@
 // See LICENSE in the project root for license information.
 
 import * as path from 'path';
-import { AlreadyReportedError, ConsoleTerminalProvider, Terminal } from '@rushstack/node-core-library';
+import { AlreadyReportedError } from '@rushstack/node-core-library';
+import { ConsoleTerminalProvider, Terminal, ITerminal } from '@rushstack/terminal';
 import { CommandLineFlagParameter, CommandLineStringParameter } from '@rushstack/ts-command-line';
 
 import { RushConfigurationProject } from '../../api/RushConfigurationProject';
@@ -62,7 +63,7 @@ export class WriteBuildCacheAction extends BaseRushAction {
       );
     }
 
-    const terminal: Terminal = new Terminal(
+    const terminal: ITerminal = new Terminal(
       new ConsoleTerminalProvider({ verboseEnabled: this._verboseFlag.value })
     );
 

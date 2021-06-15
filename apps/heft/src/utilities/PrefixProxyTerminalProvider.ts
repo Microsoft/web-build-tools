@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { Terminal, ITerminalProvider, TerminalProviderSeverity } from '@rushstack/node-core-library';
+import { Terminal, ITerminal, ITerminalProvider, TerminalProviderSeverity } from '@rushstack/terminal';
 
 export class PrefixProxyTerminalProvider implements ITerminalProvider {
   private _parent: ITerminalProvider;
@@ -12,7 +12,7 @@ export class PrefixProxyTerminalProvider implements ITerminalProvider {
     this._prefix = prefix;
   }
 
-  public static getTerminal(parent: ITerminalProvider, prefix: string): Terminal {
+  public static getTerminal(parent: ITerminalProvider, prefix: string): ITerminal {
     const provider: ITerminalProvider = new PrefixProxyTerminalProvider(parent, prefix);
     return new Terminal(provider);
   }
