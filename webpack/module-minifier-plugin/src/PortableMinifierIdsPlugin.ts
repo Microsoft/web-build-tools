@@ -4,7 +4,7 @@
 import { compilation, Compiler, Plugin } from 'webpack';
 import { ReplaceSource } from 'webpack-sources';
 import { createHash } from 'crypto';
-import { TapOptions } from 'tapable';
+import { Tap } from 'tapable';
 import RequestShortener from 'webpack/lib/RequestShortener';
 
 import { STAGE_AFTER, STAGE_BEFORE } from './Constants';
@@ -16,12 +16,12 @@ import {
 
 const PLUGIN_NAME: 'PortableMinifierModuleIdsPlugin' = 'PortableMinifierModuleIdsPlugin';
 
-const TAP_BEFORE: TapOptions<'sync'> = {
+const TAP_BEFORE: Tap = {
   name: PLUGIN_NAME,
   stage: STAGE_BEFORE
 };
 
-const TAP_AFTER: TapOptions<'sync'> = {
+const TAP_AFTER: Tap = {
   name: PLUGIN_NAME,
   stage: STAGE_AFTER
 };

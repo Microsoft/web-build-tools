@@ -3,6 +3,7 @@
 
 import * as fs from 'fs';
 import { FileSystem, LegacyAdapters, Path } from '@rushstack/node-core-library';
+import { Hook, FullTap } from 'tapable';
 
 import { HeftConfiguration } from '../configuration/HeftConfiguration';
 import { Constants } from '../utilities/Constants';
@@ -10,9 +11,9 @@ import { ScopedLogger } from '../pluginFramework/logging/ScopedLogger';
 import { IHeftPlugin } from '../pluginFramework/IHeftPlugin';
 import { HeftSession } from '../pluginFramework/HeftSession';
 import { IHeftLifecycle } from '../pluginFramework/HeftLifecycle';
-import { Hook } from 'tapable';
 import { ITestStageContext } from '../stages/TestStage';
 import { IBuildStageContext, IBundleSubstage } from '../stages/BuildStage';
+import { TapableUtilities } from '../utilities/TapableUtilities';
 
 const ALLOWED_HEFT_DATA_FOLDER_FILES: Set<string> = new Set<string>();
 const ALLOWED_HEFT_DATA_FOLDER_SUBFOLDERS: Set<string> = new Set<string>([Constants.buildCacheFolderName]);
@@ -140,11 +141,12 @@ export class ProjectValidatorPlugin implements IHeftPlugin {
     configFilePath: string,
     missingPluginCandidatePackageNames: string[],
     missingPluginDocumentationUrl: string,
-    hookToTap: Hook<unknown, unknown, unknown, unknown, unknown>,
+    hookToTap: Hook<[], unknown>,
     logger: ScopedLogger
   ): Promise<boolean> {
     // If we have the plugin, we don't need to check anything else
-    for (const tap of hookToTap.taps) {
+    const taps: FullTap[] = TapableUtilities.getTaps(hookToTap);
+    for (const tap of taps) {
       if (tap.name === missingPluginName) {
         return false;
       }

@@ -27,13 +27,13 @@ export abstract class StageHooksBase<TStageProperties extends object> {
    *
    * @beta
    */
-  public readonly overrideStage: AsyncSeriesBailHook<TStageProperties> = new AsyncSeriesBailHook([
+  public readonly overrideStage: AsyncSeriesBailHook<[TStageProperties], void> = new AsyncSeriesBailHook([
     'stageProperties'
   ]);
 
-  public readonly loadStageConfiguration: AsyncSeriesHook = new AsyncSeriesHook();
+  public readonly loadStageConfiguration: AsyncSeriesHook<[]> = new AsyncSeriesHook();
 
-  public readonly afterLoadStageConfiguration: AsyncSeriesHook = new AsyncSeriesHook();
+  public readonly afterLoadStageConfiguration: AsyncSeriesHook<[]> = new AsyncSeriesHook();
 }
 
 export abstract class StageBase<

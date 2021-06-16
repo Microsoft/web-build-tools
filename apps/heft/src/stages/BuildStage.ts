@@ -18,7 +18,7 @@ import { LoggingManager } from '../pluginFramework/logging/LoggingManager';
  * @public
  */
 export class BuildSubstageHooksBase {
-  public readonly run: AsyncParallelHook = new AsyncParallelHook();
+  public readonly run: AsyncParallelHook<[]> = new AsyncParallelHook();
 }
 
 /**
@@ -46,13 +46,14 @@ export class CompileSubstageHooks extends BuildSubstageHooksBase {
    * The "bundle" stage will not begin until all event handlers have resolved their promises.  The behavior
    * of this event is the same in watch mode and non-watch mode.
    */
-  public readonly afterCompile: AsyncParallelHook = new AsyncParallelHook();
+  public readonly afterCompile: AsyncParallelHook<[]> = new AsyncParallelHook();
+
   /**
    * The `afterRecompile` event is only used in watch mode.  It fires whenever the compiler's outputs have
    * been rebuilt.  The initial compilation fires the `afterCompile` event only, and then all subsequent iterations
    * fire the `afterRecompile` event only. Heft does not wait for the `afterRecompile` promises to resolve.
    */
-  public readonly afterRecompile: AsyncParallelHook = new AsyncParallelHook();
+  public readonly afterRecompile: AsyncParallelHook<[]> = new AsyncParallelHook();
 }
 
 /**
@@ -62,7 +63,7 @@ export class BundleSubstageHooks extends BuildSubstageHooksBase {
   public readonly configureWebpack: AsyncSeriesWaterfallHook<unknown> = new AsyncSeriesWaterfallHook<unknown>(
     ['webpackConfiguration']
   );
-  public readonly afterConfigureWebpack: AsyncSeriesHook = new AsyncSeriesHook();
+  public readonly afterConfigureWebpack: AsyncSeriesHook<[]> = new AsyncSeriesHook();
 }
 
 /**

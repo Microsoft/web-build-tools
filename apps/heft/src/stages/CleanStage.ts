@@ -12,7 +12,7 @@ import { LoggingManager } from '../pluginFramework/logging/LoggingManager';
  * @public
  */
 export class CleanStageHooks extends StageHooksBase<ICleanStageProperties> {
-  public readonly run: AsyncParallelHook = new AsyncParallelHook();
+  public readonly run: AsyncParallelHook<[]> = new AsyncParallelHook();
 }
 
 /**

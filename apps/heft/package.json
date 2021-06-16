@@ -36,7 +36,6 @@
     "@rushstack/rig-package": "workspace:*",
     "@rushstack/ts-command-line": "workspace:*",
     "@rushstack/typings-generator": "workspace:*",
-    "@types/tapable": "1.0.6",
     "argparse": "~1.0.9",
     "chokidar": "~3.4.0",
     "fast-glob": "~3.2.4",
@@ -47,7 +46,7 @@
     "postcss-modules": "~1.5.0",
     "prettier": "~2.3.0",
     "semver": "~7.3.0",
-    "tapable": "1.1.3",
+    "tapable": "~2.2.0",
     "true-case-path": "~2.2.1"
   },
   "devDependencies": {

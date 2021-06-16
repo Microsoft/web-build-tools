@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { SyncHook } from 'tapable';
+import { SyncHook, FullTap } from 'tapable';
 
 import { IHeftPlugin } from './IHeftPlugin';
 import { HeftSession, RegisterAction } from './HeftSession';
@@ -11,6 +11,7 @@ import { TestStage } from '../stages/TestStage';
 import { MetricsCollector } from '../metrics/MetricsCollector';
 import { LoggingManager } from './logging/LoggingManager';
 import { IHeftLifecycle } from './HeftLifecycle';
+import { TapableUtilities } from '../utilities/TapableUtilities';
 
 /**
  * @internal
@@ -62,16 +63,19 @@ export class InternalHeftSession {
   public applyPluginHooks(plugin: IHeftPlugin): void {
     const pluginHook: SyncHook<object> | undefined = this._pluginHooks.get(plugin.pluginName);
     const accessor: object | undefined = plugin.accessor;
-    if (pluginHook && pluginHook.taps.length > 0) {
-      if (!accessor) {
-        const accessingPlugins: Set<string> = new Set<string>(pluginHook.taps.map((x) => x.name));
-        throw new Error(
-          `Plugin "${plugin.pluginName}" does not provide an accessor property, so it does not provide ` +
-            `access to other plugins. Plugins requesting access to "${plugin.pluginName}: ` +
-            Array.from(accessingPlugins).join(', ')
-        );
-      } else {
-        pluginHook.call(accessor);
+    if (pluginHook) {
+      const taps: FullTap[] = TapableUtilities.getTaps(pluginHook);
+      if (taps.length > 0) {
+        if (!accessor) {
+          const accessingPlugins: Set<string> = new Set<string>(taps.map((x) => x.name));
+          throw new Error(
+            `Plugin "${plugin.pluginName}" does not provide an accessor property, so it does not provide ` +
+              `access to other plugins. Plugins requesting access to "${plugin.pluginName}: ` +
+              Array.from(accessingPlugins).join(', ')
+          );
+        } else {
+          pluginHook.call(accessor);
+        }
       }
     }
   }

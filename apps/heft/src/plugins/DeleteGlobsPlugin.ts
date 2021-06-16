@@ -4,7 +4,7 @@
 import * as path from 'path';
 import glob from 'glob';
 import { FileSystem, LegacyAdapters } from '@rushstack/node-core-library';
-import { TapOptions } from 'tapable';
+import { Tap } from 'tapable';
 
 import { IHeftPlugin } from '../pluginFramework/IHeftPlugin';
 import { HeftSession } from '../pluginFramework/HeftSession';
@@ -25,7 +25,7 @@ import { Constants } from '../utilities/Constants';
 const globEscape: (unescaped: string) => string = require('glob-escape'); // No @types/glob-escape package exists
 
 const PLUGIN_NAME: string = 'DeleteGlobsPlugin';
-const HEFT_STAGE_TAP: TapOptions<'promise'> = {
+const HEFT_STAGE_TAP: Tap = {
   name: PLUGIN_NAME,
   stage: Number.MIN_SAFE_INTEGER
 };

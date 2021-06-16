@@ -10,5 +10,5 @@ export interface IHeftLifecycle {
 
 /** @internal */
 export class HeftLifecycleHooks {
-  public toolStart: AsyncParallelHook = new AsyncParallelHook();
+  public toolStart: AsyncParallelHook<[]> = new AsyncParallelHook();
 }

@@ -10,7 +10,7 @@ import {
   SourceMapSource
 } from 'webpack-sources';
 import * as webpack from 'webpack';
-import { AsyncSeriesWaterfallHook, SyncWaterfallHook, TapOptions } from 'tapable';
+import { AsyncSeriesWaterfallHook, SyncWaterfallHook, Tap } from 'tapable';
 import {
   CHUNK_MODULES_TOKEN,
   MODULE_WRAPPER_PREFIX,
@@ -38,18 +38,18 @@ import { createHash } from 'crypto';
 // The name of the plugin, for use in taps
 const PLUGIN_NAME: 'ModuleMinifierPlugin' = 'ModuleMinifierPlugin';
 
-const TAP_BEFORE: TapOptions<'promise'> = {
+const TAP_BEFORE: Tap = {
   name: PLUGIN_NAME,
   stage: STAGE_BEFORE
 };
-const TAP_AFTER: TapOptions<'sync'> = {
+const TAP_AFTER: Tap = {
   name: PLUGIN_NAME,
   stage: STAGE_AFTER
 };
 
 interface IExtendedChunkTemplate {
   hooks: {
-    modules: SyncWaterfallHook<Source, webpack.compilation.Chunk>;
+    modules: SyncWaterfallHook<[Source, webpack.compilation.Chunk]>;
   };
 }
 

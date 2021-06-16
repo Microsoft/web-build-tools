@@ -55,20 +55,17 @@ export class MetricsCollectorHooks {
   /**
    * This hook is called when a metric is recorded.
    */
-  public recordMetric: SyncHook<string, IMetricsData> = new SyncHook<string, IMetricsData>([
-    'metricName',
-    'metricsData'
-  ]);
+  public recordMetric: SyncHook<[string, IMetricsData]> = new SyncHook(['metricName', 'metricsData']);
 
   /**
    * This hook is called when collected metrics should be flushed
    */
-  public flush: AsyncParallelHook = new AsyncParallelHook();
+  public flush: AsyncParallelHook<[]> = new AsyncParallelHook();
 
   /**
    * This hook is called when collected metrics should be flushed and no more metrics will be collected.
    */
-  public flushAndTeardown: AsyncParallelHook = new AsyncParallelHook();
+  public flushAndTeardown: AsyncParallelHook<[]> = new AsyncParallelHook();
 }
 
 /**

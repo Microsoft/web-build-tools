@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@rushstack/module-minifier-plugin",
+      "comment": "Update the tapable dependency to version 2.2.0.",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@rushstack/module-minifier-plugin",
+  "email": "iclanton@users.noreply.github.com"
+}

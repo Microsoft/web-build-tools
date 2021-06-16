@@ -6,7 +6,7 @@ import * as path from 'path';
 import glob from 'fast-glob';
 import { performance } from 'perf_hooks';
 import { AlreadyExistsBehavior, FileSystem } from '@rushstack/node-core-library';
-import { TapOptions } from 'tapable';
+import { Tap } from 'tapable';
 
 import { IHeftPlugin } from '../pluginFramework/IHeftPlugin';
 import { HeftSession } from '../pluginFramework/HeftSession';
@@ -29,7 +29,7 @@ import {
 import { Constants } from '../utilities/Constants';
 
 const PLUGIN_NAME: string = 'CopyFilesPlugin';
-const HEFT_STAGE_TAP: TapOptions<'promise'> = {
+const HEFT_STAGE_TAP: Tap = {
   name: PLUGIN_NAME,
   stage: Number.MAX_SAFE_INTEGER / 2 // This should give us some certainty that this will run after other plugins
 };

@@ -12,7 +12,7 @@ export const enum PluginNames {
 }
 
 export interface IExamplePlugin01Accessor {
-  exampleHook: SyncHook;
+  exampleHook: SyncHook<[]>;
 }
 
 export class ExamplePlugin01 implements IHeftPlugin {

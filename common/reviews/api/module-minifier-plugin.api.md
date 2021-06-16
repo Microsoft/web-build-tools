@@ -115,9 +115,9 @@ export interface IModuleMinifierFunction {
 
 // @public
 export interface IModuleMinifierPluginHooks {
-    finalModuleId: SyncWaterfallHook<string | number | undefined>;
-    postProcessCodeFragment: SyncWaterfallHook<ReplaceSource, string>;
-    rehydrateAssets: AsyncSeriesWaterfallHook<IDehydratedAssets, webpack.compilation.Compilation>;
+    finalModuleId: SyncWaterfallHook<[string | number | undefined]>;
+    postProcessCodeFragment: SyncWaterfallHook<[ReplaceSource, string]>;
+    rehydrateAssets: AsyncSeriesWaterfallHook<[IDehydratedAssets, webpack.compilation.Compilation]>;
 }
 
 // @public

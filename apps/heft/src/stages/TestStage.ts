@@ -10,8 +10,8 @@ import { LoggingManager } from '../pluginFramework/logging/LoggingManager';
  * @public
  */
 export class TestStageHooks extends StageHooksBase<ITestStageProperties> {
-  public readonly run: AsyncParallelHook = new AsyncParallelHook();
-  public readonly configureTest: AsyncSeriesHook = new AsyncSeriesHook();
+  public readonly run: AsyncParallelHook<[]> = new AsyncParallelHook();
+  public readonly configureTest: AsyncSeriesHook<[]> = new AsyncSeriesHook();
 }
 
 /**

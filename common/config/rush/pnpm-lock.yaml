@@ -124,7 +124,6 @@ importers:
       '@types/node': 10.17.13
       '@types/node-sass': 4.11.1
       '@types/semver': 7.3.5
-      '@types/tapable': 1.0.6
       argparse: ~1.0.9
       chokidar: ~3.4.0
       colors: ~1.2.1
@@ -136,7 +135,7 @@ importers:
       postcss-modules: ~1.5.0
       prettier: ~2.3.0
       semver: ~7.3.0
-      tapable: 1.1.3
+      tapable: ~2.2.0
       true-case-path: ~2.2.1
       tslint: ~5.20.1
       typescript: ~3.9.7
@@ -146,7 +145,6 @@ importers:
       '@rushstack/rig-package': link:../../libraries/rig-package
       '@rushstack/ts-command-line': link:../../libraries/ts-command-line
       '@rushstack/typings-generator': link:../../libraries/typings-generator
-      '@types/tapable': 1.0.6
       argparse: 1.0.10
       chokidar: 3.4.3
       fast-glob: 3.2.5
@@ -157,7 +155,7 @@ importers:
       postcss-modules: 1.5.0
       prettier: 2.3.1
       semver: 7.3.5
-      tapable: 1.1.3
+      tapable: 2.2.0
       true-case-path: 2.2.1
     devDependencies:
       '@microsoft/api-extractor': link:../api-extractor
@@ -637,17 +635,15 @@ importers:
       '@rushstack/eslint-config': workspace:*
       '@rushstack/heft': workspace:*
       '@types/node': 10.17.13
-      '@types/tapable': 1.0.6
       eslint: ~7.12.1
-      tapable: 1.1.3
+      tapable: ~2.2.0
       typescript: ~3.9.7
     dependencies:
-      tapable: 1.1.3
+      tapable: 2.2.0
     devDependencies:
       '@rushstack/eslint-config': link:../../stack/eslint-config
       '@rushstack/heft': link:../../apps/heft
       '@types/node': 10.17.13
-      '@types/tapable': 1.0.6
       eslint: 7.12.1
       typescript: 3.9.9
 
@@ -1616,19 +1612,17 @@ importers:
       '@rushstack/heft-node-rig': workspace:*
       '@types/heft-jest': 1.0.1
       '@types/node': 10.17.13
-      '@types/tapable': 1.0.6
       '@types/webpack': 4.41.24
       '@types/webpack-sources': 1.4.2
       source-map: ~0.7.3
-      tapable: 1.1.3
+      tapable: ~2.2.0
       terser: 4.7.0
       webpack: ~4.44.2
       webpack-sources: ~1.4.3
     dependencies:
       '@types/node': 10.17.13
-      '@types/tapable': 1.0.6
       source-map: 0.7.3
-      tapable: 1.1.3
+      tapable: 2.2.0
       terser: 4.7.0
     devDependencies:
       '@rushstack/eslint-config': link:../../stack/eslint-config

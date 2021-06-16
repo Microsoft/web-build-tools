@@ -310,15 +310,15 @@ export interface IModuleMinifierPluginHooks {
   /**
    * Hook invoked at the start of optimizeChunkAssets to rehydrate the minified boilerplate and runtime into chunk assets.
    */
-  rehydrateAssets: AsyncSeriesWaterfallHook<IDehydratedAssets, webpack.compilation.Compilation>;
+  rehydrateAssets: AsyncSeriesWaterfallHook<[IDehydratedAssets, webpack.compilation.Compilation]>;
 
   /**
    * Hook invoked on a module id to get the final rendered id.
    */
-  finalModuleId: SyncWaterfallHook<string | number | undefined>;
+  finalModuleId: SyncWaterfallHook<[string | number | undefined]>;
 
   /**
    * Hook invoked on code after it has been returned from the minifier.
    */
-  postProcessCodeFragment: SyncWaterfallHook<ReplaceSource, string>;
+  postProcessCodeFragment: SyncWaterfallHook<[ReplaceSource, string]>;
 }

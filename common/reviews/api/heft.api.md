@@ -34,13 +34,13 @@ export class BuildStageHooks extends StageHooksBase<IBuildStageProperties> {
 // @public (undocumented)
 export class BuildSubstageHooksBase {
     // (undocumented)
-    readonly run: AsyncParallelHook;
+    readonly run: AsyncParallelHook<[]>;
 }
 
 // @public (undocumented)
 export class BundleSubstageHooks extends BuildSubstageHooksBase {
     // (undocumented)
-    readonly afterConfigureWebpack: AsyncSeriesHook;
+    readonly afterConfigureWebpack: AsyncSeriesHook<[]>;
     // (undocumented)
     readonly configureWebpack: AsyncSeriesWaterfallHook<unknown>;
 }
@@ -48,13 +48,13 @@ export class BundleSubstageHooks extends BuildSubstageHooksBase {
 // @public (undocumented)
 export class CleanStageHooks extends StageHooksBase<ICleanStageProperties> {
     // (undocumented)
-    readonly run: AsyncParallelHook;
+    readonly run: AsyncParallelHook<[]>;
 }
 
 // @public (undocumented)
 export class CompileSubstageHooks extends BuildSubstageHooksBase {
-    readonly afterCompile: AsyncParallelHook;
-    readonly afterRecompile: AsyncParallelHook;
+    readonly afterCompile: AsyncParallelHook<[]>;
+    readonly afterRecompile: AsyncParallelHook<[]>;
 }
 
 // @public (undocumented)
@@ -83,7 +83,7 @@ export class HeftConfiguration {
 // @internal (undocumented)
 export class _HeftLifecycleHooks {
     // (undocumented)
-    toolStart: AsyncParallelHook;
+    toolStart: AsyncParallelHook<[]>;
 }
 
 // @public (undocumented)
@@ -357,9 +357,9 @@ export class _MetricsCollector {
 
 // @public
 export class MetricsCollectorHooks {
-    flush: AsyncParallelHook;
-    flushAndTeardown: AsyncParallelHook;
-    recordMetric: SyncHook<string, IMetricsData>;
+    flush: AsyncParallelHook<[]>;
+    flushAndTeardown: AsyncParallelHook<[]>;
+    recordMetric: SyncHook<[string, IMetricsData]>;
 }
 
 // @beta (undocumented)
@@ -393,19 +393,19 @@ export class ScopedLogger implements IScopedLogger {
 // @public (undocumented)
 export abstract class StageHooksBase<TStageProperties extends object> {
     // (undocumented)
-    readonly afterLoadStageConfiguration: AsyncSeriesHook;
+    readonly afterLoadStageConfiguration: AsyncSeriesHook<[]>;
     // (undocumented)
-    readonly loadStageConfiguration: AsyncSeriesHook;
+    readonly loadStageConfiguration: AsyncSeriesHook<[]>;
     // @beta
-    readonly overrideStage: AsyncSeriesBailHook<TStageProperties>;
+    readonly overrideStage: AsyncSeriesBailHook<[TStageProperties], void>;
 }
 
 // @public (undocumented)
 export class TestStageHooks extends StageHooksBase<ITestStageProperties> {
     // (undocumented)
-    readonly configureTest: AsyncSeriesHook;
+    readonly configureTest: AsyncSeriesHook<[]>;
     // (undocumented)
-    readonly run: AsyncParallelHook;
+    readonly run: AsyncParallelHook<[]>;
 }
 
 
