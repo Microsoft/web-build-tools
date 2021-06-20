@@ -19,6 +19,12 @@ import { RigConfig } from '@rushstack/rig-package';
 import { SyncHook } from 'tapable';
 import { Terminal } from '@rushstack/node-core-library';
 
+// @public
+export class Async {
+    static forEachLimitAsync<TEntry>(array: TEntry[], parallelismLimit: number, fn: (entry: TEntry) => Promise<void>): Promise<void>;
+    static runWatcherWithErrorHandling(fn: () => Promise<void>, scopedLogger: ScopedLogger): void;
+}
+
 // @public (undocumented)
 export class BuildStageHooks extends StageHooksBase<IBuildStageProperties> {
     // (undocumented)

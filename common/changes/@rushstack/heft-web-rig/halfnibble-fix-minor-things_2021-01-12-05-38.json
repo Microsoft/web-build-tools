@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@rushstack/heft-web-rig",
+      "comment": "Update static assets to copy defaults",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@rushstack/heft-web-rig",
+  "email": "halfnibble@users.noreply.github.com"
+}

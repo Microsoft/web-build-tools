@@ -56,7 +56,26 @@
     /**
      * File extensions that should be copied from the src folder to the destination folder(s).
      */
-    "fileExtensions": [".json"]
+    "fileExtensions": [
+      ".json",
+      // Fonts
+      ".eot",
+      ".ttf",
+      ".woff",
+      // Images
+      ".dds",
+      ".gif",
+      ".ico",
+      ".jpeg",
+      ".jpg",
+      ".png",
+      ".svg",
+      ".webp",
+      // Styles
+      ".css",
+      ".sass",
+      ".scss"
+    ]
 
     /**
      * Glob patterns that should be explicitly included.
