@@ -28,17 +28,20 @@ export class CommandLineIntegerListParameter extends CommandLineParameterWithArg
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public _setValue(data: any): void {
-    // If argparse passed us a value, confirm it is valid
+    // If argparse passed us a value, confirm it is valid. Note that argparse
+    // may pass an array of arrays of args, so we flatten it before validating
+    // each entry.
     if (data !== null && data !== undefined) {
       if (!Array.isArray(data)) {
         this.reportInvalidData(data);
       }
-      for (const arrayItem of data) {
-        if (typeof arrayItem !== 'number') {
+      const values: unknown[] = data.reduce((list, item) => list.concat(item), []);
+      for (const item of values) {
+        if (typeof item !== 'number') {
           this.reportInvalidData(data);
         }
       }
-      this._values = data;
+      this._values = values as number[];
       return;
     }
 

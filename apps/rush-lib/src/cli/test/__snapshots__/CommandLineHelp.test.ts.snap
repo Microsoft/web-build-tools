@@ -115,11 +115,13 @@ Optional arguments:
 `;
 
 exports[`CommandLineHelp prints the help for each action: build 1`] = `
-"usage: rush build [-h] [-p COUNT] [-t PROJECT] [-T PROJECT] [-f PROJECT]
-                  [-o PROJECT] [-i PROJECT] [-I PROJECT]
-                  [--to-version-policy VERSION_POLICY_NAME]
-                  [--from-version-policy VERSION_POLICY_NAME] [-v] [-c]
-                  [--ignore-hooks] [--disable-build-cache] [-s] [-m]
+"usage: rush build [-h] [-p COUNT] [-t PROJECT [PROJECT ...]]
+                  [-T PROJECT [PROJECT ...]] [-f PROJECT [PROJECT ...]]
+                  [-o PROJECT [PROJECT ...]] [-i PROJECT [PROJECT ...]]
+                  [-I PROJECT [PROJECT ...]]
+                  [--to-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]]
+                  [--from-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]]
+                  [-v] [-c] [--ignore-hooks] [--disable-build-cache] [-s] [-m]
                   
 
 This command is similar to \\"rush rebuild\\", except that \\"rush build\\" performs 
@@ -145,7 +147,7 @@ Optional arguments:
                         depends on the operating system and number of CPU 
                         cores. This parameter may alternatively be specified 
                         via the RUSH_PARALLELISM environment variable.
-  -t PROJECT, --to PROJECT
+  -t PROJECT [PROJECT ...], --to PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--to\\" parameter expands 
@@ -154,7 +156,7 @@ Optional arguments:
                         project in the current working directory. For details,
                          refer to the website article \\"Selecting subsets of 
                         projects\\".
-  -T PROJECT, --to-except PROJECT
+  -T PROJECT [PROJECT ...], --to-except PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--to-except\\" parameter 
@@ -163,7 +165,7 @@ Optional arguments:
                         shorthand for the project in the current working 
                         directory. For details, refer to the website article 
                         \\"Selecting subsets of projects\\".
-  -f PROJECT, --from PROJECT
+  -f PROJECT [PROJECT ...], --from PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--from\\" parameter expands 
@@ -172,7 +174,7 @@ Optional arguments:
                         \\".\\" can be used as shorthand for the project in the 
                         current working directory. For details, refer to the 
                         website article \\"Selecting subsets of projects\\".
-  -o PROJECT, --only PROJECT
+  -o PROJECT [PROJECT ...], --only PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--only\\" parameter expands 
@@ -183,7 +185,7 @@ Optional arguments:
                         selection that excludes some dependencies. For 
                         details, refer to the website article \\"Selecting 
                         subsets of projects\\".
-  -i PROJECT, --impacted-by PROJECT
+  -i PROJECT [PROJECT ...], --impacted-by PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--impacted-by\\" parameter 
@@ -195,7 +197,7 @@ Optional arguments:
                         may produce a selection that excludes some 
                         dependencies. For details, refer to the website 
                         article \\"Selecting subsets of projects\\".
-  -I PROJECT, --impacted-by-except PROJECT
+  -I PROJECT [PROJECT ...], --impacted-by-except PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--impacted-by-except\\" 
@@ -206,7 +208,7 @@ Optional arguments:
                         is \\"unsafe\\" as it may produce a selection that 
                         excludes some dependencies. For details, refer to the 
                         website article \\"Selecting subsets of projects\\".
-  --to-version-policy VERSION_POLICY_NAME
+  --to-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. The \\"--to-version-policy\\" 
@@ -214,7 +216,7 @@ Optional arguments:
                         of the projects belonging to VERSION_POLICY_NAME. For 
                         details, refer to the website article \\"Selecting 
                         subsets of projects\\".
-  --from-version-policy VERSION_POLICY_NAME
+  --from-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. The \\"--from-version-policy\\" 
@@ -359,11 +361,15 @@ Optional arguments:
 `;
 
 exports[`CommandLineHelp prints the help for each action: import-strings 1`] = `
-"usage: rush import-strings [-h] [-p COUNT] [-t PROJECT] [-T PROJECT]
-                           [-f PROJECT] [-o PROJECT] [-i PROJECT] [-I PROJECT]
-                           [--to-version-policy VERSION_POLICY_NAME]
-                           [--from-version-policy VERSION_POLICY_NAME] [-v]
-                           [--ignore-hooks] [--disable-build-cache]
+"usage: rush import-strings [-h] [-p COUNT] [-t PROJECT [PROJECT ...]]
+                           [-T PROJECT [PROJECT ...]]
+                           [-f PROJECT [PROJECT ...]]
+                           [-o PROJECT [PROJECT ...]]
+                           [-i PROJECT [PROJECT ...]]
+                           [-I PROJECT [PROJECT ...]]
+                           [--to-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]]
+                           [--from-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]]
+                           [-v] [--ignore-hooks] [--disable-build-cache]
                            [--locale {en-us,fr-fr,es-es,zh-cn}]
                            
 
@@ -381,7 +387,7 @@ Optional arguments:
                         depends on the operating system and number of CPU 
                         cores. This parameter may alternatively be specified 
                         via the RUSH_PARALLELISM environment variable.
-  -t PROJECT, --to PROJECT
+  -t PROJECT [PROJECT ...], --to PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--to\\" parameter expands 
@@ -390,7 +396,7 @@ Optional arguments:
                         project in the current working directory. For details,
                          refer to the website article \\"Selecting subsets of 
                         projects\\".
-  -T PROJECT, --to-except PROJECT
+  -T PROJECT [PROJECT ...], --to-except PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--to-except\\" parameter 
@@ -399,7 +405,7 @@ Optional arguments:
                         shorthand for the project in the current working 
                         directory. For details, refer to the website article 
                         \\"Selecting subsets of projects\\".
-  -f PROJECT, --from PROJECT
+  -f PROJECT [PROJECT ...], --from PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--from\\" parameter expands 
@@ -408,7 +414,7 @@ Optional arguments:
                         \\".\\" can be used as shorthand for the project in the 
                         current working directory. For details, refer to the 
                         website article \\"Selecting subsets of projects\\".
-  -o PROJECT, --only PROJECT
+  -o PROJECT [PROJECT ...], --only PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--only\\" parameter expands 
@@ -419,7 +425,7 @@ Optional arguments:
                         selection that excludes some dependencies. For 
                         details, refer to the website article \\"Selecting 
                         subsets of projects\\".
-  -i PROJECT, --impacted-by PROJECT
+  -i PROJECT [PROJECT ...], --impacted-by PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--impacted-by\\" parameter 
@@ -431,7 +437,7 @@ Optional arguments:
                         may produce a selection that excludes some 
                         dependencies. For details, refer to the website 
                         article \\"Selecting subsets of projects\\".
-  -I PROJECT, --impacted-by-except PROJECT
+  -I PROJECT [PROJECT ...], --impacted-by-except PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--impacted-by-except\\" 
@@ -442,7 +448,7 @@ Optional arguments:
                         is \\"unsafe\\" as it may produce a selection that 
                         excludes some dependencies. For details, refer to the 
                         website article \\"Selecting subsets of projects\\".
-  --to-version-policy VERSION_POLICY_NAME
+  --to-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. The \\"--to-version-policy\\" 
@@ -450,7 +456,7 @@ Optional arguments:
                         of the projects belonging to VERSION_POLICY_NAME. For 
                         details, refer to the website article \\"Selecting 
                         subsets of projects\\".
-  --from-version-policy VERSION_POLICY_NAME
+  --from-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. The \\"--from-version-policy\\" 
@@ -538,10 +544,12 @@ exports[`CommandLineHelp prints the help for each action: install 1`] = `
 "usage: rush install [-h] [-p] [--bypass-policy] [--no-link]
                     [--network-concurrency COUNT] [--debug-package-manager]
                     [--max-install-attempts NUMBER] [--ignore-hooks]
-                    [--variant VARIANT] [-t PROJECT] [-T PROJECT] [-f PROJECT]
-                    [-o PROJECT] [-i PROJECT] [-I PROJECT]
-                    [--to-version-policy VERSION_POLICY_NAME]
-                    [--from-version-policy VERSION_POLICY_NAME]
+                    [--variant VARIANT] [-t PROJECT [PROJECT ...]]
+                    [-T PROJECT [PROJECT ...]] [-f PROJECT [PROJECT ...]]
+                    [-o PROJECT [PROJECT ...]] [-i PROJECT [PROJECT ...]]
+                    [-I PROJECT [PROJECT ...]]
+                    [--to-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]]
+                    [--from-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]]
                     
 
 The \\"rush install\\" command installs package dependencies for all your 
@@ -585,7 +593,7 @@ Optional arguments:
   --variant VARIANT     Run command using a variant installation 
                         configuration. This parameter may alternatively be 
                         specified via the RUSH_VARIANT environment variable.
-  -t PROJECT, --to PROJECT
+  -t PROJECT [PROJECT ...], --to PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--to\\" parameter expands 
@@ -594,7 +602,7 @@ Optional arguments:
                         project in the current working directory. For details,
                          refer to the website article \\"Selecting subsets of 
                         projects\\".
-  -T PROJECT, --to-except PROJECT
+  -T PROJECT [PROJECT ...], --to-except PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--to-except\\" parameter 
@@ -603,7 +611,7 @@ Optional arguments:
                         shorthand for the project in the current working 
                         directory. For details, refer to the website article 
                         \\"Selecting subsets of projects\\".
-  -f PROJECT, --from PROJECT
+  -f PROJECT [PROJECT ...], --from PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--from\\" parameter expands 
@@ -612,7 +620,7 @@ Optional arguments:
                         \\".\\" can be used as shorthand for the project in the 
                         current working directory. For details, refer to the 
                         website article \\"Selecting subsets of projects\\".
-  -o PROJECT, --only PROJECT
+  -o PROJECT [PROJECT ...], --only PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--only\\" parameter expands 
@@ -623,7 +631,7 @@ Optional arguments:
                         selection that excludes some dependencies. For 
                         details, refer to the website article \\"Selecting 
                         subsets of projects\\".
-  -i PROJECT, --impacted-by PROJECT
+  -i PROJECT [PROJECT ...], --impacted-by PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--impacted-by\\" parameter 
@@ -635,7 +643,7 @@ Optional arguments:
                         may produce a selection that excludes some 
                         dependencies. For details, refer to the website 
                         article \\"Selecting subsets of projects\\".
-  -I PROJECT, --impacted-by-except PROJECT
+  -I PROJECT [PROJECT ...], --impacted-by-except PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--impacted-by-except\\" 
@@ -646,7 +654,7 @@ Optional arguments:
                         is \\"unsafe\\" as it may produce a selection that 
                         excludes some dependencies. For details, refer to the 
                         website article \\"Selecting subsets of projects\\".
-  --to-version-policy VERSION_POLICY_NAME
+  --to-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. The \\"--to-version-policy\\" 
@@ -654,7 +662,7 @@ Optional arguments:
                         of the projects belonging to VERSION_POLICY_NAME. For 
                         details, refer to the website article \\"Selecting 
                         subsets of projects\\".
-  --from-version-policy VERSION_POLICY_NAME
+  --from-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. The \\"--from-version-policy\\" 
@@ -813,11 +821,13 @@ Optional arguments:
 `;
 
 exports[`CommandLineHelp prints the help for each action: rebuild 1`] = `
-"usage: rush rebuild [-h] [-p COUNT] [-t PROJECT] [-T PROJECT] [-f PROJECT]
-                    [-o PROJECT] [-i PROJECT] [-I PROJECT]
-                    [--to-version-policy VERSION_POLICY_NAME]
-                    [--from-version-policy VERSION_POLICY_NAME] [-v]
-                    [--ignore-hooks] [--disable-build-cache] [-s] [-m]
+"usage: rush rebuild [-h] [-p COUNT] [-t PROJECT [PROJECT ...]]
+                    [-T PROJECT [PROJECT ...]] [-f PROJECT [PROJECT ...]]
+                    [-o PROJECT [PROJECT ...]] [-i PROJECT [PROJECT ...]]
+                    [-I PROJECT [PROJECT ...]]
+                    [--to-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]]
+                    [--from-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]]
+                    [-v] [--ignore-hooks] [--disable-build-cache] [-s] [-m]
                     
 
 This command assumes that the package.json file for each project contains a 
@@ -840,7 +850,7 @@ Optional arguments:
                         depends on the operating system and number of CPU 
                         cores. This parameter may alternatively be specified 
                         via the RUSH_PARALLELISM environment variable.
-  -t PROJECT, --to PROJECT
+  -t PROJECT [PROJECT ...], --to PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--to\\" parameter expands 
@@ -849,7 +859,7 @@ Optional arguments:
                         project in the current working directory. For details,
                          refer to the website article \\"Selecting subsets of 
                         projects\\".
-  -T PROJECT, --to-except PROJECT
+  -T PROJECT [PROJECT ...], --to-except PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--to-except\\" parameter 
@@ -858,7 +868,7 @@ Optional arguments:
                         shorthand for the project in the current working 
                         directory. For details, refer to the website article 
                         \\"Selecting subsets of projects\\".
-  -f PROJECT, --from PROJECT
+  -f PROJECT [PROJECT ...], --from PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--from\\" parameter expands 
@@ -867,7 +877,7 @@ Optional arguments:
                         \\".\\" can be used as shorthand for the project in the 
                         current working directory. For details, refer to the 
                         website article \\"Selecting subsets of projects\\".
-  -o PROJECT, --only PROJECT
+  -o PROJECT [PROJECT ...], --only PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--only\\" parameter expands 
@@ -878,7 +888,7 @@ Optional arguments:
                         selection that excludes some dependencies. For 
                         details, refer to the website article \\"Selecting 
                         subsets of projects\\".
-  -i PROJECT, --impacted-by PROJECT
+  -i PROJECT [PROJECT ...], --impacted-by PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--impacted-by\\" parameter 
@@ -890,7 +900,7 @@ Optional arguments:
                         may produce a selection that excludes some 
                         dependencies. For details, refer to the website 
                         article \\"Selecting subsets of projects\\".
-  -I PROJECT, --impacted-by-except PROJECT
+  -I PROJECT [PROJECT ...], --impacted-by-except PROJECT [PROJECT ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. Each \\"--impacted-by-except\\" 
@@ -901,7 +911,7 @@ Optional arguments:
                         is \\"unsafe\\" as it may produce a selection that 
                         excludes some dependencies. For details, refer to the 
                         website article \\"Selecting subsets of projects\\".
-  --to-version-policy VERSION_POLICY_NAME
+  --to-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. The \\"--to-version-policy\\" 
@@ -909,7 +919,7 @@ Optional arguments:
                         of the projects belonging to VERSION_POLICY_NAME. For 
                         details, refer to the website article \\"Selecting 
                         subsets of projects\\".
-  --from-version-policy VERSION_POLICY_NAME
+  --from-version-policy VERSION_POLICY_NAME [VERSION_POLICY_NAME ...]
                         Normally all projects in the monorepo will be 
                         processed; adding this parameter will instead select 
                         a subset of projects. The \\"--from-version-policy\\" 

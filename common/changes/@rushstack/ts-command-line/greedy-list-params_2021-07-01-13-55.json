@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@rushstack/ts-command-line",
+      "comment": "Allow space-separated parameters passed to ListParameter types",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@rushstack/ts-command-line",
+  "email": "elliot-nelson@users.noreply.github.com"
+}

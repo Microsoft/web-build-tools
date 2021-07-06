@@ -544,12 +544,13 @@ Array [
 exports[`CommandLineParameter prints the action help 1`] = `
 "usage: example do:the-job [-h] [-c {one,two,three,default}]
                           [--choice-with-default {one,two,three,default}]
-                          [-C {red,green,blue}] [-f] [-i NUMBER]
-                          [--integer-with-default NUMBER] --integer-required
-                          NUMBER [-I LIST_ITEM] [-s TEXT]
+                          [-C {red,green,blue} [{red,green,blue} ...]] [-f]
+                          [-i NUMBER] [--integer-with-default NUMBER]
+                          --integer-required NUMBER
+                          [-I LIST_ITEM [LIST_ITEM ...]] [-s TEXT]
                           [--string-with-default TEXT]
                           [--string-with-undocumented-synonym TEXT]
-                          [-l LIST_ITEM]
+                          [-l LIST_ITEM [LIST_ITEM ...]]
                           
 
 a longer description
@@ -564,7 +565,7 @@ Optional arguments:
                         \\"quoted word\\". This parameter may alternatively be 
                         specified via the ENV_CHOICE2 environment variable. 
                         The default value is \\"default\\".
-  -C {red,green,blue}, --choice-list {red,green,blue}
+  -C {red,green,blue} [{red,green,blue} ...], --choice-list {red,green,blue} [{red,green,blue} ...]
                         This parameter may be specified multiple times to 
                         make a list of choices. This parameter may 
                         alternatively be specified via the ENV_CHOICE_LIST 
@@ -580,7 +581,7 @@ Optional arguments:
                         environment variable. The default value is 123.
   --integer-required NUMBER
                         An integer
-  -I LIST_ITEM, --integer-list LIST_ITEM
+  -I LIST_ITEM [LIST_ITEM ...], --integer-list LIST_ITEM [LIST_ITEM ...]
                         This parameter may be specified multiple times to 
                         make a list of integers. This parameter may 
                         alternatively be specified via the ENV_INTEGER_LIST 
@@ -594,7 +595,7 @@ Optional arguments:
                         environment variable. The default value is \\"123\\".
   --string-with-undocumented-synonym TEXT
                         A string with an undocumented synonym
-  -l LIST_ITEM, --string-list LIST_ITEM
+  -l LIST_ITEM [LIST_ITEM ...], --string-list LIST_ITEM [LIST_ITEM ...]
                         This parameter may be specified multiple times to 
                         make a list of strings. This parameter may 
                         alternatively be specified via the ENV_STRING_LIST 
@@ -617,4 +618,54 @@ Optional arguments:
 
 For detailed help about a specific command, use: example <command> -h
 "
+`;
+
+exports[`CommandLineParameter supports both single and greedy args for list parameters 1`] = `
+Array [
+  "### --choice output: ###",
+  "--choice",
+  "one",
+  "### --choice-with-default output: ###",
+  "--choice-with-default",
+  "two",
+  "### --choice-list output: ###",
+  "--choice-list",
+  "red",
+  "--choice-list",
+  "green",
+  "### --flag output: ###",
+  "--flag",
+  "### --integer output: ###",
+  "--integer",
+  "111",
+  "### --integer-with-default output: ###",
+  "--integer-with-default",
+  "222",
+  "### --integer-required output: ###",
+  "--integer-required",
+  "6",
+  "### --integer-list output: ###",
+  "--integer-list",
+  "1",
+  "--integer-list",
+  "2",
+  "--integer-list",
+  "3",
+  "### --string output: ###",
+  "--string",
+  "Hello, world!",
+  "### --string-with-default output: ###",
+  "--string-with-default",
+  "Hello, world!",
+  "### --string-with-undocumented-synonym output: ###",
+  "### --string-list output: ###",
+  "--string-list",
+  "cat",
+  "--string-list",
+  "dog",
+  "--string-list",
+  "pig",
+  "--string-list",
+  "cow",
+]
 `;

@@ -1,28 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CommandLineHelp prints the global help 1`] = `
-"usage: heft [-h] [--unmanaged] [--debug] [--plugin PATH] <command> ...
+"usage: heft [-h] [--unmanaged] [--debug] [--plugin PATH [PATH ...]]
+            <command> ...
 
 Heft is a pluggable build system designed for web projects.
 
 Positional arguments:
   <command>
-    clean        Clean the project
-    build        Build the project.
-    start        Run the local server for the current project
-    test         Build the project and run tests.
+    clean               Clean the project
+    build               Build the project.
+    start               Run the local server for the current project
+    test                Build the project and run tests.
 
 Optional arguments:
-  -h, --help     Show this help message and exit.
-  --unmanaged    Disables the Heft version selector: When Heft is invoked via 
-                 the shell path, normally it will examine the project's 
-                 package.json dependencies and try to use the locally 
-                 installed version of Heft. Specify \\"--unmanaged\\" to force 
-                 the invoked version of Heft to be used. This is useful for 
-                 example if you want to test a different version of Heft.
-  --debug        Show the full call stack if an error occurs while executing 
-                 the tool
-  --plugin PATH  Used to specify Heft plugins.
+  -h, --help            Show this help message and exit.
+  --unmanaged           Disables the Heft version selector: When Heft is 
+                        invoked via the shell path, normally it will examine 
+                        the project's package.json dependencies and try to 
+                        use the locally installed version of Heft. Specify 
+                        \\"--unmanaged\\" to force the invoked version of Heft to 
+                        be used. This is useful for example if you want to 
+                        test a different version of Heft.
+  --debug               Show the full call stack if an error occurs while 
+                        executing the tool
+  --plugin PATH [PATH ...]
+                        Used to specify Heft plugins.
 
 [bold]For detailed help about a specific command, use: heft <command> -h[normal]
 "
@@ -92,8 +95,10 @@ exports[`CommandLineHelp prints the help for each action: test 1`] = `
 "usage: heft test [-h] [-v] [--production] [--locale LOCALE] [-l]
                  [--typescript-max-write-parallelism PARALLEILSM]
                  [--max-old-space-size SIZE] [--watch] [--clean] [--no-test]
-                 [--no-build] [-u] [--find-related-tests SOURCE_FILE]
-                 [--silent] [-t REGEXP] [--test-path-pattern REGEXP]
+                 [--no-build] [-u]
+                 [--find-related-tests SOURCE_FILE [SOURCE_FILE ...]]
+                 [--silent] [-t REGEXP]
+                 [--test-path-pattern REGEXP [REGEXP ...]]
                  [--test-timeout-ms INTEGER] [--detect-open-handles]
                  [--debug-heft-reporter] [--max-workers COUNT_OR_PERCENTAGE]
                  
@@ -119,7 +124,7 @@ Optional arguments:
                         Update Jest snapshots while running the tests. This 
                         corresponds to the \\"--updateSnapshots\\" parameter in 
                         Jest
-  --find-related-tests SOURCE_FILE
+  --find-related-tests SOURCE_FILE [SOURCE_FILE ...]
                         Find and run the tests that cover a space separated 
                         list of source files that were passed in as arguments.
                          This corresponds to the \\"--findRelatedTests\\" 
@@ -134,7 +139,7 @@ Optional arguments:
                         its surrounding describe blocks. This corresponds to 
                         the \\"--testNamePattern\\" parameter in Jest's 
                         documentation.
-  --test-path-pattern REGEXP
+  --test-path-pattern REGEXP [REGEXP ...]
                         Run only tests with a source file path that matches a 
                         regular expression. On Windows you will need to use 
                         \\"/\\" instead of \\"\\" This corresponds to the 

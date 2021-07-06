@@ -383,6 +383,7 @@ export abstract class CommandLineParameterProvider {
         const choiceParameter: CommandLineChoiceListParameter = parameter as CommandLineChoiceListParameter;
         argparseOptions.choices = choiceParameter.alternatives as string[];
         argparseOptions.action = 'append';
+        argparseOptions.nargs = '+';
         break;
       }
       case CommandLineParameterKind.Flag:
@@ -394,11 +395,13 @@ export abstract class CommandLineParameterProvider {
       case CommandLineParameterKind.IntegerList:
         argparseOptions.type = 'int';
         argparseOptions.action = 'append';
+        argparseOptions.nargs = '+';
         break;
       case CommandLineParameterKind.String:
         break;
       case CommandLineParameterKind.StringList:
         argparseOptions.action = 'append';
+        argparseOptions.nargs = '+';
         break;
     }
 

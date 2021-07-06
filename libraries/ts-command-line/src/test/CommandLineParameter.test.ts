@@ -333,6 +333,33 @@ describe('CommandLineParameter', () => {
     expect(copiedArgs).toMatchSnapshot();
   });
 
+  it('supports both single and greedy args for list parameters', async () => {
+    const commandLineParser: CommandLineParser = createParser();
+    const action: CommandLineAction = commandLineParser.getAction('do:the-job');
+
+    const args: string[] = [
+      'do:the-job',
+      '--integer-required',
+      '6',
+      '--string-list',
+      'cat',
+      '--string-list',
+      'dog',
+      'pig',
+      '--string-list',
+      'cow'
+    ];
+
+    await commandLineParser.execute(args);
+
+    const copiedArgs: string[] = [];
+    for (const parameter of action.parameters) {
+      copiedArgs.push(`### ${parameter.longName} output: ###`);
+      parameter.appendToArgList(copiedArgs);
+    }
+    expect(copiedArgs).toMatchSnapshot();
+  });
+
   describe('choice list', () => {
     function createHelloWorldParser(): CommandLineParser {
       const commandLineParser: CommandLineParser = new DynamicCommandLineParser({
