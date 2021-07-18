@@ -36,3 +36,10 @@ export type ExportedAlias = AlphaClass;
 export { IPublicComplexInterface } from './IPublicComplexInterface';
 
 export { Lib1Interface } from 'api-extractor-lib1-test';
+
+/**
+ * Test that when exporting namespaces, we don't export members that got trimmed.
+ * See this issue: https://github.com/microsoft/rushstack/issues/2791
+ */
+import * as NS from './NamespaceWithTrimming';
+export { NS };

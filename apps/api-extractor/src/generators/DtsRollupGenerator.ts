@@ -202,6 +202,15 @@ export class DtsRollupGenerator {
             );
           }
 
+          // If the entity's declaration won't be included, then neither should the namespace export it
+          // This fixes the issue encountered here: https://github.com/microsoft/rushstack/issues/2791
+          const symbolMetadata: SymbolMetadata | undefined =
+            collector.tryFetchMetadataForAstEntity(exportedEntity);
+          const maxEffectiveReleaseTag: ReleaseTag = symbolMetadata
+            ? symbolMetadata.maxEffectiveReleaseTag
+            : ReleaseTag.None;
+          if (!this._shouldIncludeReleaseTag(maxEffectiveReleaseTag, dtsKind)) continue;
+
           if (collectorEntity.nameForEmit === exportedName) {
             exportClauses.push(collectorEntity.nameForEmit);
           } else {

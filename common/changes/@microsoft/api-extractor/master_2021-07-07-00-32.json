@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@microsoft/api-extractor",
+      "comment": "Don't export trimmed namespace members during rollup (#2791)",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@microsoft/api-extractor",
+  "email": "14597409+SchoofsKelvin@users.noreply.github.com"
+}

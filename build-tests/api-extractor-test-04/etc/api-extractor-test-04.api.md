@@ -83,6 +83,24 @@ export interface IPublicComplexInterface {
 
 export { Lib1Interface }
 
+declare namespace NS {
+  export {
+    NS_PUBLIC,
+    NS_BETA,
+    NS_INTERNAL
+  }
+}
+export { NS }
+
+// @beta (undocumented)
+const NS_BETA = "BETA";
+
+// @internal (undocumented)
+const NS_INTERNAL = "INTERNAL";
+
+// @public (undocumented)
+const NS_PUBLIC = "PUBLIC";
+
 // @public
 export class PublicClass {
     // @internal
