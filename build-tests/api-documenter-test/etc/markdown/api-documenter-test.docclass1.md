@@ -35,9 +35,7 @@ The constructor for this class is marked as internal. Third-party code should no
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [readonlyProperty](./api-documenter-test.docclass1.readonlyproperty.md) |  | string |  |
 |  [regularProperty](./api-documenter-test.docclass1.regularproperty.md) |  | [SystemEvent](./api-documenter-test.systemevent.md) | This is a regular property that happens to use the SystemEvent type. |
-|  [writeableProperty](./api-documenter-test.docclass1.writeableproperty.md) |  | string |  |
 
 ## Methods
 

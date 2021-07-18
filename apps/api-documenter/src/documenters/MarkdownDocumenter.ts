@@ -113,6 +113,19 @@ export class MarkdownDocumenter {
     }
   }
 
+  private _shouldIncludeItem(apiItem: ApiItem): boolean {
+    if (apiItem instanceof ApiDocumentedItem) {
+      if (apiItem.tsdocComment === undefined) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private _filterItems<T extends ApiItem>(apiItems: readonly T[]): readonly T[] {
+    return apiItems.filter((x) => this._shouldIncludeItem(x));
+  }
+
   private _writeApiItemPage(apiItem: ApiItem): void {
     const configuration: TSDocConfiguration = this._tsdocConfiguration;
     const output: DocSection = new DocSection({ configuration: this._tsdocConfiguration });
@@ -468,7 +481,7 @@ export class MarkdownDocumenter {
       headerTitles: ['Package', 'Description']
     });
 
-    for (const apiMember of apiModel.members) {
+    for (const apiMember of this._filterItems(apiModel.members)) {
       const row: DocTableRow = new DocTableRow({ configuration }, [
         this._createTitleCell(apiMember),
         this._createDescriptionCell(apiMember)
@@ -534,7 +547,7 @@ export class MarkdownDocumenter {
         ? (apiContainer as ApiPackage).entryPoints[0].members
         : (apiContainer as ApiNamespace).members;
 
-    for (const apiMember of apiMembers) {
+    for (const apiMember of this._filterItems(apiMembers)) {
       const row: DocTableRow = new DocTableRow({ configuration }, [
         this._createTitleCell(apiMember),
         this._createDescriptionCell(apiMember)
@@ -639,7 +652,7 @@ export class MarkdownDocumenter {
       headerTitles: ['Method', 'Modifiers', 'Description']
     });
 
-    for (const apiMember of apiClass.members) {
+    for (const apiMember of this._filterItems(apiClass.members)) {
       switch (apiMember.kind) {
         case ApiItemKind.Constructor: {
           constructorsTable.addRow(
@@ -724,7 +737,7 @@ export class MarkdownDocumenter {
       headerTitles: ['Member', 'Value', 'Description']
     });
 
-    for (const apiEnumMember of apiEnum.members) {
+    for (const apiEnumMember of this._filterItems(apiEnum.members)) {
       enumMembersTable.addRow(
         new DocTableRow({ configuration }, [
           new DocTableCell({ configuration }, [
@@ -773,7 +786,7 @@ export class MarkdownDocumenter {
       headerTitles: ['Method', 'Description']
     });
 
-    for (const apiMember of apiClass.members) {
+    for (const apiMember of this._filterItems(apiClass.members)) {
       switch (apiMember.kind) {
         case ApiItemKind.ConstructSignature:
         case ApiItemKind.MethodSignature: {

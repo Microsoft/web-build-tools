@@ -16,16 +16,5 @@ export interface IDocInterface6
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [arrayProperty](./api-documenter-test.idocinterface6.arrayproperty.md) | [IDocInterface1](./api-documenter-test.idocinterface1.md)<!-- -->\[\] |  |
-|  [intersectionProperty](./api-documenter-test.idocinterface6.intersectionproperty.md) | [IDocInterface1](./api-documenter-test.idocinterface1.md) &amp; [IDocInterface2](./api-documenter-test.idocinterface2.md) |  |
 |  [regularProperty](./api-documenter-test.idocinterface6.regularproperty.md) | number | Property of type number that does something |
-|  [tupleProperty](./api-documenter-test.idocinterface6.tupleproperty.md) | \[[IDocInterface1](./api-documenter-test.idocinterface1.md)<!-- -->, [IDocInterface2](./api-documenter-test.idocinterface2.md)<!-- -->\] |  |
-|  [typeReferenceProperty](./api-documenter-test.idocinterface6.typereferenceproperty.md) | [Generic](./api-documenter-test.generic.md)<!-- -->&lt;[IDocInterface1](./api-documenter-test.idocinterface1.md)<!-- -->&gt; |  |
-|  [unionProperty](./api-documenter-test.idocinterface6.unionproperty.md) | [IDocInterface1](./api-documenter-test.idocinterface1.md) \| [IDocInterface2](./api-documenter-test.idocinterface2.md) |  |
-
-## Methods
-
-|  Method | Description |
-|  --- | --- |
-|  [genericReferenceMethod(x)](./api-documenter-test.idocinterface6.genericreferencemethod.md) |  |
 
