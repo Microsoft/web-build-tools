@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@microsoft/api-extractor",
+      "comment": "fix: use entity exportName instead of nameForEmit for docModel generation",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@microsoft/api-extractor",
+  "email": "adventure-yunfei@users.noreply.github.com"
+}

@@ -81,7 +81,8 @@ export class ApiModelGenerator {
     // Create a CollectorEntity for each top-level export
     for (const entity of this._collector.entities) {
       if (entity.exported) {
-        this._processAstEntity(entity.astEntity, entity.nameForEmit, apiEntryPoint);
+        const exportedName: string | undefined = Array.from(entity.exportNames)[0] || entity.nameForEmit;
+        this._processAstEntity(entity.astEntity, exportedName, apiEntryPoint);
       }
     }
 

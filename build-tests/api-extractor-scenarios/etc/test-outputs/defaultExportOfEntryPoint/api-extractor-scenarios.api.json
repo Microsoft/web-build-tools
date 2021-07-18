@@ -171,7 +171,7 @@
       "members": [
         {
           "kind": "Class",
-          "canonicalReference": "api-extractor-scenarios!DefaultClass:class",
+          "canonicalReference": "api-extractor-scenarios!default:class",
           "docComment": "/**\n * @public\n */\n",
           "excerptTokens": [
             {
@@ -180,7 +180,7 @@
             }
           ],
           "releaseTag": "Public",
-          "name": "DefaultClass",
+          "name": "default",
           "members": [],
           "implementsTokenRanges": []
         }
