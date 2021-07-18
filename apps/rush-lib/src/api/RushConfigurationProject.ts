@@ -21,6 +21,7 @@ import { Selection } from '../logic/Selection';
 
 /**
  * This represents the JSON data object for a project entry in the rush.json configuration file.
+ * @public
  */
 export interface IRushConfigurationProjectJson {
   packageName: string;

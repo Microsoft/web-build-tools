@@ -28,7 +28,7 @@ export { PackageManagerName, PackageManager } from './api/packageManager/Package
 
 export { EnvironmentVariableNames } from './api/EnvironmentConfiguration';
 
-export { RushConfigurationProject } from './api/RushConfigurationProject';
+export { IRushConfigurationProjectJson, RushConfigurationProject } from './api/RushConfigurationProject';
 
 export { RushGlobalFolder as _RushGlobalFolder } from './api/RushGlobalFolder';
 
