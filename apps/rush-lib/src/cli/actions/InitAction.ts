@@ -113,7 +113,9 @@ export class InitAction extends BaseConfiglessRushAction {
       console.log(
         os.EOL +
           'The "rush init" command must be run in a new folder without ' +
-          'an existing Rush configuration.'
+          'an existing Rush configuration. Use the "myrush init ' +
+          '--overwrite-exisiting" command to upgrade an existing Rush ' +
+          'configuration to the globally installed version.'
       );
       return false;
     }

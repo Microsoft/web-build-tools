@@ -27,7 +27,8 @@
   },
   "bin": {
     "rush": "./bin/rush",
-    "rushx": "./bin/rushx"
+    "rushx": "./bin/rushx",
+    "myrush": "./bin/myrush"
   },
   "license": "MIT",
   "dependencies": {

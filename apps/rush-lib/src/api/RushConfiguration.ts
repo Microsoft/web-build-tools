@@ -815,7 +815,7 @@ export class RushConfiguration {
           throw new Error(
             `Unable to load ${rushJsonBaseName} because its RushVersion is` +
               ` ${rushConfigurationJson.rushVersion}, whereas @microsoft/rush-lib is version ${Rush.version}.` +
-              ` Consider upgrading the library.`
+              ` Consider upgrading the library using "npm install -g @microsoft/rush".`
           );
         }
       }

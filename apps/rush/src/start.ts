@@ -86,7 +86,11 @@ const launchOptions: rushLib.ILaunchOptions = { isManaged, alreadyReportedNodeTo
 
 // If we're inside a repo folder, and it's requesting a different version, then use the RushVersionManager to
 // install it
-if (rushVersionToLoad && rushVersionToLoad !== currentPackageVersion) {
+if (
+  RushCommandSelector.getCommandName() !== 'myrush' &&
+  rushVersionToLoad &&
+  rushVersionToLoad !== currentPackageVersion
+) {
   const versionSelector: RushVersionSelector = new RushVersionSelector(currentPackageVersion);
   versionSelector
     .ensureRushVersionInstalledAsync(rushVersionToLoad, configuration, launchOptions)

@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@microsoft/rush",
+      "comment": "Add new binary 'myrush' that invokes the globally installed version of Rush",
+      "type": "none"
+    }
+  ],
+  "packageName": "@microsoft/rush",
+  "email": "darsi-an@users.noreply.github.com"
+}
