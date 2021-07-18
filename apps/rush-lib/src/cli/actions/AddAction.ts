@@ -6,6 +6,7 @@ import * as semver from 'semver';
 import { Import } from '@rushstack/node-core-library';
 import { CommandLineFlagParameter, CommandLineStringParameter } from '@rushstack/ts-command-line';
 
+import { Event } from '../../api/EventHooks';
 import { RushConfigurationProject } from '../../api/RushConfigurationProject';
 import { BaseRushAction } from './BaseRushAction';
 import { RushCommandLineParser } from '../RushCommandLineParser';
@@ -24,6 +25,7 @@ export class AddAction extends BaseRushAction {
   private _devDependencyFlag!: CommandLineFlagParameter;
   private _makeConsistentFlag!: CommandLineFlagParameter;
   private _skipUpdateFlag!: CommandLineFlagParameter;
+  private _ignoreHooksParameter!: CommandLineFlagParameter;
   private _packageName!: CommandLineStringParameter;
 
   public constructor(parser: RushCommandLineParser) {
@@ -90,10 +92,21 @@ export class AddAction extends BaseRushAction {
       parameterLongName: '--all',
       description: 'If specified, the dependency will be added to all projects.'
     });
+    this._ignoreHooksParameter = this.defineFlagParameter({
+      parameterLongName: '--ignore-hooks',
+      description: `Skips execution of the "eventHooks" scripts defined in rush.json. Make sure you know what you are skipping.`
+    });
   }
 
   public async runAsync(): Promise<void> {
     let projects: RushConfigurationProject[];
+
+    this.eventHooksManager.handle(
+      Event.preRushAdd,
+      this.parser.isDebug,
+      this._ignoreHooksParameter.value
+    );
+
     if (this._allFlag.value) {
       projects = this.rushConfiguration.projects;
     } else {
@@ -171,5 +184,11 @@ export class AddAction extends BaseRushAction {
       debugInstall: this.parser.isDebug,
       rangeStyle: rangeStyle
     });
+
+    this.eventHooksManager.handle(
+      Event.postRushAdd,
+      this.parser.isDebug,
+      this._ignoreHooksParameter.value
+    );
   }
 }

@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@microsoft/rush",
+      "comment": "Adds new hooks to be called pre and post rush add, to resolve an issue whereby pre and post install hooks are not called as part of this lifecycle",
+      "type": "none"
+    }
+  ],
+  "packageName": "@microsoft/rush",
+  "email": "cblagg@squarespace.com"
+}
