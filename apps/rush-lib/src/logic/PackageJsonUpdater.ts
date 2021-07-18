@@ -37,15 +37,15 @@ export interface IPackageJsonUpdaterRushAddOptions {
    */
   projects: RushConfigurationProject[];
   /**
-   * The name of the dependency to be added
+   * The name list of the dependencies to be added
    */
-  packageName: string;
+  packageNames: string[];
   /**
-   * The initial version specifier.
+   * The initial version specifier mapped by package name.
    * If undefined, the latest version will be used (that doesn't break ensureConsistentVersions).
    * If specified, the latest version meeting the SemVer specifier will be used as the basis.
    */
-  initialVersion: string | undefined;
+  initialVersions: Map<string, string | undefined>;
   /**
    * Whether or not this dependency should be added as a devDependency or a regular dependency.
    */
@@ -63,9 +63,10 @@ export interface IPackageJsonUpdaterRushAddOptions {
    */
   debugInstall: boolean;
   /**
-   * The style of range that should be used if the version is automatically detected.
+   * The map contains the style of range that should be used if the version is automatically detected.
+   * which are indexed by package name
    */
-  rangeStyle: SemVerStyle;
+  rangeStyles: Map<string, SemVerStyle>;
   /**
    * The variant to consider when performing installations and validating shrinkwrap updates.
    */
@@ -81,13 +82,11 @@ export interface IUpdateProjectOptions {
    */
   project: VersionMismatchFinderEntity;
   /**
-   * The name of the dependency to be added or updated in the project
+   * Map of packages to update
+   * Its key is the name of the dependency to be added or updated in the project
+   * Its value is the new SemVer specifier that should be added to the project's package.json
    */
-  packageName: string;
-  /**
-   * The new SemVer specifier that should be added to the project's package.json
-   */
-  newVersion: string;
+  updatePackages: Record<string, string>;
   /**
    * The type of dependency that should be updated. If left empty, this will be auto-detected.
    * If it cannot be auto-detected an exception will be thrown.
@@ -114,13 +113,13 @@ export class PackageJsonUpdater {
   public async doRushAdd(options: IPackageJsonUpdaterRushAddOptions): Promise<void> {
     const {
       projects,
-      packageName,
-      initialVersion,
+      packageNames,
+      initialVersions,
       devDependency,
       updateOtherPackages,
       skipUpdate,
       debugInstall,
-      rangeStyle,
+      rangeStyles,
       variant
     } = options;
 
@@ -147,17 +146,22 @@ export class PackageJsonUpdater {
       installManagerOptions
     );
 
-    const version: string = await this._getNormalizedVersionSpec(
-      projects,
-      installManager,
-      packageName,
-      initialVersion,
-      implicitlyPinned.get(packageName),
-      rangeStyle
-    );
-
     console.log();
-    console.log(colors.green(`Updating projects to use `) + packageName + '@' + colors.cyan(version));
+    const updatePackages: Record<string, string> = {};
+    for (const packageName of packageNames) {
+      const initialVersion: string | undefined = initialVersions.get(packageName);
+      const rangeStyle: SemVerStyle = rangeStyles.get(packageName)!;
+      const version: string = await this._getNormalizedVersionSpec(
+        projects,
+        installManager,
+        packageName,
+        initialVersion,
+        implicitlyPinned.get(packageName),
+        rangeStyle
+      );
+      updatePackages[packageName] = version;
+      console.log(colors.green(`Updating projects to use `) + packageName + '@' + colors.cyan(version));
+    }
     console.log();
 
     const allPackageUpdates: IUpdateProjectOptions[] = [];
@@ -165,8 +169,7 @@ export class PackageJsonUpdater {
     for (const project of projects) {
       const currentProjectUpdate: IUpdateProjectOptions = {
         project: new VersionMismatchFinderProject(project),
-        packageName,
-        newVersion: version,
+        updatePackages,
         dependencyType: devDependency ? DependencyType.Dev : undefined
       };
       this.updateProject(currentProjectUpdate);
@@ -187,24 +190,35 @@ export class PackageJsonUpdater {
         });
         if (mismatches.length) {
           if (!updateOtherPackages) {
+            const updatePackagesLiteral: string = Object.entries(updatePackages)
+              .map(([packageName, version]) => `${packageName}@${version}`)
+              .join(',');
             throw new Error(
-              `Adding '${packageName}@${version}' to ${project.packageName}` +
+              `Adding '${updatePackagesLiteral}' to ${project.packageName}` +
                 ` causes mismatched dependencies. Use the "--make-consistent" flag to update other packages to use` +
                 ` this version, or do not specify a SemVer range.`
             );
           }
 
           // otherwise we need to go update a bunch of other projects
-          const mismatchedVersions: string[] | undefined = mismatchFinder.getVersionsOfMismatch(packageName);
-          if (mismatchedVersions) {
-            for (const mismatchedVersion of mismatchedVersions) {
-              for (const consumer of mismatchFinder.getConsumersOfMismatch(packageName, mismatchedVersion)!) {
-                if (consumer instanceof VersionMismatchFinderProject) {
-                  otherPackageUpdates.push({
-                    project: consumer,
-                    packageName: packageName,
-                    newVersion: version
-                  });
+          for (const [packageName, version] of Object.entries(updatePackages)) {
+            const mismatchedVersions: string[] | undefined = mismatchFinder.getVersionsOfMismatch(
+              packageName
+            );
+            if (mismatchedVersions) {
+              for (const mismatchedVersion of mismatchedVersions) {
+                for (const consumer of mismatchFinder.getConsumersOfMismatch(
+                  packageName,
+                  mismatchedVersion
+                )!) {
+                  if (consumer instanceof VersionMismatchFinderProject) {
+                    otherPackageUpdates.push({
+                      project: consumer,
+                      updatePackages: {
+                        [packageName]: version
+                      }
+                    });
+                  }
                 }
               }
             }
@@ -249,20 +263,22 @@ export class PackageJsonUpdater {
    */
   public updateProject(options: IUpdateProjectOptions): void {
     let { dependencyType } = options;
-    const { project, packageName, newVersion } = options;
+    const { project, updatePackages } = options;
 
-    const oldDependency: PackageJsonDependency | undefined = project.tryGetDependency(packageName);
-    const oldDevDependency: PackageJsonDependency | undefined = project.tryGetDevDependency(packageName);
+    for (const [packageName, newVersion] of Object.entries(updatePackages)) {
+      const oldDependency: PackageJsonDependency | undefined = project.tryGetDependency(packageName);
+      const oldDevDependency: PackageJsonDependency | undefined = project.tryGetDevDependency(packageName);
 
-    const oldDependencyType: DependencyType | undefined = oldDevDependency
-      ? oldDevDependency.dependencyType
-      : oldDependency
-      ? oldDependency.dependencyType
-      : undefined;
+      const oldDependencyType: DependencyType | undefined = oldDevDependency
+        ? oldDevDependency.dependencyType
+        : oldDependency
+        ? oldDependency.dependencyType
+        : undefined;
 
-    dependencyType = dependencyType || oldDependencyType || DependencyType.Regular;
+      dependencyType = dependencyType || oldDependencyType || DependencyType.Regular;
 
-    project.addOrUpdateDependency(packageName, newVersion, dependencyType!);
+      project.addOrUpdateDependency(packageName, newVersion, dependencyType!);
+    }
   }
 
   /**

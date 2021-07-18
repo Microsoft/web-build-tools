@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@microsoft/rush",
+      "comment": "Rush add supports adding multiple packages",
+      "type": "none"
+    }
+  ],
+  "packageName": "@microsoft/rush",
+  "email": "liucheng.tech@outlook.com"
+}
