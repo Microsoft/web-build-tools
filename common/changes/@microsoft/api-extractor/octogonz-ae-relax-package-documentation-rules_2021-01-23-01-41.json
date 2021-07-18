@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@microsoft/api-extractor",
+      "comment": "Support a use case where the \"ae-misplaced-package-tag\" warning is suppressed; API Extractor will now accept a misplaced `@packageDocumentation` rather than discarding it",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@microsoft/api-extractor",
+  "email": "4673363+octogonz@users.noreply.github.com"
+}
