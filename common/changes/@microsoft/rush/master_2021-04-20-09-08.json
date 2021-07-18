@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@microsoft/rush",
+      "comment": "Fix the information output to be print on stderr",
+      "type": "none"
+    }
+  ],
+  "packageName": "@microsoft/rush",
+  "email": "info@ideabile.com"
+}

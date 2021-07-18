@@ -28,7 +28,9 @@ const RUSH_PREVIEW_VERSION: string = 'RUSH_PREVIEW_VERSION';
 function _getRushVersion(): string {
   const rushPreviewVersion: string | undefined = process.env[RUSH_PREVIEW_VERSION];
   if (rushPreviewVersion !== undefined) {
-    console.log(`Using Rush version from environment variable ${RUSH_PREVIEW_VERSION}=${rushPreviewVersion}`);
+    console.warn(
+      `Using Rush version from environment variable ${RUSH_PREVIEW_VERSION}=${rushPreviewVersion}`
+    );
     return rushPreviewVersion;
   }
 
@@ -67,18 +69,18 @@ function _run(): void {
   }
 
   if (process.argv.length < 3) {
-    console.log(`Usage: ${scriptName} <command> [args...]`);
+    console.warn(`Usage: ${scriptName} <command> [args...]`);
     if (scriptName === 'install-run-rush.js') {
-      console.log(`Example: ${scriptName} build --to myproject`);
+      console.warn(`Example: ${scriptName} build --to myproject`);
     } else {
-      console.log(`Example: ${scriptName} custom-command`);
+      console.warn(`Example: ${scriptName} custom-command`);
     }
     process.exit(1);
   }
 
   runWithErrorAndStatusCode(() => {
     const version: string = _getRushVersion();
-    console.log(`The rush.json configuration requests Rush version ${version}`);
+    console.warn(`The rush.json configuration requests Rush version ${version}`);
 
     return installAndRun(PACKAGE_NAME, version, bin, packageBinArgs);
   });
