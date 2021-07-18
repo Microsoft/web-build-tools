@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@microsoft/rush",
+      "comment": "Add CI skipping to default version & changelog commits",
+      "type": "none"
+    }
+  ],
+  "packageName": "@microsoft/rush",
+  "email": "hi@olivierlacan.com"
+}

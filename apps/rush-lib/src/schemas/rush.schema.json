@@ -174,11 +174,11 @@
           "type": "string"
         },
         "versionBumpCommitMessage": {
-          "description": "The commit message to use when committing changes during \"rush publish\". Defaults to \"Applying package updates.\"",
+          "description": "The commit message to use when committing changes during \"rush publish\". Defaults to \"Bump versions [skip ci]\"",
           "type": "string"
         },
         "changeLogUpdateCommitMessage": {
-          "description": "The commit message to use when committing change log files \"rush version\". Defaults to \"Deleting change files and updating change logs for package updates.\"",
+          "description": "The commit message to use when committing change log files \"rush version\". Defaults to \"Update changelogs [skip ci]\"",
           "type": "string"
         }
       },

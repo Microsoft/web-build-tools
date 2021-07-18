@@ -18,9 +18,8 @@ import { Git } from '../../logic/Git';
 import type * as VersionManagerTypes from '../../logic/VersionManager';
 const versionManagerModule: typeof VersionManagerTypes = Import.lazy('../../logic/VersionManager', require);
 
-export const DEFAULT_PACKAGE_UPDATE_MESSAGE: string = 'Applying package updates.';
-export const DEFAULT_CHANGELOG_UPDATE_MESSAGE: string =
-  'Deleting change files and updating change logs for package updates.';
+export const DEFAULT_PACKAGE_UPDATE_MESSAGE: string = 'Bump versions [skip ci]';
+export const DEFAULT_CHANGELOG_UPDATE_MESSAGE: string = 'Update changelogs [skip ci]';
 
 export class VersionAction extends BaseRushAction {
   private _ensureVersionPolicy!: CommandLineFlagParameter;
