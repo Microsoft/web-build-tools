@@ -253,6 +253,46 @@ export class PackageJsonEditor {
     this._modified = true;
   }
 
+  public updateDependencyOnlyExists(
+    packageName: string,
+    newVersion: string,
+    dependencyType: DependencyType
+  ): void {
+    const dependency: PackageJsonDependency = new PackageJsonDependency(
+      packageName,
+      newVersion,
+      dependencyType,
+      this._onChange.bind(this)
+    );
+
+    // Rush collapses everything that isn't a devDependency into the dependencies
+    // field, so we need to set the value depending on dependency type
+    switch (dependencyType) {
+      case DependencyType.Regular:
+      case DependencyType.Optional:
+      case DependencyType.Peer:
+        if (this._dependencies.get(packageName)) {
+          this._dependencies.set(packageName, dependency);
+          this._modified = true;
+        }
+        break;
+      case DependencyType.Dev:
+        if (this._devDependencies.get(packageName)) {
+          this._devDependencies.set(packageName, dependency);
+          this._modified = true;
+        }
+        break;
+      case DependencyType.YarnResolutions:
+        if (this._resolutions.get(packageName)) {
+          this._resolutions.set(packageName, dependency);
+          this._modified = true;
+        }
+        break;
+      default:
+        throw new InternalError('Unsupported DependencyType');
+    }
+  }
+
   public saveIfModified(): boolean {
     if (this._modified) {
       this._modified = false;

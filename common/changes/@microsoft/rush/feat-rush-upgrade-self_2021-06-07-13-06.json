@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@microsoft/rush",
+      "comment": "Add a \"rush upgrade-self\" action that upgrades the version of Rush in the current repository.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@microsoft/rush",
+  "email": "chengcyber@users.noreply.github.com"
+}

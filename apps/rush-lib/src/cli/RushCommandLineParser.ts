@@ -44,6 +44,7 @@ import { RushGlobalFolder } from '../api/RushGlobalFolder';
 import { NodeJsCompatibility } from '../logic/NodeJsCompatibility';
 import { SetupAction } from './actions/SetupAction';
 import { EnvironmentConfiguration } from '../api/EnvironmentConfiguration';
+import { UpgradeSelfAction } from './actions/UpgradeSelfAction';
 
 /**
  * Options for `RushCommandLineParser`.
@@ -179,6 +180,7 @@ export class RushCommandLineParser extends CommandLineParser {
       this.addAction(new UpdateAction(this));
       this.addAction(new UpdateAutoinstallerAction(this));
       this.addAction(new UpdateCloudCredentialsAction(this));
+      this.addAction(new UpgradeSelfAction(this));
       this.addAction(new VersionAction(this));
       this.addAction(new WriteBuildCacheAction(this));
 
