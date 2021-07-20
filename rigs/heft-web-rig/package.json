@@ -16,6 +16,7 @@
   "dependencies": {
     "@microsoft/api-extractor": "workspace:*",
     "@rushstack/heft-jest-plugin": "workspace:*",
+    "@rushstack/heft-sass-plugin": "workspace:*",
     "@rushstack/heft-webpack4-plugin": "workspace:*",
     "eslint": "~7.30.0",
     "typescript": "~3.9.7"

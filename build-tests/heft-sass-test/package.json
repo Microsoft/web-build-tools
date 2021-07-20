@@ -11,6 +11,7 @@
     "@rushstack/eslint-config": "workspace:*",
     "@rushstack/heft": "workspace:*",
     "@rushstack/heft-jest-plugin": "workspace:*",
+    "@rushstack/heft-sass-plugin": "workspace:*",
     "@rushstack/heft-webpack4-plugin": "workspace:*",
     "@types/heft-jest": "1.0.1",
     "@types/react-dom": "16.9.8",

@@ -20,7 +20,6 @@ import { DeleteGlobsPlugin } from '../plugins/DeleteGlobsPlugin';
 import { CopyStaticAssetsPlugin } from '../plugins/CopyStaticAssetsPlugin';
 import { RunScriptPlugin } from '../plugins/RunScriptPlugin';
 import { ApiExtractorPlugin } from '../plugins/ApiExtractorPlugin/ApiExtractorPlugin';
-import { SassTypingsPlugin } from '../plugins/SassTypingsPlugin/SassTypingsPlugin';
 import { ProjectValidatorPlugin } from '../plugins/ProjectValidatorPlugin';
 import { ToolPackageResolver } from '../utilities/ToolPackageResolver';
 import { NodeServicePlugin } from '../plugins/NodeServicePlugin';
@@ -53,7 +52,6 @@ export class PluginManager {
     this._applyPlugin(new DeleteGlobsPlugin());
     this._applyPlugin(new RunScriptPlugin());
     this._applyPlugin(new ApiExtractorPlugin(taskPackageResolver));
-    this._applyPlugin(new SassTypingsPlugin());
     this._applyPlugin(new ProjectValidatorPlugin());
     this._applyPlugin(new NodeServicePlugin());
   }

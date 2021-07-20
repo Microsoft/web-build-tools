@@ -5,13 +5,13 @@ importers:
   typescript-newest-test:
     specifiers:
       '@rushstack/eslint-config': file:rushstack-eslint-config-2.4.0.tgz
-      '@rushstack/heft': file:rushstack-heft-0.34.6.tgz
+      '@rushstack/heft': file:rushstack-heft-0.34.8.tgz
       eslint: ~7.30.0
       tslint: ~5.20.1
       typescript: ~4.3.5
     devDependencies:
       '@rushstack/eslint-config': file:../temp/tarballs/rushstack-eslint-config-2.4.0.tgz_eslint@7.30.0+typescript@4.3.5
-      '@rushstack/heft': file:../temp/tarballs/rushstack-heft-0.34.6.tgz
+      '@rushstack/heft': file:../temp/tarballs/rushstack-heft-0.34.8.tgz
       eslint: 7.30.0
       tslint: 5.20.1_typescript@4.3.5
       typescript: 4.3.5
@@ -19,13 +19,13 @@ importers:
   typescript-v3-test:
     specifiers:
       '@rushstack/eslint-config': file:rushstack-eslint-config-2.4.0.tgz
-      '@rushstack/heft': file:rushstack-heft-0.34.6.tgz
+      '@rushstack/heft': file:rushstack-heft-0.34.8.tgz
       eslint: ~7.30.0
       tslint: ~5.20.1
       typescript: ~3.9.7
     devDependencies:
       '@rushstack/eslint-config': file:../temp/tarballs/rushstack-eslint-config-2.4.0.tgz_eslint@7.30.0+typescript@3.9.10
-      '@rushstack/heft': file:../temp/tarballs/rushstack-heft-0.34.6.tgz
+      '@rushstack/heft': file:../temp/tarballs/rushstack-heft-0.34.8.tgz
       eslint: 7.30.0
       tslint: 5.20.1_typescript@3.9.10
       typescript: 3.9.10
@@ -151,7 +151,7 @@ packages:
     dependencies:
       '@typescript-eslint/experimental-utils': 4.28.3_eslint@7.30.0+typescript@4.3.5
       '@typescript-eslint/parser': 4.28.3_eslint@7.30.0+typescript@4.3.5
-      '@typescript-eslint/scope-manager': 4.28.3_typescript@4.3.5
+      '@typescript-eslint/scope-manager': 4.28.3
       debug: 4.3.1
       eslint: 7.30.0
       functional-red-black-tree: 1.0.1
@@ -176,7 +176,7 @@ packages:
     dependencies:
       '@typescript-eslint/experimental-utils': 4.28.3_eslint@7.30.0+typescript@3.9.10
       '@typescript-eslint/parser': 4.28.3_eslint@7.30.0+typescript@3.9.10
-      '@typescript-eslint/scope-manager': 4.28.3_typescript@3.9.10
+      '@typescript-eslint/scope-manager': 4.28.3
       debug: 4.3.1
       eslint: 7.30.0
       functional-red-black-tree: 1.0.1
@@ -195,8 +195,8 @@ packages:
       eslint: '*'
     dependencies:
       '@types/json-schema': 7.0.7
-      '@typescript-eslint/scope-manager': 4.28.3_typescript@3.9.10
-      '@typescript-eslint/types': 4.28.3_typescript@3.9.10
+      '@typescript-eslint/scope-manager': 4.28.3
+      '@typescript-eslint/types': 4.28.3
       '@typescript-eslint/typescript-estree': 4.28.3_typescript@3.9.10
       eslint: 7.30.0
       eslint-scope: 5.1.1
@@ -213,8 +213,8 @@ packages:
       eslint: '*'
     dependencies:
       '@types/json-schema': 7.0.7
-      '@typescript-eslint/scope-manager': 4.28.3_typescript@4.3.5
-      '@typescript-eslint/types': 4.28.3_typescript@4.3.5
+      '@typescript-eslint/scope-manager': 4.28.3
+      '@typescript-eslint/types': 4.28.3
       '@typescript-eslint/typescript-estree': 4.28.3_typescript@4.3.5
       eslint: 7.30.0
       eslint-scope: 5.1.1
@@ -234,8 +234,8 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@typescript-eslint/scope-manager': 4.28.3_typescript@3.9.10
-      '@typescript-eslint/types': 4.28.3_typescript@3.9.10
+      '@typescript-eslint/scope-manager': 4.28.3
+      '@typescript-eslint/types': 4.28.3
       '@typescript-eslint/typescript-estree': 4.28.3_typescript@3.9.10
       debug: 4.3.1
       eslint: 7.30.0
@@ -254,8 +254,8 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@typescript-eslint/scope-manager': 4.28.3_typescript@4.3.5
-      '@typescript-eslint/types': 4.28.3_typescript@4.3.5
+      '@typescript-eslint/scope-manager': 4.28.3
+      '@typescript-eslint/types': 4.28.3
       '@typescript-eslint/typescript-estree': 4.28.3_typescript@4.3.5
       debug: 4.3.1
       eslint: 7.30.0
@@ -264,42 +264,17 @@ packages:
       - supports-color
     dev: true
 
-  /@typescript-eslint/scope-manager/4.28.3_typescript@3.9.10:
+  /@typescript-eslint/scope-manager/4.28.3:
     resolution: {integrity: sha512-/8lMisZ5NGIzGtJB+QizQ5eX4Xd8uxedFfMBXOKuJGP0oaBBVEMbJVddQKDXyyB0bPlmt8i6bHV89KbwOelJiQ==}
     engines: {node: ^8.10.0 || ^10.13.0 || >=11.10.1}
     dependencies:
-      '@typescript-eslint/types': 4.28.3_typescript@3.9.10
-      '@typescript-eslint/visitor-keys': 4.28.3_typescript@3.9.10
-    transitivePeerDependencies:
-      - typescript
+      '@typescript-eslint/types': 4.28.3
+      '@typescript-eslint/visitor-keys': 4.28.3
     dev: true
 
-  /@typescript-eslint/scope-manager/4.28.3_typescript@4.3.5:
-    resolution: {integrity: sha512-/8lMisZ5NGIzGtJB+QizQ5eX4Xd8uxedFfMBXOKuJGP0oaBBVEMbJVddQKDXyyB0bPlmt8i6bHV89KbwOelJiQ==}
-    engines: {node: ^8.10.0 || ^10.13.0 || >=11.10.1}
-    dependencies:
-      '@typescript-eslint/types': 4.28.3_typescript@4.3.5
-      '@typescript-eslint/visitor-keys': 4.28.3_typescript@4.3.5
-    transitivePeerDependencies:
-      - typescript
-    dev: true
-
-  /@typescript-eslint/types/4.28.3_typescript@3.9.10:
+  /@typescript-eslint/types/4.28.3:
     resolution: {integrity: sha512-kQFaEsQBQVtA9VGVyciyTbIg7S3WoKHNuOp/UF5RG40900KtGqfoiETWD/v0lzRXc+euVE9NXmfer9dLkUJrkA==}
     engines: {node: ^8.10.0 || ^10.13.0 || >=11.10.1}
-    peerDependencies:
-      typescript: '*'
-    dependencies:
-      typescript: 3.9.10
-    dev: true
-
-  /@typescript-eslint/types/4.28.3_typescript@4.3.5:
-    resolution: {integrity: sha512-kQFaEsQBQVtA9VGVyciyTbIg7S3WoKHNuOp/UF5RG40900KtGqfoiETWD/v0lzRXc+euVE9NXmfer9dLkUJrkA==}
-    engines: {node: ^8.10.0 || ^10.13.0 || >=11.10.1}
-    peerDependencies:
-      typescript: '*'
-    dependencies:
-      typescript: 4.3.5
     dev: true
 
   /@typescript-eslint/typescript-estree/4.28.3_typescript@3.9.10:
@@ -311,8 +286,8 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@typescript-eslint/types': 4.28.3_typescript@3.9.10
-      '@typescript-eslint/visitor-keys': 4.28.3_typescript@3.9.10
+      '@typescript-eslint/types': 4.28.3
+      '@typescript-eslint/visitor-keys': 4.28.3
       debug: 4.3.1
       globby: 11.0.4
       is-glob: 4.0.1
@@ -332,8 +307,8 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@typescript-eslint/types': 4.28.3_typescript@4.3.5
-      '@typescript-eslint/visitor-keys': 4.28.3_typescript@4.3.5
+      '@typescript-eslint/types': 4.28.3
+      '@typescript-eslint/visitor-keys': 4.28.3
       debug: 4.3.1
       globby: 11.0.4
       is-glob: 4.0.1
@@ -344,24 +319,12 @@ packages:
       - supports-color
     dev: true
 
-  /@typescript-eslint/visitor-keys/4.28.3_typescript@3.9.10:
+  /@typescript-eslint/visitor-keys/4.28.3:
     resolution: {integrity: sha512-ri1OzcLnk1HH4gORmr1dllxDzzrN6goUIz/P4MHFV0YZJDCADPR3RvYNp0PW2SetKTThar6wlbFTL00hV2Q+fg==}
     engines: {node: ^8.10.0 || ^10.13.0 || >=11.10.1}
     dependencies:
-      '@typescript-eslint/types': 4.28.3_typescript@3.9.10
+      '@typescript-eslint/types': 4.28.3
       eslint-visitor-keys: 2.1.0
-    transitivePeerDependencies:
-      - typescript
-    dev: true
-
-  /@typescript-eslint/visitor-keys/4.28.3_typescript@4.3.5:
-    resolution: {integrity: sha512-ri1OzcLnk1HH4gORmr1dllxDzzrN6goUIz/P4MHFV0YZJDCADPR3RvYNp0PW2SetKTThar6wlbFTL00hV2Q+fg==}
-    engines: {node: ^8.10.0 || ^10.13.0 || >=11.10.1}
-    dependencies:
-      '@typescript-eslint/types': 4.28.3_typescript@4.3.5
-      eslint-visitor-keys: 2.1.0
-    transitivePeerDependencies:
-      - typescript
     dev: true
 
   /abbrev/1.1.1:
@@ -3109,10 +3072,10 @@ packages:
       - typescript
     dev: true
 
-  file:../temp/tarballs/rushstack-heft-0.34.6.tgz:
-    resolution: {tarball: file:../temp/tarballs/rushstack-heft-0.34.6.tgz}
+  file:../temp/tarballs/rushstack-heft-0.34.8.tgz:
+    resolution: {tarball: file:../temp/tarballs/rushstack-heft-0.34.8.tgz}
     name: '@rushstack/heft'
-    version: 0.34.6
+    version: 0.34.8
     engines: {node: '>=10.13.0'}
     hasBin: true
     dependencies:

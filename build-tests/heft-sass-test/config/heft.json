@@ -52,6 +52,12 @@
        * The path to the plugin package.
        */
       "plugin": "@rushstack/heft-jest-plugin"
+    },
+    {
+      /**
+       * The path to the plugin package.
+       */
+      "plugin": "@rushstack/heft-sass-plugin"
     }
   ]
 }

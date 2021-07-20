@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@rushstack/heft-web-rig",
+      "comment": "Use newly extracted Sass plugin (@rushstack/heft-sass-plugin)",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@rushstack/heft-web-rig",
+  "email": "jonasb@users.noreply.github.com"
+}

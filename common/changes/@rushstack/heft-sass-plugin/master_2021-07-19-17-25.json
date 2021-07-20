@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@rushstack/heft-sass-plugin",
+      "comment": "Extract default Sass plugin to separate package",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@rushstack/heft-sass-plugin",
+  "email": "jonasb@users.noreply.github.com"
+}

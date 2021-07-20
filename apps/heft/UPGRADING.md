@@ -1,5 +1,25 @@
 # Upgrade notes for @rushstack/heft
 
+### Heft 0.35.0
+
+This release of Heft removed the Sass plugin from the `@rushstack/heft` package
+and moved it into its own package (`@rushstack/heft-sass-plugin`). To reenable
+Sass support in a project, include a dependency on `@rushstack/heft-sass-plugin`
+and add the following option to the project's `config/heft.json` file:
+
+```JSON
+{
+  "heftPlugins": [
+    {
+      "plugin": "@rushstack/heft-sass-plugin"
+    }
+  ]
+}
+```
+
+If you are using `@rushstack/heft-web-rig`, upgrading the rig package will bring
+Sass support automatically.
+
 ### Heft 0.32.0
 
 Breaking change for Jest:  This release of Heft enables rig support for Jest config files.

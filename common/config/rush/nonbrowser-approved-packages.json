@@ -103,6 +103,10 @@
       "allowedCategories": [ "libraries", "tests" ]
     },
     {
+      "name": "@rushstack/heft-sass-plugin",
+      "allowedCategories": [ "libraries", "tests" ]
+    },
+    {
       "name": "@rushstack/heft-web-rig",
       "allowedCategories": [ "libraries", "tests" ]
     },

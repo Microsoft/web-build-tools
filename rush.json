@@ -694,6 +694,12 @@
       "shouldPublish": true
     },
     {
+      "packageName": "@rushstack/heft-sass-plugin",
+      "projectFolder": "heft-plugins/heft-sass-plugin",
+      "reviewCategory": "libraries",
+      "shouldPublish": true
+    },
+    {
       "packageName": "@rushstack/heft-webpack4-plugin",
       "projectFolder": "heft-plugins/heft-webpack4-plugin",
       "reviewCategory": "libraries",
