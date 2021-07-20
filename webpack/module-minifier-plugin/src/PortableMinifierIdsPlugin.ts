@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
 // See LICENSE in the project root for license information.
 
-import { compilation, Compiler, Plugin } from 'webpack';
+import webpack, { Compiler, Plugin } from 'webpack';
 import { ReplaceSource } from 'webpack-sources';
 import { createHash } from 'crypto';
 import { TapOptions } from 'tapable';
@@ -11,7 +11,8 @@ import { STAGE_AFTER, STAGE_BEFORE } from './Constants';
 import {
   _INormalModuleFactoryModuleData,
   IExtendedModule,
-  IModuleMinifierPluginHooks
+  IModuleMinifierPluginHooks,
+  _IWebpackCompilationData
 } from './ModuleMinifierPlugin.types';
 
 const PLUGIN_NAME: 'PortableMinifierModuleIdsPlugin' = 'PortableMinifierModuleIdsPlugin';
@@ -62,30 +63,6 @@ export class PortableMinifierModuleIdsPlugin implements Plugin {
       return nodeModulePath;
     };
 
-    const nameByResource: Map<string | undefined, string> = new Map();
-
-    /**
-     * Figure out portable ids for modules by using their id based on the node module resolution algorithm
-     */
-    compiler.hooks.normalModuleFactory.tap(PLUGIN_NAME, (nmf: compilation.NormalModuleFactory) => {
-      nmf.hooks.module.tap(PLUGIN_NAME, (mod: IExtendedModule, data: _INormalModuleFactoryModuleData) => {
-        const { resourceResolveData: resolveData } = data;
-
-        if (resolveData) {
-          const { descriptionFileData: packageJson, relativePath } = resolveData;
-
-          if (packageJson && relativePath) {
-            const nodeId: string = `${packageJson.name}${relativePath.slice(1).replace(/\.js(on)?$/, '')}`;
-            nameByResource.set(mod.resource, nodeId);
-            return mod;
-          }
-        }
-
-        console.error(`Missing resolution data for ${mod.resource}`);
-        return mod;
-      });
-    });
-
     const stableIdToFinalId: Map<string | number, string | number> = new Map();
 
     this._minifierHooks.finalModuleId.tap(PLUGIN_NAME, (id: string | number | undefined) => {
@@ -112,59 +89,92 @@ export class PortableMinifierModuleIdsPlugin implements Plugin {
       return source;
     });
 
-    compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation: compilation.Compilation) => {
-      stableIdToFinalId.clear();
+    compiler.hooks.thisCompilation.tap(
+      PLUGIN_NAME,
+      (compilation: webpack.compilation.Compilation, compilationData: _IWebpackCompilationData) => {
+        const { normalModuleFactory } = compilationData;
 
-      // Make module ids portable immediately before rendering.
-      // Unfortunately, other means of altering these ids don't work in Webpack 4 without a lot more code and work.
-      // Namely, a number of functions reference "module.id" directly during code generation
-      compilation.hooks.beforeChunkAssets.tap(TAP_AFTER, () => {
-        // For tracking collisions
-        const resourceById: Map<string | number, string> = new Map();
+        normalModuleFactory.hooks.module.tap(
+          PLUGIN_NAME,
+          (mod: IExtendedModule, data: _INormalModuleFactoryModuleData) => {
+            const { resourceResolveData: resolveData } = data;
 
-        for (const mod of compilation.modules) {
-          const originalId: string | number = mod.id;
-
-          // Need to handle ConcatenatedModules, which don't have the resource property directly
-          const resource: string = (mod.rootModule || mod).resource;
-
-          // Map to the friendly node module identifier
-          const preferredId: string | undefined = nameByResource.get(resource);
-          if (preferredId) {
-            const hashId: string = createHash('sha256').update(preferredId).digest('hex');
-
-            // This is designed to be an easily regex-findable string
-            const stableId: string = `${STABLE_MODULE_ID_PREFIX}${hashId}`;
-            const existingResource: string | undefined = resourceById.get(stableId);
-
-            if (existingResource) {
-              compilation.errors.push(
-                new Error(
-                  `Module id collision for ${resource} with ${existingResource}.\n This means you are bundling multiple versions of the same module.`
-                )
-              );
+            if (resolveData) {
+              mod.factoryMeta.resolveData = resolveData;
+              return;
             }
 
-            stableIdToFinalId.set(stableId, originalId);
-
-            // Record to detect collisions
-            resourceById.set(stableId, resource);
-            mod.id = stableId;
+            console.error(`Missing resolution data for ${mod.resource}`);
           }
-        }
-      });
+        );
 
-      // This is the hook immediately following chunk asset rendering. Fix the module ids.
-      compilation.hooks.additionalChunkAssets.tap(TAP_BEFORE, () => {
-        // Restore module ids in case any later hooks need them
-        for (const mod of compilation.modules) {
-          const stableId: string | number = mod.id;
-          const finalId: string | number | undefined = stableIdToFinalId.get(stableId);
-          if (finalId !== undefined) {
-            mod.id = finalId;
+        compilation.hooks.succeedModule.tap(PLUGIN_NAME, (mod: webpack.compilation.Module) => {
+          const { resolveData } = mod.factoryMeta;
+
+          if (!resolveData) {
+            return;
           }
-        }
-      });
-    });
+
+          const { descriptionFileData: packageJson, relativePath } = resolveData;
+
+          if (packageJson && relativePath) {
+            const nodeId: string = `${packageJson.name}${relativePath.slice(1).replace(/\.js(on)?$/, '')}`;
+            mod.factoryMeta.nodeResource = nodeId;
+          }
+        });
+
+        stableIdToFinalId.clear();
+
+        // Make module ids a pure function of the file path immediately before rendering.
+        // Unfortunately, other means of altering these ids don't work in Webpack 4 without a lot more code and work.
+        // Namely, a number of functions reference "module.id" directly during code generation
+
+        compilation.hooks.beforeChunkAssets.tap(TAP_AFTER, () => {
+          // For tracking collisions
+          const resourceById: Map<string | number, string> = new Map();
+
+          for (const mod of compilation.modules) {
+            const originalId: string | number = mod.id;
+
+            // Need to handle ConcatenatedModules, which don't have the resource property directly
+            const { resource } = mod.rootModule || mod;
+
+            if (resource) {
+              const hashId: string = createHash('sha256').update(resource).digest('hex');
+
+              // This is designed to be an easily regex-findable string
+              const stableId: string = `${STABLE_MODULE_ID_PREFIX}${hashId}`;
+              const existingResource: string | undefined = resourceById.get(stableId);
+
+              if (existingResource) {
+                compilation.errors.push(
+                  new Error(
+                    `Module id collision for ${resource} with ${existingResource}.\n This means you are bundling multiple versions of the same module.`
+                  )
+                );
+              }
+
+              stableIdToFinalId.set(stableId, originalId);
+
+              // Record to detect collisions
+              resourceById.set(stableId, resource);
+              mod.id = stableId;
+            }
+          }
+        });
+
+        // This is the hook immediately following chunk asset rendering. Fix the module ids.
+        compilation.hooks.additionalChunkAssets.tap(TAP_BEFORE, () => {
+          // Restore module ids in case any later hooks need them
+          for (const mod of compilation.modules) {
+            const stableId: string | number = mod.id;
+            const finalId: string | number | undefined = stableIdToFinalId.get(stableId);
+            if (finalId !== undefined) {
+              mod.id = finalId;
+            }
+          }
+        });
+      }
+    );
   }
 }

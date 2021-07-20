@@ -53,7 +53,9 @@ export class WorkerPoolMinifier implements IModuleMinifier {
       id: 'Minifier',
       maxWorkers: maxThreads,
       prepareWorker: (worker: Worker) => {
-        worker.on('message', (message: IModuleMinificationResult) => {
+        const cb: (message: IModuleMinificationResult) => void = (
+          message: IModuleMinificationResult
+        ): void => {
           const callbacks: IModuleMinificationCallback[] | undefined = activeRequests.get(message.hash)!;
           activeRequests.delete(message.hash);
           resultCache.set(message.hash, message);
@@ -61,7 +63,10 @@ export class WorkerPoolMinifier implements IModuleMinifier {
             callback(message);
           }
           terserPool.checkinWorker(worker);
-        });
+          worker.off('message', cb);
+        };
+
+        worker.on('message', cb);
       },
       workerData: terserOptions,
       workerScriptPath: require.resolve('./workerPool/MinifierWorker')
@@ -121,8 +126,7 @@ export class WorkerPoolMinifier implements IModuleMinifier {
             hash,
             error,
             code: undefined,
-            map: undefined,
-            extractedComments: undefined
+            map: undefined
           });
         }
       });
@@ -136,6 +140,8 @@ export class WorkerPoolMinifier implements IModuleMinifier {
     return async () => {
       if (--this._refCount === 0) {
         await this._pool.finishAsync();
+        this._resultCache.clear();
+        this._activeRequests.clear();
         console.log(`Module minification: ${this._deduped} Deduped, ${this._minified} Processed`);
       }
     };

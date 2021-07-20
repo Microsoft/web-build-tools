@@ -6,62 +6,51 @@ import { IAssetInfo, IModuleMap } from '../ModuleMinifierPlugin.types';
 const modules: IModuleMap = new Map();
 modules.set('a', {
   source: new RawSource('foo'),
-  extractedComments: [],
   module: undefined!
 });
 modules.set('b', {
   source: new RawSource('bar'),
-  extractedComments: [],
   module: undefined!
 });
 modules.set('0b', {
   source: new RawSource('baz'),
-  extractedComments: [],
   module: undefined!
 });
 modules.set('=', {
   source: new RawSource('bak'),
-  extractedComments: [],
   module: undefined!
 });
 modules.set('a0', {
   source: new RawSource('bal'),
-  extractedComments: [],
   module: undefined!
 });
 modules.set(0, {
   source: new RawSource('fizz'),
-  extractedComments: [],
   module: undefined!
 });
 modules.set(2, {
   source: new RawSource('buzz'),
-  extractedComments: [],
   module: undefined!
 });
 modules.set(255, {
   source: new RawSource('__WEBPACK_EXTERNAL_MODULE_fizz__'),
-  extractedComments: [],
   module: undefined!
 });
 for (let i: number = 14; i < 30; i++) {
   if (i !== 25) {
     modules.set(i, {
       source: new RawSource('bozz'),
-      extractedComments: [],
       module: undefined!
     });
   }
 }
 modules.set(25, {
   source: new RawSource('bang'),
-  extractedComments: [],
   module: undefined!
 });
 for (let i: number = 1000; i < 1010; i++) {
   modules.set(i, {
     source: new RawSource(`b${i}`),
-    extractedComments: [],
     module: undefined!
   });
 }
@@ -73,7 +62,6 @@ describe('rehydrateAsset', () => {
     const asset: IAssetInfo = {
       source: new RawSource(`<before>${CHUNK_MODULES_TOKEN}<after>`),
       modules: ['a', 'b', '0b', '=', 'a0'],
-      extractedComments: [],
       fileName: 'test',
       chunk: undefined!,
       externalNames: new Map()
@@ -91,7 +79,6 @@ describe('rehydrateAsset', () => {
     const asset: IAssetInfo = {
       source: new RawSource(`<before>${CHUNK_MODULES_TOKEN}<after>`),
       modules: [0, 25],
-      extractedComments: [],
       fileName: 'test',
       chunk: undefined!,
       externalNames: new Map()
@@ -109,7 +96,6 @@ describe('rehydrateAsset', () => {
     const asset: IAssetInfo = {
       source: new RawSource(`<before>${CHUNK_MODULES_TOKEN}<after>`),
       modules: [2],
-      extractedComments: [],
       fileName: 'test',
       chunk: undefined!,
       externalNames: new Map()
@@ -127,7 +113,6 @@ describe('rehydrateAsset', () => {
     const asset: IAssetInfo = {
       source: new RawSource(`<before>${CHUNK_MODULES_TOKEN}<after>`),
       modules: [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
-      extractedComments: [],
       fileName: 'test',
       chunk: undefined!,
       externalNames: new Map()
@@ -145,7 +130,6 @@ describe('rehydrateAsset', () => {
     const asset: IAssetInfo = {
       source: new RawSource(`<before>${CHUNK_MODULES_TOKEN}<after>`),
       modules: [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009],
-      extractedComments: [],
       fileName: 'test',
       chunk: undefined!,
       externalNames: new Map()
@@ -163,7 +147,6 @@ describe('rehydrateAsset', () => {
     const asset: IAssetInfo = {
       source: new RawSource(`<before>${CHUNK_MODULES_TOKEN}<after>`),
       modules: [0, 2, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009],
-      extractedComments: [],
       fileName: 'test',
       chunk: undefined!,
       externalNames: new Map()
@@ -181,7 +164,6 @@ describe('rehydrateAsset', () => {
     const asset: IAssetInfo = {
       source: new RawSource(`<before>${CHUNK_MODULES_TOKEN}<after>`),
       modules: [2, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009],
-      extractedComments: [],
       fileName: 'test',
       chunk: undefined!,
       externalNames: new Map()
@@ -199,7 +181,6 @@ describe('rehydrateAsset', () => {
     const asset: IAssetInfo = {
       source: new RawSource(`<before>${CHUNK_MODULES_TOKEN}<after>`),
       modules: [255],
-      extractedComments: [],
       fileName: 'test',
       chunk: undefined!,
       externalNames: new Map([['__WEBPACK_EXTERNAL_MODULE_fizz__', 'TREBLE']])

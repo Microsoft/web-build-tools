@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`minifySingleFile uses consistent identifiers for webpack vars 1`] = `
+Object {
+  "code": "__MINIFY_MODULE__((function(e,t,n){}));",
+  "error": undefined,
+  "hash": "foo",
+  "map": undefined,
+}
+`;

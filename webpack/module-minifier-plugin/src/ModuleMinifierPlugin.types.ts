@@ -50,10 +50,6 @@ export interface IModuleMinificationErrorResult {
    * Marker property to always return the same result shape.
    */
   map?: undefined;
-  /**
-   * Marker property to always return the same result shape.
-   */
-  extractedComments?: undefined;
 }
 
 /**
@@ -77,10 +73,6 @@ export interface IModuleMinificationSuccessResult {
    * Marker property to always return the same result shape.
    */
   map?: RawSourceMap;
-  /**
-   * The array of extracted comments, usually these are license information for 3rd party libraries.
-   */
-  extractedComments: string[];
 }
 
 /**
@@ -113,11 +105,6 @@ export interface IAssetInfo {
   fileName: string;
 
   /**
-   * The extracted comments from the boilerplate. Will usually be empty unless the minifier configuration and a plugin inject a comment that needs extraction in the runtime.
-   */
-  extractedComments: string[];
-
-  /**
    * The ids of the modules that are part of the chunk corresponding to this asset
    */
   modules: (string | number)[];
@@ -144,11 +131,6 @@ export interface IModuleInfo {
   source: Source;
 
   /**
-   * The extracted comments from this module, e.g. license information for a 3rd party library.
-   */
-  extractedComments: string[];
-
-  /**
    * The raw module object from Webpack, in case information from it is necessary for reconstruction
    */
   module: IExtendedModule;
@@ -163,6 +145,10 @@ export interface IExtendedModule extends webpack.compilation.Module {
    * Is this module external?
    */
   external?: boolean;
+  /**
+   * Concatenated modules
+   */
+  modules?: IExtendedModule[];
   /**
    * Id for the module
    */
@@ -180,10 +166,6 @@ export interface IExtendedModule extends webpack.compilation.Module {
    * Path to the physical file this module represents
    */
   resource?: string;
-  /**
-   * If set, bypass the minifier for this module. Useful if the code is known to already be minified.
-   */
-  skipMinification?: boolean;
 }
 
 declare module 'webpack' {
@@ -197,6 +179,15 @@ declare module 'webpack' {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     interface RequestShortener {}
   }
+}
+
+/**
+ * This is the second parameter to the thisCompilation and compilation webpack.Compiler hooks.
+ * @internal
+ */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export interface _IWebpackCompilationData {
+  normalModuleFactory: webpack.compilation.NormalModuleFactory;
 }
 
 /**

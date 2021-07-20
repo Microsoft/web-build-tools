@@ -16,27 +16,30 @@ export interface IParallelWebpackOptions {
   usePortableModules?: boolean;
 }
 
+const ZERO: bigint = BigInt(0);
+const THOUSAND: bigint = BigInt(1e3);
+
 /**
  * Formats a delta of `process.hrtime.bigint()` values as a string
  * @param timeNs
  */
 function formatTime(timeNs: bigint): string {
   let unit: string = 'ns';
-  let fraction: bigint = 0n;
-  if (timeNs > 1e3) {
+  let fraction: bigint = ZERO;
+  if (timeNs > THOUSAND) {
     unit = 'us';
-    fraction = timeNs % 1000n;
-    timeNs /= 1000n;
+    fraction = timeNs % THOUSAND;
+    timeNs /= THOUSAND;
   }
-  if (timeNs > 1e3) {
+  if (timeNs > THOUSAND) {
     unit = 'ms';
-    fraction = timeNs % 1000n;
-    timeNs /= 1000n;
+    fraction = timeNs % THOUSAND;
+    timeNs /= THOUSAND;
   }
-  if (timeNs > 1e3) {
+  if (timeNs > THOUSAND) {
     unit = 's';
-    fraction = timeNs % 1000n;
-    timeNs /= 1000n;
+    fraction = timeNs % THOUSAND;
+    timeNs /= THOUSAND;
   }
 
   return `${timeNs}.${('000' + fraction).slice(-3, -1)} ${unit}`;

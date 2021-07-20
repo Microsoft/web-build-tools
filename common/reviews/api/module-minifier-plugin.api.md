@@ -24,7 +24,6 @@ export function generateLicenseFileForAsset(compilation: webpack.compilation.Com
 export interface IAssetInfo {
     chunk: webpack.compilation.Chunk;
     externalNames: Map<string, string>;
-    extractedComments: string[];
     fileName: string;
     modules: (string | number)[];
     source: Source;
@@ -50,14 +49,13 @@ export interface IExtendedModule extends webpack.compilation.Module {
     external?: boolean;
     id: string | number | null;
     identifier(): string;
+    modules?: IExtendedModule[];
     readableIdentifier(requestShortener: unknown): string;
     resource?: string;
-    skipMinification?: boolean;
 }
 
 // @public
 export interface IModuleInfo {
-    extractedComments: string[];
     module: IExtendedModule;
     source: Source;
 }
@@ -75,7 +73,6 @@ export interface IModuleMinificationCallback {
 export interface IModuleMinificationErrorResult {
     code?: undefined;
     error: Error;
-    extractedComments?: undefined;
     hash: string;
     map?: undefined;
 }
@@ -95,7 +92,6 @@ export type IModuleMinificationResult = IModuleMinificationErrorResult | IModule
 export interface IModuleMinificationSuccessResult {
     code: string;
     error: undefined;
-    extractedComments: string[];
     hash: string;
     map?: RawSourceMap;
 }
@@ -144,6 +140,12 @@ export interface _INormalModuleFactoryModuleData {
 export interface ISynchronousMinifierOptions {
     // (undocumented)
     terserOptions?: MinifyOptions;
+}
+
+// @internal
+export interface _IWebpackCompilationData {
+    // (undocumented)
+    normalModuleFactory: webpack.compilation.NormalModuleFactory;
 }
 
 // @public

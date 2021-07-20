@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@rushstack/module-minifier-plugin",
+      "comment": "Separate comment extraction from minification.",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@rushstack/module-minifier-plugin",
+  "email": "dmichon-msft@users.noreply.github.com"
+}

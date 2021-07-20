@@ -28,7 +28,8 @@ import {
   IAssetMap,
   IExtendedModule,
   IModuleMinifierPluginHooks,
-  IDehydratedAssets
+  IDehydratedAssets,
+  _IWebpackCompilationData
 } from './ModuleMinifierPlugin.types';
 import { generateLicenseFileForAsset } from './GenerateLicenseFileForAsset';
 import { rehydrateAsset } from './RehydrateAsset';
@@ -50,6 +51,19 @@ const TAP_AFTER: TapOptions<'sync'> = {
 interface IExtendedChunkTemplate {
   hooks: {
     modules: SyncWaterfallHook<Source, webpack.compilation.Chunk>;
+  };
+}
+
+interface IAcornComment {
+  type: 'Line' | 'Block';
+  value: string;
+  start: number;
+  end: number;
+}
+
+interface IExtendedParser extends webpack.compilation.normalModuleFactory.Parser {
+  state: {
+    module: IExtendedModule;
   };
 }
 
@@ -102,6 +116,12 @@ function isMinificationResultError(
   return !!result.error;
 }
 
+// Matche behavior of terser's "some" option
+function isLicenseComment(comment: IAcornComment): boolean {
+  // https://github.com/terser/terser/blob/d3d924fa9e4c57bbe286b811c6068bcc7026e902/lib/output.js#L175
+  return /@preserve|@lic|@cc_on|^\**!/i.test(comment.value);
+}
+
 /**
  * Webpack plugin that minifies code on a per-module basis rather than per-asset. The actual minification is handled by the input `minifier` object.
  * @public
@@ -152,329 +172,353 @@ export class ModuleMinifierPlugin implements webpack.Plugin {
       stableIdsPlugin.apply(compiler);
     }
 
-    compiler.hooks.thisCompilation.tap(PLUGIN_NAME, (compilation: webpack.compilation.Compilation) => {
-      /**
-       * Set of local module ids that have been processed.
-       */
-      const submittedModules: Set<string | number> = new Set();
+    compiler.hooks.thisCompilation.tap(
+      PLUGIN_NAME,
+      (compilation: webpack.compilation.Compilation, compilationData: _IWebpackCompilationData) => {
+        const { normalModuleFactory } = compilationData;
 
-      /**
-       * The text and comments of all minified modules.
-       */
-      const minifiedModules: IModuleMap = new Map();
-
-      /**
-       * The text and comments of all minified chunks. Most of these are trivial, but the runtime chunk is a bit larger.
-       */
-      const minifiedAssets: IAssetMap = new Map();
-
-      let pendingMinificationRequests: number = 0;
-      /**
-       * Indicates that all files have been sent to the minifier and therefore that when pending hits 0, assets can be rehydrated.
-       */
-      let allRequestsIssued: boolean = false;
-
-      let resolveMinifyPromise: () => void;
-
-      const getRealId: (id: number | string) => number | string | undefined = (id: number | string) =>
-        this.hooks.finalModuleId.call(id);
-
-      const postProcessCode: (code: ReplaceSource, context: string) => ReplaceSource = (
-        code: ReplaceSource,
-        context: string
-      ) => this.hooks.postProcessCodeFragment.call(code, context);
-
-      /**
-       * Callback to invoke when a file has finished minifying.
-       */
-      function onFileMinified(): void {
-        if (--pendingMinificationRequests === 0 && allRequestsIssued) {
-          resolveMinifyPromise();
+        function addCommentExtraction(parser: webpack.compilation.normalModuleFactory.Parser): void {
+          parser.hooks.program.tap(PLUGIN_NAME, (program: unknown, comments: IAcornComment[]) => {
+            (parser as IExtendedParser).state.module.factoryMeta.comments = comments.filter(isLicenseComment);
+          });
         }
-      }
 
-      /**
-       * Callback to invoke for a chunk during render to replace the modules with CHUNK_MODULES_TOKEN
-       */
-      function dehydrateAsset(modules: Source, chunk: webpack.compilation.Chunk): Source {
-        for (const mod of chunk.modulesIterable) {
-          if (mod.id === null || !submittedModules.has(mod.id)) {
-            console.error(
-              `Chunk ${chunk.id} failed to render module ${mod.id} for ${(mod as IExtendedModule).resource}`
-            );
+        normalModuleFactory.hooks.parser.for('javascript/auto').tap(PLUGIN_NAME, addCommentExtraction);
+        normalModuleFactory.hooks.parser.for('javascript/dynamic').tap(PLUGIN_NAME, addCommentExtraction);
+        normalModuleFactory.hooks.parser.for('javascript/esm').tap(PLUGIN_NAME, addCommentExtraction);
+
+        /**
+         * Set of local module ids that have been processed.
+         */
+        const submittedModules: Set<string | number> = new Set();
+
+        /**
+         * The text and comments of all minified modules.
+         */
+        const minifiedModules: IModuleMap = new Map();
+
+        /**
+         * The text and comments of all minified chunks. Most of these are trivial, but the runtime chunk is a bit larger.
+         */
+        const minifiedAssets: IAssetMap = new Map();
+
+        let pendingMinificationRequests: number = 0;
+        /**
+         * Indicates that all files have been sent to the minifier and therefore that when pending hits 0, assets can be rehydrated.
+         */
+        let allRequestsIssued: boolean = false;
+
+        let resolveMinifyPromise: () => void;
+
+        const getRealId: (id: number | string) => number | string | undefined = (id: number | string) =>
+          this.hooks.finalModuleId.call(id);
+
+        const postProcessCode: (code: ReplaceSource, context: string) => ReplaceSource = (
+          code: ReplaceSource,
+          context: string
+        ) => this.hooks.postProcessCodeFragment.call(code, context);
+
+        /**
+         * Callback to invoke when a file has finished minifying.
+         */
+        function onFileMinified(): void {
+          if (--pendingMinificationRequests === 0 && allRequestsIssued) {
+            resolveMinifyPromise();
           }
         }
 
-        // Discard the rendered modules
-        return new RawSource(CHUNK_MODULES_TOKEN);
-      }
-
-      const { minifier } = this;
-
-      const cleanupMinifier: (() => Promise<void>) | undefined = minifier.ref && minifier.ref();
-
-      const requestShortener: webpack.compilation.RequestShortener =
-        compilation.runtimeTemplate.requestShortener;
-
-      /**
-       * Extracts the code for the module and sends it to be minified.
-       * Currently source maps are explicitly not supported.
-       * @param {Source} source
-       * @param {Module} mod
-       */
-      function minifyModule(source: Source, mod: IExtendedModule): Source {
-        const id: string | number | null = mod.id;
-
-        if (id !== null && !submittedModules.has(id)) {
-          // options.chunk contains the current chunk, if needed
-          // Render the source, then hash, then persist hash -> module, return a placeholder
-
-          // Initially populate the map with unminified version; replace during callback
-          submittedModules.add(id);
-
-          const realId: string | number | undefined = getRealId(id);
-
-          if (realId !== undefined && !mod.skipMinification) {
-            const wrapped: ConcatSource = new ConcatSource(
-              MODULE_WRAPPER_PREFIX + '\n',
-              source,
-              '\n' + MODULE_WRAPPER_SUFFIX
-            );
-
-            const nameForMap: string = `(modules)/${realId}`;
-
-            const { source: wrappedCode, map } = useSourceMaps
-              ? wrapped.sourceAndMap()
-              : {
-                  source: wrapped.source(),
-                  map: undefined
-                };
-
-            const hash: string = hashCodeFragment(wrappedCode);
-
-            ++pendingMinificationRequests;
-
-            minifier.minify(
-              {
-                hash,
-                code: wrappedCode,
-                nameForMap: useSourceMaps ? nameForMap : undefined,
-                externals: undefined
-              },
-              (result: IModuleMinificationResult) => {
-                if (isMinificationResultError(result)) {
-                  compilation.errors.push(result.error);
-                } else {
-                  try {
-                    // Have the source map display the module id instead of the minifier boilerplate
-                    const sourceForMap: string = `// ${mod.readableIdentifier(
-                      requestShortener
-                    )}${wrappedCode.slice(MODULE_WRAPPER_PREFIX.length, -MODULE_WRAPPER_SUFFIX.length)}`;
-
-                    const { code: minified, map: minifierMap, extractedComments } = result;
-
-                    const rawOutput: Source = useSourceMaps
-                      ? new SourceMapSource(
-                          minified, // Code
-                          nameForMap, // File
-                          minifierMap!, // Base source map
-                          sourceForMap, // Source from before transform
-                          map!, // Source Map from before transform
-                          false // Remove original source
-                        )
-                      : new RawSource(minified);
-
-                    const unwrapped: ReplaceSource = new ReplaceSource(rawOutput);
-                    const len: number = minified.length;
-
-                    unwrapped.replace(0, MODULE_WRAPPER_PREFIX.length - 1, '');
-                    unwrapped.replace(len - MODULE_WRAPPER_SUFFIX.length, len - 1, '');
-
-                    const withIds: Source = postProcessCode(unwrapped, mod.identifier());
-
-                    minifiedModules.set(realId, {
-                      source: new CachedSource(withIds),
-                      extractedComments,
-                      module: mod
-                    });
-                  } catch (err) {
-                    compilation.errors.push(err);
-                  }
-                }
-
-                onFileMinified();
-              }
-            );
-          } else {
-            // Route any other modules straight through
-            minifiedModules.set(realId !== undefined ? realId : id, {
-              source: new CachedSource(postProcessCode(new ReplaceSource(source), mod.identifier())),
-              extractedComments: [],
-              module: mod
-            });
-          }
-        }
-
-        // Return something so that this stage still produces valid ECMAScript
-        return new RawSource('(function(){})');
-      }
-
-      // During code generation, send the generated code to the minifier and replace with a placeholder
-      compilation.moduleTemplates.javascript.hooks.package.tap(TAP_AFTER, minifyModule);
-
-      // This should happen before any other tasks that operate during optimizeChunkAssets
-      compilation.hooks.optimizeChunkAssets.tapPromise(
-        TAP_BEFORE,
-        async (chunks: webpack.compilation.Chunk[]): Promise<void> => {
-          // Still need to minify the rendered assets
-          for (const chunk of chunks) {
-            const externals: string[] = [];
-            const externalNames: Map<string, string> = new Map();
-
-            const chunkModuleSet: Set<string | number> = new Set();
-            const allChunkModules: Iterable<IExtendedModule> =
-              chunk.modulesIterable as Iterable<IExtendedModule>;
-            let hasNonNumber: boolean = false;
-            for (const mod of allChunkModules) {
-              if (mod.id !== null) {
-                if (typeof mod.id !== 'number') {
-                  hasNonNumber = true;
-                }
-                chunkModuleSet.add(mod.id);
-
-                if (mod.external) {
-                  const key: string = `__WEBPACK_EXTERNAL_MODULE_${webpack.Template.toIdentifier(
-                    `${mod.id}`
-                  )}__`;
-                  // The first two identifiers are used for function (module, exports) at the module site
-                  const ordinal: number = 2 + externals.length;
-                  const miniId: string = getIdentifier(ordinal);
-                  externals.push(key);
-                  externalNames.set(key, miniId);
-                }
-              }
+        /**
+         * Callback to invoke for a chunk during render to replace the modules with CHUNK_MODULES_TOKEN
+         */
+        function dehydrateAsset(modules: Source, chunk: webpack.compilation.Chunk): Source {
+          for (const mod of chunk.modulesIterable) {
+            if (mod.id === null || !submittedModules.has(mod.id)) {
+              console.error(
+                `Chunk ${chunk.id} failed to render module ${mod.id} for ${(mod as IExtendedModule).resource}`
+              );
             }
+          }
 
-            const chunkModules: (string | number)[] = Array.from(chunkModuleSet);
-            // Sort by id before rehydration in case we rehydrate a given chunk multiple times
-            chunkModules.sort(
-              hasNonNumber
-                ? stringifyIdSortPredicate
-                : (x: string | number, y: string | number) => (x as number) - (y as number)
-            );
+          // Discard the rendered modules
+          return new RawSource(CHUNK_MODULES_TOKEN);
+        }
 
-            for (const assetName of chunk.files) {
-              const asset: Source = compilation.assets[assetName];
+        const { minifier } = this;
 
-              // Verify that this is a JS asset
-              if (/\.m?js(\?.+)?$/.test(assetName)) {
-                ++pendingMinificationRequests;
+        const cleanupMinifier: (() => Promise<void>) | undefined = minifier.ref?.();
 
-                const rawCode: string = asset.source() as string;
-                const nameForMap: string = `(chunks)/${assetName}`;
+        const requestShortener: webpack.compilation.RequestShortener =
+          compilation.runtimeTemplate.requestShortener;
 
-                const hash: string = hashCodeFragment(rawCode);
+        /**
+         * Extracts the code for the module and sends it to be minified.
+         * Currently source maps are explicitly not supported.
+         * @param {Source} source
+         * @param {Module} mod
+         */
+        function minifyModule(source: Source, mod: IExtendedModule): Source {
+          const id: string | number | null = mod.id;
 
-                minifier.minify(
-                  {
-                    hash,
-                    code: rawCode,
-                    nameForMap: useSourceMaps ? nameForMap : undefined,
-                    externals
-                  },
-                  (result: IModuleMinificationResult) => {
-                    if (isMinificationResultError(result)) {
-                      compilation.errors.push(result.error);
-                      console.error(result.error);
-                    } else {
-                      try {
-                        const { code: minified, map: minifierMap, extractedComments } = result;
+          if (id !== null && !submittedModules.has(id)) {
+            // options.chunk contains the current chunk, if needed
+            // Render the source, then hash, then persist hash -> module, return a placeholder
 
-                        let codeForMap: string = rawCode;
-                        if (useSourceMaps) {
-                          // Pretend the __WEBPACK_CHUNK_MODULES__ token is an array of module ids, so that the source map contains information about the module ids in the chunk
-                          codeForMap = codeForMap.replace(
-                            CHUNK_MODULES_TOKEN,
-                            JSON.stringify(chunkModules, undefined, 2)
-                          );
-                        }
+            // Initially populate the map with unminified version; replace during callback
+            submittedModules.add(id);
 
-                        const rawOutput: Source = useSourceMaps
-                          ? new SourceMapSource(
-                              minified, // Code
-                              nameForMap, // File
-                              minifierMap!, // Base source map
-                              codeForMap, // Source from before transform
-                              undefined, // Source Map from before transform
-                              false // Remove original source
-                            )
-                          : new RawSource(minified);
+            const realId: string | number | undefined = getRealId(id);
 
-                        const withIds: Source = postProcessCode(new ReplaceSource(rawOutput), assetName);
+            if (realId !== undefined && !mod.factoryMeta.skipMinification) {
+              const wrapped: ConcatSource = new ConcatSource(
+                MODULE_WRAPPER_PREFIX + '\n',
+                source,
+                '\n' + MODULE_WRAPPER_SUFFIX
+              );
 
-                        minifiedAssets.set(assetName, {
-                          source: new CachedSource(withIds),
-                          extractedComments,
-                          modules: chunkModules,
-                          chunk,
-                          fileName: assetName,
-                          externalNames
-                        });
-                      } catch (err) {
-                        compilation.errors.push(err);
-                      }
+              const nameForMap: string = `(modules)/${realId}`;
+
+              const { source: wrappedCode, map } = useSourceMaps
+                ? wrapped.sourceAndMap()
+                : {
+                    source: wrapped.source(),
+                    map: undefined
+                  };
+
+              const hash: string = hashCodeFragment(wrappedCode);
+
+              ++pendingMinificationRequests;
+
+              minifier.minify(
+                {
+                  hash,
+                  code: wrappedCode,
+                  nameForMap: useSourceMaps ? nameForMap : undefined,
+                  externals: undefined
+                },
+                (result: IModuleMinificationResult) => {
+                  if (isMinificationResultError(result)) {
+                    compilation.errors.push(result.error);
+                  } else {
+                    try {
+                      // Have the source map display the module id instead of the minifier boilerplate
+                      const sourceForMap: string = `// ${mod.readableIdentifier(
+                        requestShortener
+                      )}${wrappedCode.slice(MODULE_WRAPPER_PREFIX.length, -MODULE_WRAPPER_SUFFIX.length)}`;
+
+                      const { code: minified, map: minifierMap } = result;
+
+                      const rawOutput: Source = useSourceMaps
+                        ? new SourceMapSource(
+                            minified, // Code
+                            nameForMap, // File
+                            minifierMap!, // Base source map
+                            sourceForMap, // Source from before transform
+                            map!, // Source Map from before transform
+                            false // Remove original source
+                          )
+                        : new RawSource(minified);
+
+                      const unwrapped: ReplaceSource = new ReplaceSource(rawOutput);
+                      const len: number = minified.length;
+
+                      unwrapped.replace(0, MODULE_WRAPPER_PREFIX.length - 1, '');
+                      unwrapped.replace(len - MODULE_WRAPPER_SUFFIX.length, len - 1, '');
+
+                      const withIds: Source = postProcessCode(unwrapped, mod.identifier());
+                      const cached: CachedSource = new CachedSource(withIds);
+
+                      const minifiedSize: number = Buffer.byteLength(cached.source(), 'utf-8');
+                      mod.factoryMeta.minifiedSize = minifiedSize;
+
+                      minifiedModules.set(realId, {
+                        source: cached,
+                        module: mod
+                      });
+                    } catch (err) {
+                      compilation.errors.push(err);
                     }
-
-                    onFileMinified();
                   }
-                );
-              } else {
-                // Skip minification for all other assets, though the modules still are
-                minifiedAssets.set(assetName, {
-                  // Still need to restore ids
-                  source: postProcessCode(new ReplaceSource(asset), assetName),
-                  extractedComments: [],
-                  modules: chunkModules,
-                  chunk,
-                  fileName: assetName,
-                  externalNames
-                });
-              }
+
+                  onFileMinified();
+                }
+              );
+            } else {
+              // Route any other modules straight through
+              const cached: CachedSource = new CachedSource(
+                postProcessCode(new ReplaceSource(source), mod.identifier())
+              );
+
+              const minifiedSize: number = Buffer.byteLength(cached.source(), 'utf-8');
+              mod.factoryMeta.minifiedSize = minifiedSize;
+
+              minifiedModules.set(realId !== undefined ? realId : id, {
+                source: cached,
+                module: mod
+              });
             }
           }
 
-          allRequestsIssued = true;
-
-          if (pendingMinificationRequests) {
-            await new Promise<void>((resolve) => {
-              resolveMinifyPromise = resolve;
-            });
-          }
-
-          // Handle any error from the minifier.
-          if (cleanupMinifier) {
-            await cleanupMinifier();
-          }
-
-          // All assets and modules have been minified, hand them off to be rehydrated
-
-          // Clone the maps for safety, even though we won't be using them in the plugin anymore
-          const assets: IAssetMap = new Map(minifiedAssets);
-          const modules: IModuleMap = new Map(minifiedModules);
-
-          await this.hooks.rehydrateAssets.promise(
-            {
-              assets,
-              modules
-            },
-            compilation
-          );
+          // Return something so that this stage still produces valid ECMAScript
+          return new RawSource('(function(){})');
         }
-      );
 
-      for (const template of [compilation.chunkTemplate, compilation.mainTemplate]) {
-        (template as unknown as IExtendedChunkTemplate).hooks.modules.tap(TAP_AFTER, dehydrateAsset);
+        // During code generation, send the generated code to the minifier and replace with a placeholder
+        compilation.moduleTemplates.javascript.hooks.package.tap(TAP_AFTER, minifyModule);
+
+        // This should happen before any other tasks that operate during optimizeChunkAssets
+        compilation.hooks.optimizeChunkAssets.tapPromise(
+          TAP_BEFORE,
+          async (chunks: webpack.compilation.Chunk[]): Promise<void> => {
+            // Still need to minify the rendered assets
+            for (const chunk of chunks) {
+              const externals: string[] = [];
+              const externalNames: Map<string, string> = new Map();
+
+              const chunkModuleSet: Set<string | number> = new Set();
+              const allChunkModules: Iterable<IExtendedModule> =
+                chunk.modulesIterable as Iterable<IExtendedModule>;
+              let hasNonNumber: boolean = false;
+              for (const mod of allChunkModules) {
+                if (mod.id !== null) {
+                  if (typeof mod.id !== 'number') {
+                    hasNonNumber = true;
+                  }
+                  chunkModuleSet.add(mod.id);
+
+                  if (mod.external) {
+                    // Match the identifiers generated in the AmdMainTemplatePlugin
+                    // https://github.com/webpack/webpack/blob/444e59f8a427f94f0064cae6765e5a3c4b78596d/lib/AmdMainTemplatePlugin.js#L49
+                    const key: string = `__WEBPACK_EXTERNAL_MODULE_${webpack.Template.toIdentifier(
+                      `${mod.id}`
+                    )}__`;
+                    // The first two identifiers are used for function (module, exports) at the module site
+                    const ordinal: number = 2 + externals.length;
+                    const miniId: string = getIdentifier(ordinal);
+                    externals.push(key);
+                    externalNames.set(key, miniId);
+                  }
+                }
+              }
+
+              const chunkModules: (string | number)[] = Array.from(chunkModuleSet);
+              // Sort by id before rehydration in case we rehydrate a given chunk multiple times
+              chunkModules.sort(
+                hasNonNumber
+                  ? stringifyIdSortPredicate
+                  : (x: string | number, y: string | number) => (x as number) - (y as number)
+              );
+
+              for (const assetName of chunk.files) {
+                const asset: Source = compilation.assets[assetName];
+
+                // Verify that this is a JS asset
+                if (/\.m?js(\?.+)?$/.test(assetName)) {
+                  ++pendingMinificationRequests;
+
+                  const rawCode: string = asset.source() as string;
+                  const nameForMap: string = `(chunks)/${assetName}`;
+
+                  const hash: string = hashCodeFragment(rawCode);
+
+                  minifier.minify(
+                    {
+                      hash,
+                      code: rawCode,
+                      nameForMap: useSourceMaps ? nameForMap : undefined,
+                      externals
+                    },
+                    (result: IModuleMinificationResult) => {
+                      if (isMinificationResultError(result)) {
+                        compilation.errors.push(result.error);
+                        console.error(result.error);
+                      } else {
+                        try {
+                          const { code: minified, map: minifierMap } = result;
+
+                          let codeForMap: string = rawCode;
+                          if (useSourceMaps) {
+                            // Pretend the __WEBPACK_CHUNK_MODULES__ token is an array of module ids, so that the source map contains information about the module ids in the chunk
+                            codeForMap = codeForMap.replace(
+                              CHUNK_MODULES_TOKEN,
+                              JSON.stringify(chunkModules, undefined, 2)
+                            );
+                          }
+
+                          const rawOutput: Source = useSourceMaps
+                            ? new SourceMapSource(
+                                minified, // Code
+                                nameForMap, // File
+                                minifierMap!, // Base source map
+                                codeForMap, // Source from before transform
+                                undefined, // Source Map from before transform
+                                false // Remove original source
+                              )
+                            : new RawSource(minified);
+
+                          const withIds: Source = postProcessCode(new ReplaceSource(rawOutput), assetName);
+
+                          minifiedAssets.set(assetName, {
+                            source: new CachedSource(withIds),
+                            modules: chunkModules,
+                            chunk,
+                            fileName: assetName,
+                            externalNames
+                          });
+                        } catch (err) {
+                          compilation.errors.push(err);
+                        }
+                      }
+
+                      onFileMinified();
+                    }
+                  );
+                } else {
+                  // Skip minification for all other assets, though the modules still are
+                  minifiedAssets.set(assetName, {
+                    // Still need to restore ids
+                    source: postProcessCode(new ReplaceSource(asset), assetName),
+                    modules: chunkModules,
+                    chunk,
+                    fileName: assetName,
+                    externalNames
+                  });
+                }
+              }
+            }
+
+            allRequestsIssued = true;
+
+            if (pendingMinificationRequests) {
+              await new Promise<void>((resolve) => {
+                resolveMinifyPromise = resolve;
+              });
+            }
+
+            // Handle any error from the minifier.
+            if (cleanupMinifier) {
+              await cleanupMinifier();
+            }
+
+            // All assets and modules have been minified, hand them off to be rehydrated
+
+            // Clone the maps for safety, even though we won't be using them in the plugin anymore
+            const assets: IAssetMap = new Map(minifiedAssets);
+            const modules: IModuleMap = new Map(minifiedModules);
+
+            await this.hooks.rehydrateAssets.promise(
+              {
+                assets,
+                modules
+              },
+              compilation
+            );
+          }
+        );
+
+        for (const template of [compilation.chunkTemplate, compilation.mainTemplate]) {
+          (template as unknown as IExtendedChunkTemplate).hooks.modules.tap(TAP_AFTER, dehydrateAsset);
+        }
       }
-    });
+    );
   }
 }

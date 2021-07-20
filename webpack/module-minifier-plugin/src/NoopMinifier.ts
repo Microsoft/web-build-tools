@@ -24,8 +24,7 @@ export class NoopMinifier implements IModuleMinifier {
       hash,
       error: undefined,
       code,
-      map: undefined,
-      extractedComments: []
+      map: undefined
     });
   }
 }

@@ -244,7 +244,7 @@ export class WorkerPool {
     }
 
     if (!this._alive.length && !this._error) {
-      for (const [resolve] of this._onComplete) {
+      for (const [resolve] of this._onComplete.splice(0)) {
         resolve();
       }
     }
