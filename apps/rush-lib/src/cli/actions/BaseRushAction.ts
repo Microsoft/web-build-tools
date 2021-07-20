@@ -13,6 +13,7 @@ import { EventHooksManager } from '../../logic/EventHooksManager';
 import { RushCommandLineParser } from './../RushCommandLineParser';
 import { Utilities } from '../../utilities/Utilities';
 import { RushGlobalFolder } from '../../api/RushGlobalFolder';
+import { RushStartupBanner } from '../RushStartupBanner';
 
 export interface IBaseRushActionOptions extends ICommandLineActionOptions {
   /**
@@ -25,6 +26,11 @@ export interface IBaseRushActionOptions extends ICommandLineActionOptions {
   safeForSimultaneousRushProcesses?: boolean;
 
   /**
+   * If specified, the action will skip the rush startup banner to ensure the action has full control over logging output.
+   */
+  suppressStartupBanner?: boolean;
+
+  /**
    * The rush parser.
    */
   parser: RushCommandLineParser;
@@ -35,8 +41,9 @@ export interface IBaseRushActionOptions extends ICommandLineActionOptions {
  * can be used without a rush.json configuration.
  */
 export abstract class BaseConfiglessRushAction extends CommandLineAction {
-  private _parser: RushCommandLineParser;
-  private _safeForSimultaneousRushProcesses: boolean;
+  private readonly _parser: RushCommandLineParser;
+  private readonly _safeForSimultaneousRushProcesses: boolean;
+  private readonly _suppressStartupBanner: boolean;
 
   protected get rushConfiguration(): RushConfiguration | undefined {
     return this._parser.rushConfiguration;
@@ -55,6 +62,7 @@ export abstract class BaseConfiglessRushAction extends CommandLineAction {
 
     this._parser = options.parser;
     this._safeForSimultaneousRushProcesses = !!options.safeForSimultaneousRushProcesses;
+    this._suppressStartupBanner = !!options.suppressStartupBanner;
   }
 
   protected onExecute(): Promise<void> {
@@ -69,9 +77,12 @@ export abstract class BaseConfiglessRushAction extends CommandLineAction {
       }
     }
 
-    if (!Utilities.shouldRestrictConsoleOutput()) {
+    // Some actions need to fully control their output. Only print boilerplate if the action does not declare that need.
+    if (!this._suppressStartupBanner) {
+      RushStartupBanner.log(this._parser.rushVersion);
       console.log(`Starting "rush ${this.actionName}"${os.EOL}`);
     }
+
     return this.runAsync();
   }
 

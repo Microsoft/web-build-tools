@@ -25,10 +25,16 @@ import {
 const PACKAGE_NAME: string = '@microsoft/rush';
 const RUSH_PREVIEW_VERSION: string = 'RUSH_PREVIEW_VERSION';
 
+const includeDebugOutput: boolean = process.argv.includes('--debug') || process.argv.includes('-d');
+
 function _getRushVersion(): string {
   const rushPreviewVersion: string | undefined = process.env[RUSH_PREVIEW_VERSION];
   if (rushPreviewVersion !== undefined) {
-    console.log(`Using Rush version from environment variable ${RUSH_PREVIEW_VERSION}=${rushPreviewVersion}`);
+    if (includeDebugOutput) {
+      console.log(
+        `Using Rush version from environment variable ${RUSH_PREVIEW_VERSION}=${rushPreviewVersion}`
+      );
+    }
     return rushPreviewVersion;
   }
 
@@ -58,7 +64,7 @@ function _run(): void {
     ...packageBinArgs /* [build, --to, myproject] */
   ]: string[] = process.argv;
 
-  // Detect if this script was directly invoked, or if the install-run-rushx script was invokved to select the
+  // Detect if this script was directly invoked, or if the install-run-rushx script was invoked to select the
   // appropriate binary inside the rush package to run
   const scriptName: string = path.basename(scriptPath);
   const bin: string = scriptName.toLowerCase() === 'install-run-rushx.js' ? 'rushx' : 'rush';
@@ -78,7 +84,9 @@ function _run(): void {
 
   runWithErrorAndStatusCode(() => {
     const version: string = _getRushVersion();
-    console.log(`The rush.json configuration requests Rush version ${version}`);
+    if (includeDebugOutput) {
+      console.log(`The rush.json configuration requests Rush version ${version}`);
+    }
 
     return installAndRun(PACKAGE_NAME, version, bin, packageBinArgs);
   });

@@ -39,6 +39,11 @@
           "title": "Safe For Simultaneous Rush Processes",
           "description": "By default, Rush operations acquire a lock file which prevents multiple commands from executing simultaneously in the same repo folder.  (For example, it would be a mistake to run \"rush install\" and \"rush build\" at the same time.)  If your command makes sense to run concurrently with other operations, set safeForSimultaneousRushProcesses=true to disable this protection.  In particular, this is needed for custom scripts that invoke other Rush commands.",
           "type": "boolean"
+        },
+        "suppressStartupBanner": {
+          "title": "Suppress Startup Banner",
+          "description": "If \"true\", Rush will skip logging the startup banner to give the action full control over the console output.",
+          "type": "boolean"
         }
       }
     },

@@ -34,7 +34,8 @@ export class ListAction extends BaseRushAction {
         'List package names, and optionally version (--version) and ' +
         'path (--path) or full path (--full-path), for projects in the ' +
         'current rush config.',
-      parser
+      parser,
+      suppressStartupBanner: true
     });
   }
 

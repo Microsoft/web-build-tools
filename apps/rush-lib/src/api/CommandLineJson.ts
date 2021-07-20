@@ -14,6 +14,7 @@ export interface IBaseCommandJson {
   description?: string;
   safeForSimultaneousRushProcesses: boolean;
   autoinstallerName?: string;
+  suppressStartupBanner?: boolean;
 }
 
 /**

@@ -13,7 +13,6 @@ import { RushConfiguration } from '../api/RushConfiguration';
 import { RushConstants } from '../logic/RushConstants';
 import { CommandLineConfiguration } from '../api/CommandLineConfiguration';
 import { CommandJson } from '../api/CommandLineJson';
-import { Utilities } from '../utilities/Utilities';
 import { BaseScriptAction } from '../cli/scriptActions/BaseScriptAction';
 
 import { AddAction } from './actions/AddAction';
@@ -51,6 +50,7 @@ import { EnvironmentConfiguration } from '../api/EnvironmentConfiguration';
 export interface IRushCommandLineParserOptions {
   cwd: string; // Defaults to `cwd`
   alreadyReportedNodeTooNewError: boolean;
+  rushVersion?: string;
 }
 
 export class RushCommandLineParser extends CommandLineParser {
@@ -81,7 +81,7 @@ export class RushCommandLineParser extends CommandLineParser {
     try {
       const rushJsonFilename: string | undefined = RushConfiguration.tryFindRushJsonLocation({
         startingFolder: this._rushOptions.cwd,
-        showVerbose: !Utilities.shouldRestrictConsoleOutput()
+        showVerbose: false
       });
       if (rushJsonFilename) {
         this.rushConfiguration = RushConfiguration.loadFromConfigurationFile(rushJsonFilename);
@@ -101,6 +101,11 @@ export class RushCommandLineParser extends CommandLineParser {
 
   public get isDebug(): boolean {
     return this._debugParameter.value;
+  }
+
+  public get rushVersion(): string {
+    // Options normalization forces this to exist.
+    return this._rushOptions.rushVersion!;
   }
 
   public flushTelemetry(): void {
@@ -141,7 +146,8 @@ export class RushCommandLineParser extends CommandLineParser {
   private _normalizeOptions(options: Partial<IRushCommandLineParserOptions>): IRushCommandLineParserOptions {
     return {
       cwd: options.cwd || process.cwd(),
-      alreadyReportedNodeTooNewError: options.alreadyReportedNodeTooNewError || false
+      alreadyReportedNodeTooNewError: options.alreadyReportedNodeTooNewError || false,
+      rushVersion: options.rushVersion || ''
     };
   }
 
@@ -276,7 +282,9 @@ export class RushCommandLineParser extends CommandLineParser {
             allowWarningsInSuccessfulBuild: overrideAllowWarnings || !!command.allowWarningsInSuccessfulBuild,
 
             watchForChanges: command.watchForChanges || false,
-            disableBuildCache: command.disableBuildCache || false
+            disableBuildCache: command.disableBuildCache || false,
+
+            suppressStartupBanner: command.suppressStartupBanner || false
           })
         );
         break;
@@ -294,7 +302,9 @@ export class RushCommandLineParser extends CommandLineParser {
 
             shellCommand: command.shellCommand,
 
-            autoinstallerName: command.autoinstallerName
+            autoinstallerName: command.autoinstallerName,
+
+            suppressStartupBanner: command.suppressStartupBanner || false
           })
         );
         break;
