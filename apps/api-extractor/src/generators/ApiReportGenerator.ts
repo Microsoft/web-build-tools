@@ -60,10 +60,10 @@ export class ApiReportGenerator {
     // Emit the triple slash directives
     for (const typeDirectiveReference of Array.from(collector.dtsTypeReferenceDirectives).sort()) {
       // https://github.com/microsoft/TypeScript/blob/611ebc7aadd7a44a4c0447698bfda9222a78cb66/src/compiler/declarationEmitter.ts#L162
-      writer.writeLine(`/// <reference types="${typeDirectiveReference}" />`);
+      writer.writeLine(`/// <reference types="${typeDirectiveReference.toLowerCase()}" />`);
     }
     for (const libDirectiveReference of Array.from(collector.dtsLibReferenceDirectives).sort()) {
-      writer.writeLine(`/// <reference lib="${libDirectiveReference}" />`);
+      writer.writeLine(`/// <reference lib="${libDirectiveReference.toLowerCase()}" />`);
     }
     writer.ensureSkippedLine();
 
