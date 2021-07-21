@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@microsoft/rush",
+      "comment": "Adds support for the project subset selection parameters (\"--to\", \"--from\", etc., documented at https://rushjs.io/pages/developer/selecting_subsets/) to the \"rush list\" command.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@microsoft/rush",
+  "email": "dmichon-msft@users.noreply.github.com"
+}
